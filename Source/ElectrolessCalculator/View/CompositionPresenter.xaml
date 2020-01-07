@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="ElectrolessCalculator.View.CompositionPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectrolessCalculator.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="335" d:DesignWidth="200">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <local:ComponentPresenter ComponentName="Metallic Nickel" 
+                                      ComponentValue="{Binding NickelMetalSpecificGravity}" 
+                                      ValueUnits="g/l"></local:ComponentPresenter>
+            <local:ComponentPresenter ComponentName="Sodium Hypophosphite" 
+                                      ComponentValue="{Binding SodiumHypophosphiteSpecificGravity}" 
+                                      ValueUnits="g/l"></local:ComponentPresenter>
+            <local:ComponentPresenter ComponentName="Sodium Acetate" 
+                                      ComponentValue="{Binding SodiumAcetateSpecificGravity}" 
+                                      ValueUnits="g/l"></local:ComponentPresenter>
+        </StackPanel>
+    </Grid>
+</UserControl>

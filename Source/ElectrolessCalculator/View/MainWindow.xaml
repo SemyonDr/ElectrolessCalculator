@@ -1,0 +1,67 @@
+﻿<Window x:Class="ElectrolessCalculator.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ElectrolessCalculator.View"
+        mc:Ignorable="d"
+        Title="Electroless Calculator" Height="400" Width="700"
+        ResizeMode="CanMinimize"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <!--Headers-->
+            <RowDefinition Height="20"></RowDefinition>
+            <!--Upper Color-->
+            <RowDefinition Height="5"></RowDefinition>
+            <!--Buttons-->
+            <RowDefinition Height="30"></RowDefinition>
+            <!--Main field-->
+            <RowDefinition Height="1*"></RowDefinition>
+            <!--Bottom color-->
+            <RowDefinition Height="15"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <!--Spacer-->
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <!--Target composition-->
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <!--Spacer-->
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <!--Current composition-->
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <!--Spacer-->
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <!--Materials to add-->
+            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+            <!--Spacer-->
+            <ColumnDefinition Width="5"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+        <!--Upper colors-->
+        <!--============-->
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="DodgerBlue"></Rectangle>
+        <Rectangle Grid.Row="1" Grid.Column="3" Fill="Khaki"></Rectangle>
+        <Rectangle Grid.Row="1" Grid.Column="5" Fill="LightGreen"></Rectangle>
+
+        <!--Headers-->
+        <!--============-->
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0" FontSize="14" FontWeight="DemiBold">Target Composition</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5,0" FontSize="14" FontWeight="DemiBold">Current Composition</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="5" Margin="5,0" FontSize="14" FontWeight="DemiBold">Materials to add</TextBlock>
+
+        <!--Controls-->
+        <!--============-->
+        <TextBox Grid.Row="2" Grid.Column="1">TEST</TextBox>
+
+        <!--Composition presenters-->
+        <!--============-->
+        <local:CompositionPresenter x:Name="TargetCompositionPresenter" Grid.Row="3" Grid.Column="1"></local:CompositionPresenter>
+
+        <!--Bottom colors-->
+        <Rectangle Grid.Row="4" Grid.Column="1" Fill="DodgerBlue"></Rectangle>
+        <Rectangle Grid.Row="4" Grid.Column="3" Fill="Khaki"></Rectangle>
+        <Rectangle Grid.Row="4" Grid.Column="5" Fill="LightGreen"></Rectangle>
+    </Grid>
+</Window>
