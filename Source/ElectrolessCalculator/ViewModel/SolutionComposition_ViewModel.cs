@@ -41,34 +41,52 @@ namespace ElectrolessCalculator.ViewModel
             }}
 
         //================
-        //Specific gravitys
+        //Concentrations
         //================
-        public float NickelMetalSpecificGravity {
+        public float NickelMetalConcentration {
             get {
-                return composition.GetSpecificGravity(Model.BathComponents.NickelMetal);
+                return composition.GetConcentration(Model.BathComponents.NickelMetal);
             }
             set {
-                composition.SetSpecificGravity(Model.BathComponents.NickelMetal, value);
-                NotifyPropertyChanged("NickelMetalSpecificGravity");
+                composition.SetConcentration(Model.BathComponents.NickelMetal, value);
+                NotifyPropertyChanged("NickelMetalConcentration");
             }}
 
-        public float SodiumHypophosphiteSpecificGravity {
+        public float SodiumHypophosphiteConcentration {
             get {
-                return composition.GetSpecificGravity(Model.BathComponents.SodiumHypophosphite);
+                return composition.GetConcentration(Model.BathComponents.SodiumHypophosphite);
             }
             set {
-                composition.SetSpecificGravity(Model.BathComponents.SodiumHypophosphite, value);
-                NotifyPropertyChanged("SodiumHypophosphiteSpecificGravity");
+                composition.SetConcentration(Model.BathComponents.SodiumHypophosphite, value);
+                NotifyPropertyChanged("SodiumHypophosphiteConcentration");
             }
         }
 
-        public float SodiumAcetateSpecificGravity {
+        public float SodiumAcetateConcentration {
             get {
-                return composition.GetSpecificGravity(Model.BathComponents.SodiumAcetate);
+                return composition.GetConcentration(Model.BathComponents.SodiumAcetate);
             }
             set {
-                composition.SetSpecificGravity(Model.BathComponents.SodiumAcetate, value);
-                NotifyPropertyChanged("SodiumAcetateSpecificGravity");
+                composition.SetConcentration(Model.BathComponents.SodiumAcetate, value);
+                NotifyPropertyChanged("SodiumAcetateConcentration");
+            }}
+
+        public float SuccinicAcidConcentration {
+            get{
+                return composition.GetConcentration(Model.BathComponents.SuccinicAcid);
+            }
+            set{
+                composition.SetConcentration(Model.BathComponents.SuccinicAcid, value);
+                NotifyPropertyChanged("SuccinicAcidConcentration");
+            }}
+
+        public float LacticAcidConcentration {
+            get {
+                return composition.GetConcentration(Model.BathComponents.LacticAcid);
+            }
+            set {
+                composition.SetConcentration(Model.BathComponents.LacticAcid, value);
+                NotifyPropertyChanged("LacticAcidConcentration");
             }}
 
         public SolutionComposition_ViewModel(Model.SolutionComposition composition)

@@ -17,11 +17,11 @@ namespace ElectrolessCalculator
         void App_Startup(Object sender, StartupEventArgs args)
         {
             Model.SolutionComposition TargetComposition = new Model.SolutionComposition();
-            TargetComposition.SetSpecificGravity(Model.BathComponents.NickelMetal, 6);
-            TargetComposition.SetSpecificGravity(Model.BathComponents.SodiumHypophosphite, 25);
-            TargetComposition.SetSpecificGravity(Model.BathComponents.SodiumAcetate, 10);
-            TargetComposition.SetSpecificGravity(Model.BathComponents.SuccinicAcid, 15);
-            TargetComposition.SetSpecificGravity(Model.BathComponents.LacticAcid, 10);
+            TargetComposition.SetConcentration(Model.BathComponents.NickelMetal, 6);
+            TargetComposition.SetConcentration(Model.BathComponents.SodiumHypophosphite, 25);
+            TargetComposition.SetConcentration(Model.BathComponents.SodiumAcetate, 10);
+            TargetComposition.SetConcentration(Model.BathComponents.SuccinicAcid, 15);
+            TargetComposition.SetConcentration(Model.BathComponents.LacticAcid, 10);
 
             ViewModel.SolutionComposition_ViewModel TargetComposition_VM = new ViewModel.SolutionComposition_ViewModel(TargetComposition);
 

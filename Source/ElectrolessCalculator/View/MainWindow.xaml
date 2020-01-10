@@ -53,11 +53,12 @@
 
         <!--Controls-->
         <!--============-->
-        <TextBox Grid.Row="2" Grid.Column="1">TEST</TextBox>
+        <Button Grid.Row="2" Grid.Column="1" Width="50" HorizontalAlignment="Left" Margin="3,3,3,3">Edit</Button>
 
         <!--Composition presenters-->
         <!--============-->
         <local:CompositionPresenter x:Name="TargetCompositionPresenter" Grid.Row="3" Grid.Column="1"></local:CompositionPresenter>
+        <local:CompositionPresenter x:Name="CurrentCompositionPresenter" Grid.Row="3" Grid.Column="1"></local:CompositionPresenter>
 
         <!--Bottom colors-->
         <Rectangle Grid.Row="4" Grid.Column="1" Fill="DodgerBlue"></Rectangle>

@@ -9,14 +9,25 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <local:ComponentPresenter ComponentName="Metallic Nickel" 
-                                      ComponentValue="{Binding NickelMetalSpecificGravity}" 
-                                      ValueUnits="g/l"></local:ComponentPresenter>
+                                      ComponentValue="{Binding NickelMetalConcentration}" 
+                                      ValueUnits="g/l"
+                                      Margin="3,3,3,0"></local:ComponentPresenter>
             <local:ComponentPresenter ComponentName="Sodium Hypophosphite" 
-                                      ComponentValue="{Binding SodiumHypophosphiteSpecificGravity}" 
-                                      ValueUnits="g/l"></local:ComponentPresenter>
+                                      ComponentValue="{Binding SodiumHypophosphiteConcentration}" 
+                                      ValueUnits="g/l"
+                                      Margin="3,3,3,0"></local:ComponentPresenter>
             <local:ComponentPresenter ComponentName="Sodium Acetate" 
-                                      ComponentValue="{Binding SodiumAcetateSpecificGravity}" 
-                                      ValueUnits="g/l"></local:ComponentPresenter>
+                                      ComponentValue="{Binding SodiumAcetateConcentration}" 
+                                      ValueUnits="g/l"
+                                      Margin="3,3,3,0"></local:ComponentPresenter>
+            <local:ComponentPresenter ComponentName="Succinic Acid" 
+                                      ComponentValue="{Binding SuccinicAcidConcentration}" 
+                                      ValueUnits="g/l"
+                                      Margin="3,3,3,0"></local:ComponentPresenter>
+            <local:ComponentPresenter ComponentName="Lactic Acid" 
+                                      ComponentValue="{Binding LacticAcidConcentration}" 
+                                      ValueUnits="g/l"
+                                      Margin="3,3,3,0"></local:ComponentPresenter>
         </StackPanel>
     </Grid>
 </UserControl>

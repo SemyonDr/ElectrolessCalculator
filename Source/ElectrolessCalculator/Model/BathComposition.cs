@@ -22,7 +22,7 @@ namespace ElectrolessCalculator.Model
             return AbsoluteWeigth[Component];
         }
 
-        public float GetSpecificGravity(BathComponents Component)
+        public float GetConcentration(BathComponents Component)
         {
             return AbsoluteWeigth[Component] / volume;
         }
@@ -39,7 +39,7 @@ namespace ElectrolessCalculator.Model
             }
         }
 
-        public void SetSpecificGravity(BathComponents Component, float value)
+        public void SetConcentration(BathComponents Component, float value)
         {
             if (Component == BathComponents.NickelMetal)
             {
@@ -62,14 +62,14 @@ namespace ElectrolessCalculator.Model
             AbsoluteWeigth.Add(BathComponents.LacticAcid, 0);
         }
 
-        public SolutionComposition(float SolutionVolume, float MetalNickelSpecificMass, SolutionComposition TargetComposition)
+        public SolutionComposition(float SolutionVolume, float MetalNickelConcentration, SolutionComposition TargetComposition)
         {
             this.volume = SolutionVolume;
-            float proportion = NickelConverter.ConvertMetalToSalt(MetalNickelSpecificMass) / TargetComposition.GetSpecificGravity(BathComponents.NickelSulfate);
+            float proportion = NickelConverter.ConvertMetalToSalt(MetalNickelConcentration) / TargetComposition.GetConcentration(BathComponents.NickelSulfate);
 
             foreach (BathComponents comp in AbsoluteWeigth.Keys)
             {
-                AbsoluteWeigth[comp] = proportion * volume * TargetComposition.GetSpecificGravity(comp);
+                AbsoluteWeigth[comp] = proportion * volume * TargetComposition.GetConcentration(comp);
             }
         }
     }
