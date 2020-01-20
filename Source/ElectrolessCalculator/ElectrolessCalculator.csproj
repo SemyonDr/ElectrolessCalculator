@@ -94,6 +94,7 @@
     <Compile Include="View\CompositionPresenter.xaml.cs">
       <DependentUpon>CompositionPresenter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converterts\ValueUnitsToTextConveter.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -140,5 +141,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

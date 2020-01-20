@@ -10,23 +10,23 @@
         <StackPanel Orientation="Vertical">
             <local:ComponentPresenter ComponentName="Metallic Nickel" 
                                       ComponentValue="{Binding NickelMetalConcentration}" 
-                                      ValueUnits="g/l"
+                                      ValueUnits="g_l"
                                       Margin="3,3,3,0"></local:ComponentPresenter>
             <local:ComponentPresenter ComponentName="Sodium Hypophosphite" 
                                       ComponentValue="{Binding SodiumHypophosphiteConcentration}" 
-                                      ValueUnits="g/l"
+                                      ValueUnits="g_l"
                                       Margin="3,3,3,0"></local:ComponentPresenter>
             <local:ComponentPresenter ComponentName="Sodium Acetate" 
                                       ComponentValue="{Binding SodiumAcetateConcentration}" 
-                                      ValueUnits="g/l"
+                                      ValueUnits="g_l"
                                       Margin="3,3,3,0"></local:ComponentPresenter>
             <local:ComponentPresenter ComponentName="Succinic Acid" 
                                       ComponentValue="{Binding SuccinicAcidConcentration}" 
-                                      ValueUnits="g/l"
+                                      ValueUnits="g_l"
                                       Margin="3,3,3,0"></local:ComponentPresenter>
             <local:ComponentPresenter ComponentName="Lactic Acid" 
                                       ComponentValue="{Binding LacticAcidConcentration}" 
-                                      ValueUnits="g/l"
+                                      ValueUnits="g_l"
                                       Margin="3,3,3,0"></local:ComponentPresenter>
         </StackPanel>
     </Grid>

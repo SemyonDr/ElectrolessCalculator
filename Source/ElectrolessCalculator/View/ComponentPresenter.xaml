@@ -6,14 +6,33 @@
              xmlns:local="clr-namespace:ElectrolessCalculator.View"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="200">
-    <Grid>
+    <UserControl.Resources>
+        <local:ValueUnitsToTextConveter x:Key="UnitsToTextConverter"></local:ValueUnitsToTextConveter>
+    </UserControl.Resources>
+    <Grid Background="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:ComponentPresenter}, FallbackValue=White}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="25"></ColumnDefinition>
             <ColumnDefinition Width="30"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:ComponentPresenter}, Path=ComponentName}" TextAlignment="Left"></TextBlock>
-        <TextBlock Grid.Column="1" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:ComponentPresenter}, Path=ComponentValue}" TextAlignment="Right"></TextBlock>
-        <TextBlock Grid.Column="2" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:ComponentPresenter}, Path=ValueUnits}" TextAlignment="Right" FontWeight="SemiBold"></TextBlock>
+        <!--Component name-->
+        <TextBlock Grid.Column="0" 
+                   Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                        AncestorType=local:ComponentPresenter},
+                                                        Path=ComponentName, FallbackValue=NaN}"
+                   TextAlignment="Left">
+        </TextBlock>
+        <!--Value-->
+        <TextBlock Grid.Column="1" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                        AncestorType=local:ComponentPresenter},
+                                                        Path=ComponentValue, FallbackValue=NaN}" 
+                   TextAlignment="Right">
+        </TextBlock>
+        <!--Value units-->
+        <TextBlock Grid.Column="2" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                        AncestorType=local:ComponentPresenter},
+                                                        Path=ValueUnits, Converter={StaticResource ResourceKey=UnitsToTextConverter}, FallbackValue=NaN}"
+                    TextAlignment="Right" FontWeight="SemiBold">
+        </TextBlock>
     </Grid>
 </UserControl>

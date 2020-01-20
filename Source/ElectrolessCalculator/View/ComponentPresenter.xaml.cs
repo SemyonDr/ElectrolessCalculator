@@ -45,22 +45,32 @@ namespace ElectrolessCalculator.View
             DependencyProperty.Register("ComponentValue", typeof(float), typeof(ComponentPresenter), new PropertyMetadata(0.0f));
 
 
-
-        public string ValueUnits
+        public ComponentUnits ValueUnits
         {
-            get { return (string)GetValue(ValueUnitsProperty); }
+            get { return (ComponentUnits)GetValue(ValueUnitsProperty); }
             set { SetValue(ValueUnitsProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ValueUnits.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValueUnitsProperty =
-            DependencyProperty.Register("ValueUnits", typeof(string), typeof(ComponentPresenter), new PropertyMetadata(""));
+            DependencyProperty.Register("ValueUnits", typeof(ComponentUnits), typeof(ComponentPresenter), new PropertyMetadata(ComponentUnits.kg));
 
-
-
+        
         public ComponentPresenter()
         {
             InitializeComponent();
+        }
+
+        public enum ComponentUnits
+        {
+            kg,
+            g,
+            l,
+            ml,
+            kg_l,
+            g_l,
+            l_l,
+            ml_l
         }
     }
 }
