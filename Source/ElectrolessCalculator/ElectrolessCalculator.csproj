@@ -70,9 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\ComponentPresenter.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\CompositionPresenter.xaml">
       <SubType>Designer</SubType>
@@ -88,9 +88,7 @@
     </Compile>
     <Compile Include="ViewModel\SolutionComposition_ViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\ComponentPresenter.xaml.cs">
-      <DependentUpon>ComponentPresenter.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="View\ComponentPresenter.cs" />
     <Compile Include="View\CompositionPresenter.xaml.cs">
       <DependentUpon>CompositionPresenter.xaml</DependentUpon>
     </Compile>

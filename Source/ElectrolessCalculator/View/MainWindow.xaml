@@ -53,11 +53,48 @@
 
         <!--Controls-->
         <!--============-->
-        <Button Grid.Row="2" Grid.Column="1" Width="50" HorizontalAlignment="Left" Margin="3,3,3,3">Edit</Button>
+        <Button x:Name="TargetCompositionEditButton" 
+                Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="3,3,3,3"
+                Click="TargetCompositionEdit_Click">Edit</Button>
+        <Rectangle Fill="Red" Grid.Column="3" Grid.Row="2" Visibility="{Binding ElementName=TargetCompositionPresenter, Path=EditMode}"></Rectangle>
+        <CheckBox x:Name="TestCheckBox" Grid.Row="2" Grid.Column="1" IsChecked="{Binding ElementName=TargetCompositionPresenter, Path=EditMode}"></CheckBox>
+        <local:ComponentPresenter Grid.Row="3" Grid.Column="5" EditMode="{Binding ElementName=TargetCompositionPresenter, Path=EditMode}"></local:ComponentPresenter>
 
         <!--Composition presenters-->
         <!--============-->
-        <local:CompositionPresenter x:Name="TargetCompositionPresenter" Grid.Row="3" Grid.Column="1"></local:CompositionPresenter>
+        <!--Target composition-->
+        <local:CompositionPresenter x:Name="TargetCompositionPresenter"
+                                    Grid.Row="3" Grid.Column="1">
+            <local:CompositionPresenter.Components>
+                <local:ComponentPresenter ComponentName="Metallic Nickel"
+                                      ComponentValue="{Binding NickelMetalConcentration, FallbackValue=0}" 
+                                      ValueUnits="g_l"
+                                      BindEditModeToCompositionPresenter="True"
+                                      Margin="3,3,3,0"
+                                          EditMode="{Binding ElementName=TestCheckBox, Path=IsChecked}"></local:ComponentPresenter>
+                <local:ComponentPresenter ComponentName="Sodium Hypophosphite" 
+                                      ComponentValue="{Binding SodiumHypophosphiteConcentration, FallbackValue=0}" 
+                                      ValueUnits="g_l"
+                                      BindEditModeToCompositionPresenter="True"
+                                      Margin="3,3,3,0"></local:ComponentPresenter>
+                <local:ComponentPresenter ComponentName="Sodium Acetate" 
+                                      ComponentValue="{Binding SodiumAcetateConcentration, FallbackValue=0}" 
+                                      ValueUnits="g_l"
+                                      BindEditModeToCompositionPresenter="True"
+                                      Margin="3,3,3,0"></local:ComponentPresenter>
+                <local:ComponentPresenter ComponentName="Succinic Acid" 
+                                      ComponentValue="{Binding SuccinicAcidConcentration, FallbackValue=0}" 
+                                      ValueUnits="g_l"
+                                      BindEditModeToCompositionPresenter="True"
+                                      Margin="3,3,3,0"></local:ComponentPresenter>
+                <local:ComponentPresenter ComponentName="Lactic Acid"
+                                      ComponentValue="{Binding LacticAcidConcentration, FallbackValue=0}" 
+                                      ValueUnits="g_l"
+                                      BindEditModeToCompositionPresenter="True"
+                                      Margin="3,3,3,0"></local:ComponentPresenter>
+            </local:CompositionPresenter.Components>
+        </local:CompositionPresenter>
+        
         <local:CompositionPresenter x:Name="CurrentCompositionPresenter" Grid.Row="3" Grid.Column="3"></local:CompositionPresenter>
 
         <!--Bottom colors-->

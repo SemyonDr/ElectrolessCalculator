@@ -24,5 +24,14 @@ namespace ElectrolessCalculator.View
         {
             InitializeComponent();
         }
+
+        private void TargetCompositionEdit_Click(object sender, RoutedEventArgs e)
+        {
+            CompositionPresenter compositionPresenter = (CompositionPresenter)this.FindName("TargetCompositionPresenter");
+            if (compositionPresenter != null && compositionPresenter.EditMode != true)
+            {
+                compositionPresenter.EditMode = true;
+            }
+        }
     }
 }

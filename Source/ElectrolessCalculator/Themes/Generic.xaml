@@ -1,0 +1,72 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ElectrolessCalculator"
+    xmlns:view="clr-namespace:ElectrolessCalculator.View">
+
+
+    <Style TargetType="{x:Type view:ComponentPresenter}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type view:ComponentPresenter}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid Background="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=view:ComponentPresenter}, FallbackValue=White}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="25"></ColumnDefinition>
+                                <ColumnDefinition Width="30"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <!--Component name-->
+                            <TextBlock 
+                                x:Name="ComponentNameTextBlock"
+                                Grid.Column="0" 
+                                TextAlignment="Left"
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType=view:ComponentPresenter},
+                                                                    Path=ComponentName, FallbackValue=NaN}"/>
+
+                            <!--Display Value-->
+                            <TextBlock 
+                                x:Name="DisplayValueTextBlock"
+                                Grid.Column="1" 
+                                TextAlignment="Right"
+                                Visibility="Visible"
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType=view:ComponentPresenter},
+                                                                    Path=ComponentValue, FallbackValue=NaN}" />
+
+                            <!--Edit Value-->
+                            <TextBox 
+                                x:Name="EditValueTextBox" 
+                                Visibility="Hidden" 
+                                Grid.Column="1" 
+                                TextAlignment="Right" 
+                                VerticalAlignment="Top"
+                                FontSize="12" 
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType=view:ComponentPresenter},
+                                                                    Path=ValueForEditing, FallbackValue=NaN}"/>
+
+                            <!--Value units-->
+                            <TextBlock 
+                                x:Name="UnitsTextBlock"
+                                Grid.Column="2"
+                                TextAlignment="Right"
+                                FontWeight="SemiBold"
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType=view:ComponentPresenter},
+                                                                    Path=ValueUnits, Converter={StaticResource ResourceKey=UnitsToTextConverter}, FallbackValue=NaN}"/>
+
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--Component Presenter Style-->
+    
+    
+</ResourceDictionary>
