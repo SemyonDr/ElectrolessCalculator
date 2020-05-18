@@ -12,29 +12,29 @@ namespace ElectrolessCalculator.View
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            ComponentPresenter.ComponentUnits CU = (ComponentPresenter.ComponentUnits)value;
+            Model.ComponentUnits CU = (Model.ComponentUnits)value;
 
             switch (CU)
             {
-                case ComponentPresenter.ComponentUnits.g:
+                case Model.ComponentUnits.g:
                     return "g";
-                case ComponentPresenter.ComponentUnits.kg:
+                case Model.ComponentUnits.kg:
                     return "kg";
-                case ComponentPresenter.ComponentUnits.l:
+                case Model.ComponentUnits.l:
                     return "L";
-                case ComponentPresenter.ComponentUnits.ml:
+                case Model.ComponentUnits.ml:
                     return "mL";
-                case ComponentPresenter.ComponentUnits.g_l:
+                case Model.ComponentUnits.g_l:
                     return "g/L";
-                case ComponentPresenter.ComponentUnits.kg_l:
+                case Model.ComponentUnits.kg_l:
                     return "kg/L";
-                case ComponentPresenter.ComponentUnits.l_l:
+                case Model.ComponentUnits.l_l:
                     return "L/L";
-                case ComponentPresenter.ComponentUnits.ml_l:
+                case Model.ComponentUnits.ml_l:
                     return "mL/L";
             }
 
-            return ComponentPresenter.ComponentUnits.kg;
+            return Model.ComponentUnits.kg;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

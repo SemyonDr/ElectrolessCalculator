@@ -67,7 +67,8 @@
                                     Grid.Row="3" Grid.Column="1"
                                     EditMode="{Binding ElementName=TestCheckBox, Path=IsChecked}">
             <local:CompositionPresenter.Components>
-                <local:ComponentPresenter ComponentName="Metallic Nickel"
+                <local:ComponentPresenter 
+                                      ComponentName="Metallic Nickel"
                                       ComponentValue="{Binding NickelMetalConcentration, FallbackValue=0}" 
                                       ValueUnits="g_l"
                                       BindEditModeToCompositionPresenter="True"

@@ -68,14 +68,14 @@ namespace ElectrolessCalculator.View
         /// Units used to display the value.
         /// Dependency property.
         /// </summary>
-        public ComponentUnits ValueUnits
+        public Model.ComponentUnits ValueUnits
         {
-            get { return (ComponentUnits)GetValue(ValueUnitsProperty); }
+            get { return (Model.ComponentUnits)GetValue(ValueUnitsProperty); }
             set { SetValue(ValueUnitsProperty, value); }
         }
 
         public static readonly DependencyProperty ValueUnitsProperty =
-            DependencyProperty.Register("ValueUnits", typeof(ComponentUnits), typeof(ComponentPresenter), new PropertyMetadata(ComponentUnits.kg));
+            DependencyProperty.Register("ValueUnits", typeof(Model.ComponentUnits), typeof(ComponentPresenter), new PropertyMetadata(Model.ComponentUnits.kg));
 
         //---------------------------------------------------------------------------------------------------------------
 

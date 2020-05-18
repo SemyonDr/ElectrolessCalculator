@@ -26,7 +26,10 @@
                                 x:Name="ComponentNameTextBlock"
                                 Grid.Column="0" 
                                 TextAlignment="Left"
-                                Text="{Binding Name, FallbackValue=NaN}"/>
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType=view:ComponentPresenter},
+                                                                    Path=ComponentName, 
+                                                                    FallbackValue=NaN}"/>
 
                             <!--Display Value-->
                             <TextBlock 
@@ -34,7 +37,10 @@
                                 Grid.Column="1" 
                                 TextAlignment="Right"
                                 Visibility="Visible"
-                                Text="{Binding Value, FallbackValue=0.0f}" />
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType=view:ComponentPresenter},
+                                                                    Path=ComponentValue, 
+                                                                    FallbackValue=0.0f}" />
 
                             <!--Edit Value-->
                             <TextBox 
@@ -44,7 +50,10 @@
                                 TextAlignment="Right" 
                                 VerticalAlignment="Top"
                                 FontSize="12" 
-                                Text="{Binding EditValue, FallbackValue=0.0f}"/>
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType=view:ComponentPresenter},
+                                                                    Path=ValueForEditing, 
+                                                                    FallbackValue=0.0f}"/>
 
                             <!--Value units-->
                             <TextBlock 
@@ -52,7 +61,10 @@
                                 Grid.Column="2"
                                 TextAlignment="Right"
                                 FontWeight="SemiBold"
-                                Text="{Binding Units, Converter={StaticResource ResourceKey=UnitsToTextConverter}, FallbackValue=NaN}"/>
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType=view:ComponentPresenter},
+                                                                    Path=ValueUnits, Converter={StaticResource ResourceKey=UnitsToTextConverter},
+                                                                    FallbackValue=NaN}"/>
 
                         </Grid>
                     </Border>
