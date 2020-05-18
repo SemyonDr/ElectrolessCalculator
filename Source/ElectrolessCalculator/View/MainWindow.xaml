@@ -57,21 +57,22 @@
                 Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="3,3,3,3"
                 Click="TargetCompositionEdit_Click">Edit</Button>
         <Rectangle Fill="Red" Grid.Column="3" Grid.Row="2" Visibility="{Binding ElementName=TargetCompositionPresenter, Path=EditMode}"></Rectangle>
-        <CheckBox x:Name="TestCheckBox" Grid.Row="2" Grid.Column="1" IsChecked="{Binding ElementName=TargetCompositionPresenter, Path=EditMode}"></CheckBox>
-        <local:ComponentPresenter Grid.Row="3" Grid.Column="5" EditMode="{Binding ElementName=TargetCompositionPresenter, Path=EditMode}"></local:ComponentPresenter>
+        <CheckBox x:Name="TestCheckBox" Grid.Row="2" Grid.Column="1"></CheckBox>
+        <local:ComponentPresenter Grid.Row="3" Grid.Column="5" EditMode="{Binding ElementName=TestCheckBox, Path=IsChecked}"></local:ComponentPresenter>
 
         <!--Composition presenters-->
         <!--============-->
         <!--Target composition-->
         <local:CompositionPresenter x:Name="TargetCompositionPresenter"
-                                    Grid.Row="3" Grid.Column="1">
+                                    Grid.Row="3" Grid.Column="1"
+                                    EditMode="{Binding ElementName=TestCheckBox, Path=IsChecked}">
             <local:CompositionPresenter.Components>
                 <local:ComponentPresenter ComponentName="Metallic Nickel"
                                       ComponentValue="{Binding NickelMetalConcentration, FallbackValue=0}" 
                                       ValueUnits="g_l"
                                       BindEditModeToCompositionPresenter="True"
                                       Margin="3,3,3,0"
-                                          EditMode="{Binding ElementName=TestCheckBox, Path=IsChecked}"></local:ComponentPresenter>
+                                          EditMode="{Binding ElementName=TargetCompositionPresenter, Path=EditMode}"></local:ComponentPresenter>
                 <local:ComponentPresenter ComponentName="Sodium Hypophosphite" 
                                       ComponentValue="{Binding SodiumHypophosphiteConcentration, FallbackValue=0}" 
                                       ValueUnits="g_l"

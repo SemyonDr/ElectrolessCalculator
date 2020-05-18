@@ -4,11 +4,13 @@
     xmlns:local="clr-namespace:ElectrolessCalculator"
     xmlns:view="clr-namespace:ElectrolessCalculator.View">
 
-
     <Style TargetType="{x:Type view:ComponentPresenter}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:ComponentPresenter}">
+                    <ControlTemplate.Resources>
+                        <view:ValueUnitsToTextConveter x:Key="UnitsToTextConverter"/>
+                    </ControlTemplate.Resources>
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
@@ -26,7 +28,8 @@
                                 TextAlignment="Left"
                                 Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                                                                     AncestorType=view:ComponentPresenter},
-                                                                    Path=ComponentName, FallbackValue=NaN}"/>
+                                                                    Path=ComponentName, 
+                                                                    FallbackValue=NaN}"/>
 
                             <!--Display Value-->
                             <TextBlock 
@@ -36,7 +39,8 @@
                                 Visibility="Visible"
                                 Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                                                                     AncestorType=view:ComponentPresenter},
-                                                                    Path=ComponentValue, FallbackValue=NaN}" />
+                                                                    Path=ComponentValue, 
+                                                                    FallbackValue=NaN}" />
 
                             <!--Edit Value-->
                             <TextBox 
@@ -48,7 +52,8 @@
                                 FontSize="12" 
                                 Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                                                                     AncestorType=view:ComponentPresenter},
-                                                                    Path=ValueForEditing, FallbackValue=NaN}"/>
+                                                                    Path=ValueForEditing, 
+                                                                    FallbackValue=NaN}"/>
 
                             <!--Value units-->
                             <TextBlock 
@@ -58,7 +63,8 @@
                                 FontWeight="SemiBold"
                                 Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
                                                                     AncestorType=view:ComponentPresenter},
-                                                                    Path=ValueUnits, Converter={StaticResource ResourceKey=UnitsToTextConverter}, FallbackValue=NaN}"/>
+                                                                    Path=ValueUnits, Converter={StaticResource ResourceKey=UnitsToTextConverter},
+                                                                    FallbackValue=NaN}"/>
 
                         </Grid>
                     </Border>

@@ -17,10 +17,11 @@ using System.ComponentModel;
 namespace ElectrolessCalculator.View
 {
     /// <summary>
-    /// Interaction logic for CompositionPresenter.xaml
+    /// This control represents a solution composition by listing solution components as ComponentPresenter UI Elements.
     /// </summary>
     public partial class CompositionPresenter : UserControl, INotifyPropertyChanged
     {
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged(string propertyName)
         {
@@ -30,29 +31,53 @@ namespace ElectrolessCalculator.View
             }
         }
 
+        #region INITIALIZATION
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        public CompositionPresenter()
-        {
+        public CompositionPresenter() {
             SetValue(ComponentsProperty, new List<ComponentPresenter>()); //Components list initialization
-
-            //Handler for Loaded event, when all Templates have been applied and all necessary elements were created and can be found for future reference.
             this.Loaded += OnLoaded;
             InitializeComponent();
         }
+        //---------------------------------------------------------------------------------------------------------------
+
 
         /// <summary>
-        /// After loading this handler will find and bind ExtendableDataGrid parts.
+        /// This handler is used for adding ComponentPresenter controls into visual tree and setting their properties.
         /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            foreach (ComponentPresenter component in Components)
-            { 
-
-                this.MainPanel.Children.Add(component);
+        private void OnLoaded(object sender, RoutedEventArgs e) {
+            foreach (ComponentPresenter component in Components) {
+                this.MainPanel.Children.Add(component);             //Adding ComponentPresenter control to StackPanel of this Composition Presenter
+                component.ParentCompositionPresenter = this;        //Setting this Presenter as ComponentPresenter parent
             }
         }
+        //---------------------------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region COMPONENTS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// List of components, which this presenter holds.
+        /// </summary>
+        public List<ComponentPresenter> Components {
+            get { return (List<ComponentPresenter>)GetValue(ComponentsProperty); }
+            set { SetValue(ComponentsProperty, value); }
+        }
+
+        public static readonly DependencyProperty ComponentsProperty =
+            DependencyProperty.Register("Components", typeof(List<ComponentPresenter>), typeof(CompositionPresenter), new PropertyMetadata(new List<ComponentPresenter>()));
+        //---------------------------------------------------------------------------------------------------------------
+
+        #endregion
 
         public bool EditMode
         {
@@ -68,23 +93,5 @@ namespace ElectrolessCalculator.View
         {
             //((CompositionPresenter)d).NotifyPropertyChanged("EditMode");
         }
-
-        /// <summary>
-        /// List of components, which this presenter holds.
-        /// </summary>
-        public List<ComponentPresenter> Components
-        {
-            get { return (List<ComponentPresenter>)GetValue(ComponentsProperty); }
-            set { SetValue(ComponentsProperty, value); }
-        }
-
-        public static readonly DependencyProperty ComponentsProperty =
-            DependencyProperty.Register("Components",
-                                        typeof(List<ComponentPresenter>),
-                                        typeof(CompositionPresenter),
-                                        new PropertyMetadata(new List<ComponentPresenter>()));
-
-
-
     }
 }

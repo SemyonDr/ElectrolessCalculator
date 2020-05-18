@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace ElectrolessCalculator.View
 {
     /// <summary>
-    /// This control represents a row representing a solution component and used is used as a part of Solution Presenter.
+    /// This control represents a row representing a solution component and is used as a part of SolutionPresenter.
     /// See default template in Generic.xaml
     /// </summary>
     [TemplateVisualState(Name="DisplayState", GroupName="EditStates")]
@@ -94,6 +94,18 @@ namespace ElectrolessCalculator.View
             DependencyProperty.Register("ComponentValue", typeof(float), typeof(ComponentPresenter), new PropertyMetadata(0.0f));
 
         //---------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Buffer value property used for editing.
+        /// </summary>
+        public float ValueForEditing {
+            get { return (float)GetValue(ValueForEditingProperty); }
+            set { SetValue(ValueForEditingProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ValueForEditing.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ValueForEditingProperty =
+            DependencyProperty.Register("ValueForEditing", typeof(float), typeof(ComponentPresenter), new PropertyMetadata(0.0f));
         #endregion
 
         #region EDIT MODE
@@ -159,13 +171,13 @@ namespace ElectrolessCalculator.View
 
         #endregion
 
-        #region COMPOSITION PRESENTER
+        #region COMPOSITION PRESENTER BINDING
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
 
         /// <summary>
-        /// This property will be set by composition presenter.
+        /// This property will be set by the composition presenter.
         /// </summary>
         public CompositionPresenter ParentCompositionPresenter { get; set; }
 
@@ -184,38 +196,30 @@ namespace ElectrolessCalculator.View
 
         private void BeginEditing()
         {
-            ValueTextBlock.Visibility = Visibility.Hidden;
-            EditValueTextBox.Text = ComponentValue.ToString();
-            EditValueTextBox.Visibility = Visibility.Visible;
+            //ValueTextBlock.Visibility = Visibility.Hidden;
+            //EditValueTextBox.Text = ComponentValue.ToString();
+            //EditValueTextBox.Visibility = Visibility.Visible;
         }
 
         private void FinishEditing()
         {
-            if (true /*Add "cancel editing" argument check here*/)
-            {//Save edited value
-                float parsedValue;
-                if (float.TryParse(EditValueTextBox.Text, out parsedValue))
-                {
-                    ComponentValue = parsedValue;
-                }
-                EditValueTextBox.Visibility = Visibility.Hidden;
-                ValueTextBlock.Visibility = Visibility.Visible;
-            }
-            else
-            {//Cancel
+            //if (true /*Add "cancel editing" argument check here*/)
+            //{//Save edited value
+            //    float parsedValue;
+            //    if (float.TryParse(EditValueTextBox.Text, out parsedValue))
+            //    {
+            //        ComponentValue = parsedValue;
+            //    }
+            //    EditValueTextBox.Visibility = Visibility.Hidden;
+            //    ValueTextBlock.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{//Cancel
 
-            }
+            //}
         }
 
-        public float ValueForEditing
-        {
-            get { return (float)GetValue(ValueForEditingProperty); }
-            set { SetValue(ValueForEditingProperty, value); }
-        }
 
-        // Using a DependencyProperty as the backing store for ValueForEditing.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ValueForEditingProperty =
-            DependencyProperty.Register("ValueForEditing", typeof(float), typeof(ComponentPresenter), new PropertyMetadata(0.0f));
 
 
         public enum ComponentUnits

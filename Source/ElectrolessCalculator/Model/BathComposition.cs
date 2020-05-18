@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.Model
 {
+    /// <summary>
+    /// This class represents solution composition by list of absolute weigths of its components
+    /// and a bath volume which allows to calculate specific gravity and other relative values.
+    /// </summary>
     public class SolutionComposition
     {
+        //Total bath volume, including water.
         private float volume;
-
+        //Components dictionary
         private Dictionary<BathComponents, float> AbsoluteWeigth;
 
         public float Volume {
