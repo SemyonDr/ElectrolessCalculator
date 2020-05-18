@@ -86,8 +86,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\ComponentPresenter_ViewModel.cs" />
+    <Compile Include="Model\Components\ComponentInfo.cs" />
+    <Compile Include="Model\Components\ComponentsInformation.cs" />
+    <Compile Include="ViewModel\SolutionComponent_ViewModel.cs" />
     <Compile Include="ViewModel\SolutionComposition_ViewModel.cs" />
+    <Compile Include="Model\ComponentUnitsEnum.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\ComponentPresenter.cs" />
     <Compile Include="View\CompositionPresenter.xaml.cs">
@@ -100,8 +103,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\BathComposition.cs" />
-    <Compile Include="Model\ComponentsEnum.cs" />
+    <Compile Include="Model\SolutionComposition.cs" />
+    <Compile Include="Model\Components\ComponentsEnum.cs" />
     <Compile Include="Model\NickelConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

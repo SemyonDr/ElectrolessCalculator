@@ -1,8 +1,7 @@
 ﻿namespace ElectrolessCalculator.Model
 {
-    public enum BathComponents
+    public enum SolutionComponents
     {
-        NickelMetal,
         NickelSulfate,
         SodiumHypophosphite,
         SodiumAcetate,

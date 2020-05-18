@@ -222,16 +222,6 @@ namespace ElectrolessCalculator.View
 
 
 
-        public enum ComponentUnits
-        {
-            kg,
-            g,
-            l,
-            ml,
-            kg_l,
-            g_l,
-            l_l,
-            ml_l
-        }
+
     }
 }
