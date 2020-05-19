@@ -31,71 +31,44 @@ namespace ElectrolessCalculator.Model
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SolutionComposition(float volume, ComponentsInformation info)
-        {
+        public SolutionComposition(float volume, ComponentsInformation info) {
             this.info = info;
-
             this.volume = volume;
             AbsoluteWeigth = new Dictionary<SolutionComponents, float>();
-            AbsoluteWeigth.Add(SolutionComponents.NickelSulfate, 0);
-            AbsoluteWeigth.Add(SolutionComponents.SodiumHypophosphite, 0);
-            AbsoluteWeigth.Add(SolutionComponents.SodiumAcetate, 0);
-            AbsoluteWeigth.Add(SolutionComponents.SuccinicAcid, 0);
-            AbsoluteWeigth.Add(SolutionComponents.LacticAcid, 0);
+        }
+
+        public void AddComponent(SolutionComponents component, float value, ComponentUnits units) {
+            switch (component) {
+                case SolutionComponents.NickelMetal: { 
+                        float metal_kg = UnitsConverter.ConvertToAbsolute(value, volume, units, info.GetDensity(SolutionComponents.NickelMetal));
+                        float salt_kg = NickelConverter.ConvertMetalToSalt(metal_kg);
+                        AbsoluteWeigth.Add(SolutionComponents.NickelMetal, metal_kg);
+                        AbsoluteWeigth.Add(SolutionComponents.NickelSulfate, salt_kg);
+                        return;
+                    }
+                case SolutionComponents.NickelSulfate: { 
+                        float salt_kg = UnitsConverter.ConvertToAbsolute(value, volume, units, info.GetDensity(SolutionComponents.NickelSulfate));
+                        float metal_kg = NickelConverter.ConvertSaltToMetal(salt_kg);
+                        AbsoluteWeigth.Add(SolutionComponents.NickelMetal, metal_kg);
+                        AbsoluteWeigth.Add(SolutionComponents.NickelSulfate, salt_kg);
+                        return;
+                    }
+                default: {
+                        AbsoluteWeigth.Add(
+                            component,
+                            UnitsConverter.ConvertToAbsolute(value, volume, units, info.GetDensity(component))
+                            );
+                        break;
+                    }
+            }
         }
 
         public float GetComponentValue(SolutionComponents component, ComponentUnits units) {
-            switch (units) {
-                case ComponentUnits.g:
-                    return AbsoluteWeigth[component] * 1000;
-                case ComponentUnits.g_l:
-                    return (AbsoluteWeigth[component] * 1000) / volume;
-                case ComponentUnits.kg:
-                    return AbsoluteWeigth[component];
-                case ComponentUnits.kg_l:
-                    return AbsoluteWeigth[component] / volume;
-                case ComponentUnits.l:
-                    return AbsoluteWeigth[component] / info.GetDensity(component);
-                case ComponentUnits.l_l:
-                    return AbsoluteWeigth[component] / (info.GetDensity(component) * volume);
-                case ComponentUnits.ml:
-                    return AbsoluteWeigth[component] * 1000 / info.GetDensity(component);
-                case ComponentUnits.ml_l:
-                    return AbsoluteWeigth[component] * 1000/ (info.GetDensity(component) * volume);
-                default:
-                    return 0f;
-            }
+            return UnitsConverter.ConvertFromAbsolute(AbsoluteWeigth[component], volume, units, info.GetDensity(component));
         }
 
         public void SetComponentValue(SolutionComponents component, float value, ComponentUnits units) {
-            switch (units) {
-                case ComponentUnits.g:
-                    AbsoluteWeigth[component] = value / 1000;
-                    break;
-                case ComponentUnits.g_l:
-                    AbsoluteWeigth[component] = value * volume / 1000;
-                    break;
-                case ComponentUnits.kg:
-                    AbsoluteWeigth[component] = value;
-                    break;
-                case ComponentUnits.kg_l:
-                    AbsoluteWeigth[component] = value * volume;
-                    break;
-                case ComponentUnits.l:
-                    AbsoluteWeigth[component] = value * info.GetDensity(component);
-                    break;
-                case ComponentUnits.l_l:
-                    AbsoluteWeigth[component] = value * volume * info.GetDensity(component);
-                    break;
-                case ComponentUnits.ml:
-                    AbsoluteWeigth[component] = value * info.GetDensity(component) / 1000;
-                    break;
-                case ComponentUnits.ml_l:
-                    AbsoluteWeigth[component] = value * info.GetDensity(component) * volume / 1000;
-                    break;
-                default:
-                    break;
-            }
+            AbsoluteWeigth[component] = UnitsConverter.ConvertToAbsolute(value, volume, units, info.GetDensity(component));
         }
     }
 }

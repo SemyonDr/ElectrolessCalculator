@@ -2,6 +2,7 @@
 {
     public enum SolutionComponents
     {
+        NickelMetal,
         NickelSulfate,
         SodiumHypophosphite,
         SodiumAcetate,

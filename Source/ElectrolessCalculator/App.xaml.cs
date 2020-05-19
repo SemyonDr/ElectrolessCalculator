@@ -27,7 +27,7 @@ namespace ElectrolessCalculator
             View.MainWindow mainWindow = new View.MainWindow();
 
             //Setting data context
-            mainWindow.TargetCompositionPresenter.DataContext = TargetComposition_VM;
+            mainWindow.TargetComposition.DataContext = TargetComposition_VM;
 
             
             mainWindow.Show();
@@ -35,6 +35,13 @@ namespace ElectrolessCalculator
 
         private Model.ComponentsInformation LoadComponentsInfo() {
             Model.ComponentsInformation info = new Model.ComponentsInformation();
+            Model.ComponentInfo nickel_metal_info = new Model.ComponentInfo(
+                "Nickel Metal",
+                "Nickel",
+                "Ni",
+                8.908f,
+                8.908f
+                );
             Model.ComponentInfo nickel_info = new Model.ComponentInfo(
                 "Nickel(II) Sulfate Hexahydrate",
                 "Nickel Sulfate",
@@ -48,8 +55,8 @@ namespace ElectrolessCalculator
                 0.8f,
                 0.8f);
             Model.ComponentInfo acetate_info = new Model.ComponentInfo(
-                "Sodium Acetate",
                 "Sodium Acetate Trihydrate",
+                "Sodium Acetate",
                 "C2H3NaO2(H20)3",
                 1.45f,
                 1.45f);
@@ -66,6 +73,7 @@ namespace ElectrolessCalculator
                 1.206f,
                 1.206f);
 
+            info.AddComponentInfo(Model.SolutionComponents.NickelMetal, nickel_metal_info);
             info.AddComponentInfo(Model.SolutionComponents.NickelSulfate, nickel_info);
             info.AddComponentInfo(Model.SolutionComponents.SodiumHypophosphite, hypo_info);
             info.AddComponentInfo(Model.SolutionComponents.SodiumAcetate, acetate_info);
@@ -77,11 +85,11 @@ namespace ElectrolessCalculator
 
         private Model.SolutionComposition LoadTargerComposition(Model.ComponentsInformation info) {
             Model.SolutionComposition TargetComposition = new Model.SolutionComposition(1, info);
-            TargetComposition.SetComponentValue(Model.SolutionComponents.NickelSulfate, Model.NickelConverter.ConvertMetalToSalt(6), Model.ComponentUnits.g_l);
-            TargetComposition.SetComponentValue(Model.SolutionComponents.SodiumHypophosphite, 25, Model.ComponentUnits.g_l);
-            TargetComposition.SetComponentValue(Model.SolutionComponents.SodiumAcetate, 10, Model.ComponentUnits.g_l);
-            TargetComposition.SetComponentValue(Model.SolutionComponents.SuccinicAcid, 15, Model.ComponentUnits.g_l);
-            TargetComposition.SetComponentValue(Model.SolutionComponents.LacticAcid, 10, Model.ComponentUnits.ml_l);
+            TargetComposition.AddComponent(Model.SolutionComponents.NickelMetal, 6, Model.ComponentUnits.g_l);
+            TargetComposition.AddComponent(Model.SolutionComponents.SodiumHypophosphite, 25, Model.ComponentUnits.g_l);
+            TargetComposition.AddComponent(Model.SolutionComponents.SodiumAcetate, 10, Model.ComponentUnits.g_l);
+            TargetComposition.AddComponent(Model.SolutionComponents.SuccinicAcid, 15, Model.ComponentUnits.g_l);
+            TargetComposition.AddComponent(Model.SolutionComponents.LacticAcid, 10, Model.ComponentUnits.ml_l);
 
             return TargetComposition;
         }

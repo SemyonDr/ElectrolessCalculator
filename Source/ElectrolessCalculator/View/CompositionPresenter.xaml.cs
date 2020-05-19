@@ -19,7 +19,7 @@ namespace ElectrolessCalculator.View
     /// <summary>
     /// This control represents a solution composition by listing solution components as ComponentPresenter UI Elements.
     /// </summary>
-    public partial class CompositionPresenter : UserControl, INotifyPropertyChanged
+    public partial class CompositionPresenter : ItemsControl
     {
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -2,8 +2,59 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ElectrolessCalculator"
+             xmlns:view="clr-namespace:ElectrolessCalculator.View"
              Startup="App_Startup">
     <Application.Resources>
-         
+        <DataTemplate x:Key="SolutionComponentDataTemplate">
+            <DataTemplate.Resources>
+                <view:ValueUnitsToTextConveter x:Key="UnitsToTextConverter"/>
+            </DataTemplate.Resources>
+            <Border>
+                <Grid Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="25"></ColumnDefinition>
+                        <ColumnDefinition Width="30"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Component name-->
+                    <TextBlock 
+                                x:Name="ComponentNameTextBlock"
+                                Grid.Column="0" 
+                                TextAlignment="Left"
+                                Text="{Binding Name, FallbackValue=NaN}"/>
+
+                    <!--Display Value-->
+                    <TextBlock 
+                                x:Name="DisplayValueTextBlock"
+                                Grid.Column="1" 
+                                TextAlignment="Right"
+                                Visibility="Visible"
+                                Text="{Binding Value, StringFormat=F1,
+                                                                    FallbackValue=0.0f}" />
+
+                    <!--Edit Value-->
+                    <TextBox 
+                                x:Name="EditValueTextBox" 
+                                Visibility="Hidden" 
+                                Grid.Column="1" 
+                                TextAlignment="Right" 
+                                VerticalAlignment="Top"
+                                FontSize="12" 
+                                Text="{Binding EditValue, 
+                                                                    FallbackValue=0.0f}"/>
+
+                    <!--Value units-->
+                    <TextBlock 
+                                x:Name="UnitsTextBlock"
+                                Grid.Column="2"
+                                TextAlignment="Right"
+                                FontWeight="SemiBold"
+                                Text="{Binding Units, Converter={StaticResource ResourceKey=UnitsToTextConverter},
+                                                                    FallbackValue=NaN}"/>
+
+                </Grid>
+            </Border>
+        </DataTemplate>
     </Application.Resources>
 </Application>
