@@ -8,62 +8,97 @@ namespace ElectrolessCalculator.ViewModel
 {
     public class Solution_ViewModel : ViewModelBase
     {
+        #region PRIVATE FIELDS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        //Fields backing public properties
         private bool editMode;
-
-        public bool EditMode {
-            get { return editMode; }
-            set {
-                editMode = value;
-                NotifyPropertyChanged("EditMode"); }}
-
-        public RelayCommand StartEditCommand { get; internal set; }
-
         private Model.Solution solution;
+        #endregion
 
+        #region SOLUTION PROPERTIES
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Model object of the solution represented.
+        /// </summary>
         public Model.Solution Solution {
             get { return solution; }
             set {
                 solution = value;
                 NotifyPropertyChanged("Components");
-                NotifyPropertyChanged("TotalVolume");
-            }}
+                NotifyPropertyChanged("TotalVolume"); }}
 
+        /// <summary>
+        /// View model components list.
+        /// </summary>
         public List<Component_ViewModel> Components { get; set; }
 
+        /// <summary>
+        /// Bath volume.
+        /// </summary>
         public float TotalVolume {
-            get {
-                return solution.TotalVolume; }
-            set {
-                solution.TotalVolume = value; }}
+            get { return solution.TotalVolume; }
+            set { solution.TotalVolume = value; }}
 
+        #endregion
+
+        #region INITIALIZATION
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="solution"></param>
-        public Solution_ViewModel(Model.Solution solution) {
+        public Solution_ViewModel(Model.Solution solution)
+        {
             EditMode = false;
             StartEditCommand = new RelayCommand(StartEditing, CanStartEditing);
-
 
             this.solution = solution;
             Components = new List<Component_ViewModel>();
 
-            foreach (Model.Component c in solution.Components) {
+            foreach (Model.Component c in solution.Components)
+            {
                 Component_ViewModel c_vm = new Component_ViewModel(c, Model.ComponentUnits.g_l, this);
-                if (c.ShortName == "Nickel Sulfate") {
+                if (c.ShortName == "Nickel Sulfate")
+                {
                     NickelMetal_ViewModel ni_vm = new NickelMetal_ViewModel(c_vm, Model.ComponentUnits.g_l, this);
                     Components.Add(ni_vm);
                 }
                 Components.Add(c_vm);
             }
         }
+        #endregion
+
+        #region EDITING
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        public RelayCommand StartEditCommand { get; internal set; }
+
+        /// <summary>
+        /// This property sets edit mode on or off. (true/false)
+        /// Can be changed only by executing ~Edit commands.
+        /// </summary>
+        public bool EditMode {
+            get { return editMode; }
+            private set {
+                editMode = value;
+                NotifyPropertyChanged("EditMode"); }}
 
         private void StartEditing(object parameter) {
             if (!EditMode) { 
                 EditMode = true;
                 foreach (Component_ViewModel c in Components) {
-                    c.EditMode = true;
+                    c.EditMode = true;  //Setting edit mode for component
                     c.EditValue = c.Value;
                 }
             }
@@ -72,5 +107,7 @@ namespace ElectrolessCalculator.ViewModel
         private bool CanStartEditing(object parameter) {
             return !EditMode;
         }
+
+        #endregion
     }
 }
