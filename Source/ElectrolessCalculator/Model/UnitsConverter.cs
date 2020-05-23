@@ -9,11 +9,11 @@ namespace ElectrolessCalculator.Model
     public static class UnitsConverter
     {
         public static float Convert(float value, float bathVolume, ComponentUnits oldUnits, ComponentUnits newUnits, float componentDensity) {
-            float absolute = ConvertToAbsolute(value, bathVolume, oldUnits, componentDensity);
-            return ConvertFromAbsolute(value, bathVolume, newUnits, componentDensity);
+            float absolute = ConvertToKg(value, bathVolume, oldUnits, componentDensity);
+            return ConvertFromKg(value, bathVolume, newUnits, componentDensity);
         }
 
-        public static float ConvertFromAbsolute(float value, float bathVolume, ComponentUnits newUnits, float componentDensity) {
+        public static float ConvertFromKg(float value, float bathVolume, ComponentUnits newUnits, float componentDensity) {
             switch (newUnits)
             {
                 case ComponentUnits.g:
@@ -37,7 +37,7 @@ namespace ElectrolessCalculator.Model
             }
         }
 
-        public static float ConvertToAbsolute(float value, float bathVolume, ComponentUnits oldUnits, float ComponentDensity) {
+        public static float ConvertToKg(float value, float bathVolume, ComponentUnits oldUnits, float ComponentDensity) {
             switch (oldUnits) {
                 case ComponentUnits.g:
                     return value / 1000;

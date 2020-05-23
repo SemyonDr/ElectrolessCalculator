@@ -39,7 +39,28 @@ namespace ElectrolessCalculator.View
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            string units = value as string;
+            switch (units)
+            {
+                case ("g"):
+                    return Model.ComponentUnits.g;
+                case ("kg"):
+                    return Model.ComponentUnits.kg;
+                case ("L"):
+                    return Model.ComponentUnits.l;
+                case ("mL"):
+                    return Model.ComponentUnits.ml;
+                case ("g/L"):
+                    return Model.ComponentUnits.g_l;
+                case ("kg/L"):
+                    return Model.ComponentUnits.kg_l;
+                case ("L/L"):
+                    return Model.ComponentUnits.l_l;
+                case ("ml/L"):
+                    return Model.ComponentUnits.ml_l;
+                default:
+                    return "NaN";
+            }
         }
     }
 }

@@ -5,16 +5,19 @@
              xmlns:view="clr-namespace:ElectrolessCalculator.View"
              Startup="App_Startup">
     <Application.Resources>
+        
+        
         <DataTemplate x:Key="SolutionComponentDataTemplate">
             <DataTemplate.Resources>
                 <view:ValueUnitsToTextConveter x:Key="UnitsToTextConverter"/>
             </DataTemplate.Resources>
+
             <Border>
-                <Grid Background="White">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="25"></ColumnDefinition>
-                        <ColumnDefinition Width="30"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="55"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
                     <!--Component name-->
@@ -22,27 +25,53 @@
                                 x:Name="ComponentNameTextBlock"
                                 Grid.Column="0" 
                                 TextAlignment="Left"
-                                Text="{Binding Name, FallbackValue=NaN}"/>
+                                Text="{Binding ShortName, FallbackValue=NaN}"/>
 
                     <!--Display Value-->
-                    <TextBlock 
+                    <TextBox 
                                 x:Name="DisplayValueTextBlock"
                                 Grid.Column="1" 
                                 TextAlignment="Right"
-                                Visibility="Visible"
+                                IsReadOnly="True"
+                                BorderThickness="0,0,0,0"
+                        
                                 Text="{Binding Value, StringFormat=F1,
-                                                                    FallbackValue=0.0f}" />
+                                                                    FallbackValue=0.0f}" >
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EditMode}" Value="True">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding EditMode}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
 
                     <!--Edit Value-->
                     <TextBox 
                                 x:Name="EditValueTextBox" 
-                                Visibility="Hidden" 
                                 Grid.Column="1" 
-                                TextAlignment="Right" 
-                                VerticalAlignment="Top"
-                                FontSize="12" 
-                                Text="{Binding EditValue, 
-                                                                    FallbackValue=0.0f}"/>
+                                TextAlignment="Right"  
+                                BorderThickness="1,0,1,1"
+                                Text="{Binding EditValue, StringFormat=F1,
+                                                                    FallbackValue=0.0f}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EditMode}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding EditMode}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
 
                     <!--Value units-->
                     <TextBlock 
@@ -51,10 +80,45 @@
                                 TextAlignment="Right"
                                 FontWeight="SemiBold"
                                 Text="{Binding Units, Converter={StaticResource ResourceKey=UnitsToTextConverter},
-                                                                    FallbackValue=NaN}"/>
+                                                                    FallbackValue=NaN}">
 
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EditMode}" Value="True">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding EditMode}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <ComboBox
+                                Grid.Column="2" ItemsSource="{Binding UnitsList}" FlowDirection="RightToLeft" SelectedValue="{Binding Units}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Right" Text="{Binding Converter={StaticResource ResourceKey=UnitsToTextConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EditMode}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding EditMode}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
                 </Grid>
             </Border>
         </DataTemplate>
+
     </Application.Resources>
 </Application>

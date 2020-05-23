@@ -17,81 +17,66 @@ namespace ElectrolessCalculator
         void App_Startup(Object sender, StartupEventArgs args)
         {
             //Loading Model data
-            Model.ComponentsInformation info = LoadComponentsInfo();
-            Model.SolutionComposition TargetComposition = LoadTargerComposition(info);
+            Model.Solution targetComposition = LoadTargetComposition();
+            Model.Solution currentComposition = Model.Calculator.GetCurrentSolution(1.1f, targetComposition.TotalVolume / 3, targetComposition);
 
             //Creating ViewModels
-            ViewModel.SolutionComposition_ViewModel TargetComposition_VM = new ViewModel.SolutionComposition_ViewModel(TargetComposition);
+            ViewModel.Solution_ViewModel targetSolution_VM = new ViewModel.Solution_ViewModel(targetComposition);
+            ViewModel.Solution_ViewModel currentSolution_VM = new ViewModel.Solution_ViewModel(currentComposition);
 
             //Creating Windows
             View.MainWindow mainWindow = new View.MainWindow();
 
             //Setting data context
-            mainWindow.TargetComposition.DataContext = TargetComposition_VM;
+            mainWindow.TargetComposition.DataContext = targetSolution_VM;
+            mainWindow.TargetVolumePresenter.DataContext = targetSolution_VM;
+            mainWindow.TargetEditPanel.DataContext = targetSolution_VM;
 
+            mainWindow.CurrentComposition.DataContext = currentSolution_VM;
             
             mainWindow.Show();
         }
 
-        private Model.ComponentsInformation LoadComponentsInfo() {
-            Model.ComponentsInformation info = new Model.ComponentsInformation();
-            Model.ComponentInfo nickel_metal_info = new Model.ComponentInfo(
-                "Nickel Metal",
-                "Nickel",
-                "Ni",
-                8.908f,
-                8.908f
-                );
-            Model.ComponentInfo nickel_info = new Model.ComponentInfo(
-                "Nickel(II) Sulfate Hexahydrate",
-                "Nickel Sulfate",
-                "NiSO4*(H2O)6",
-                2.07f,
-                2.07f);
-            Model.ComponentInfo hypo_info = new Model.ComponentInfo(
-                "Sodium Hypophosphite Anhydrous",
-                "Sodium Hypophosphite",
-                "NaPO2H2",
-                0.8f,
-                0.8f);
-            Model.ComponentInfo acetate_info = new Model.ComponentInfo(
-                "Sodium Acetate Trihydrate",
-                "Sodium Acetate",
-                "C2H3NaO2(H20)3",
-                1.45f,
-                1.45f);
-            Model.ComponentInfo succinic_info = new Model.ComponentInfo(
-                "Succinic Acid",
-                "Succinic Acid",
-                "C4H6O4",
-                1.56f,
-                1.56f);
-            Model.ComponentInfo lactic_info = new Model.ComponentInfo(
-                "Lactic Acid",
-                "Lactic Acid",
-                "C3H6O3",
-                1.206f,
-                1.206f);
 
-            info.AddComponentInfo(Model.SolutionComponents.NickelMetal, nickel_metal_info);
-            info.AddComponentInfo(Model.SolutionComponents.NickelSulfate, nickel_info);
-            info.AddComponentInfo(Model.SolutionComponents.SodiumHypophosphite, hypo_info);
-            info.AddComponentInfo(Model.SolutionComponents.SodiumAcetate, acetate_info);
-            info.AddComponentInfo(Model.SolutionComponents.SuccinicAcid, succinic_info);
-            info.AddComponentInfo(Model.SolutionComponents.LacticAcid, lactic_info);
+        private Model.Solution LoadTargetComposition() {
+            Model.Solution target = new Model.Solution(300);
+            target.Components.Add(
+                new Model.Component(
+                    "Nickel(II) Sulfate Hexahydrate",
+                    "Nickel Sulfate",
+                    "NiSO4*(H2O)6",
+                    7.5f,
+                    2.07f));
+            target.Components.Add(
+                new Model.Component(
+                    "Sodium Hypophosphite Anhydrous",
+                    "Sodium Hypophosphite",
+                    "NaPO2H2",
+                    7.8f,
+                    0.8f));
+            target.Components.Add(
+                new Model.Component(
+                    "Sodium Acetate Trihydrate",
+                    "Sodium Acetate",
+                    "C2H3NaO2(H20)3",
+                    10f,
+                    1.45f));
+            target.Components.Add(
+                new Model.Component(
+                    "Succinic Acid",
+                    "Succinic Acid",
+                    "C4H6O4",
+                    12f,
+                    1.56f));
+            target.Components.Add(
+                new Model.Component(
+                    "Lactic Acid",
+                    "Lactic Acid",
+                    "C3H6O3",
+                    10f,
+                    1.206f));
 
-            return info;
-        }
-
-        private Model.SolutionComposition LoadTargerComposition(Model.ComponentsInformation info) {
-            Model.SolutionComposition TargetComposition = new Model.SolutionComposition(1, info);
-            TargetComposition.AddComponent(Model.SolutionComponents.NickelMetal, 6, Model.ComponentUnits.g_l);
-            TargetComposition.AddComponent(Model.SolutionComponents.SodiumHypophosphite, 25, Model.ComponentUnits.g_l);
-            TargetComposition.AddComponent(Model.SolutionComponents.SodiumAcetate, 10, Model.ComponentUnits.g_l);
-            TargetComposition.AddComponent(Model.SolutionComponents.SuccinicAcid, 15, Model.ComponentUnits.g_l);
-            TargetComposition.AddComponent(Model.SolutionComponents.LacticAcid, 10, Model.ComponentUnits.ml_l);
-
-            return TargetComposition;
+            return target;
         }
     }
 }

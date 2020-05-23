@@ -6,21 +6,23 @@
         xmlns:local="clr-namespace:ElectrolessCalculator.View"
         xmlns:app="clr-namespace:ElectrolessCalculator"
         mc:Ignorable="d"
-        Title="Electroless Calculator" Height="400" Width="700"
+        Title="Electroless Calculator" Height="400" Width="900"
         ResizeMode="CanMinimize"
         >
     <Grid>
         <Grid.RowDefinitions>
             <!--Headers-->
-            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="20"/>
             <!--Upper Color-->
-            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="5"/>
             <!--Buttons-->
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="60"/>
+            <!--Solution volumes-->
+            <RowDefinition Height="20"/>
             <!--Main field-->
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"/>
             <!--Bottom color-->
-            <RowDefinition Height="15"></RowDefinition>
+            <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <!--Spacer-->
@@ -54,27 +56,38 @@
 
         <!--Controls-->
         <!--============-->
-        <Button x:Name="TargetCompositionEditButton" 
-                Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="3,3,3,3"
-                Click="TargetCompositionEdit_Click">Edit</Button>
-        <Rectangle Fill="Red" Grid.Column="3" Grid.Row="2" Visibility="{Binding ElementName=TargetCompositionPresenter, Path=EditMode}"></Rectangle>
-        <CheckBox x:Name="TestCheckBox" Grid.Row="2" Grid.Column="1"></CheckBox>
-        <local:ComponentPresenter Grid.Row="3" Grid.Column="5" EditMode="{Binding ElementName=TestCheckBox, Path=IsChecked}"></local:ComponentPresenter>
+        <local:TargetEditPanel x:Name="TargetEditPanel"
+                               Grid.Row="2" Grid.Column="1"
+                               StartEditCommand="{Binding StartEditCommand}"/>
+
+        <!--Bath volume row-->
+        <Border Grid.Row="3" Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="Black" Margin="10, 0, 10, 0" >
+            <local:SolutionVolumePresenter x:Name="TargetVolumePresenter" Text="Target Bath Volume" Volume="{Binding TotalVolume}"></local:SolutionVolumePresenter>
+        </Border>
+
 
         <!--Composition presenters-->
         <!--============-->
         <!--Target composition-->
-        <ItemsControl Grid.Row="3" Grid.Column="1" x:Name="TargetComposition" ItemsSource="{Binding Composition}">
-            <ItemsControl.ItemTemplate>
-                <StaticResource ResourceKey="SolutionComponentDataTemplate"/>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        
+        <ItemsControl x:Name="TargetComposition"
+                      Grid.Row="4" Grid.Column="1"
+                      Margin="10, 0, 10, 0"
+                      ItemsSource="{Binding Components}"
+                      ItemTemplate="{StaticResource ResourceKey=SolutionComponentDataTemplate}"/>
+
+
+
+        <!--Current composition-->
+        <ItemsControl x:Name="CurrentComposition"
+                      Grid.Row="4" Grid.Column="3" 
+                      Margin="10, 0, 10, 0" 
+                      ItemsSource="{Binding Components}" 
+                      ItemTemplate="{StaticResource ResourceKey=SolutionComponentDataTemplate}"/>
 
 
         <!--Bottom colors-->
-        <Rectangle Grid.Row="4" Grid.Column="1" Fill="DodgerBlue"></Rectangle>
-        <Rectangle Grid.Row="4" Grid.Column="3" Fill="Khaki"></Rectangle>
-        <Rectangle Grid.Row="4" Grid.Column="5" Fill="LightGreen"></Rectangle>
+        <Rectangle Grid.Row="5" Grid.Column="1" Fill="DodgerBlue"></Rectangle>
+        <Rectangle Grid.Row="5" Grid.Column="3" Fill="Khaki"></Rectangle>
+        <Rectangle Grid.Row="5" Grid.Column="5" Fill="LightGreen"></Rectangle>
     </Grid>
 </Window>
