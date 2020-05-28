@@ -21,8 +21,8 @@ namespace ElectrolessCalculator
             Model.Solution currentComposition = Model.Calculator.GetCurrentSolution(1.1f, targetComposition.TotalVolume / 3, targetComposition);
 
             //Creating ViewModels
-            ViewModel.Solution_ViewModel targetSolution_VM = new ViewModel.Solution_ViewModel(targetComposition);
-            ViewModel.Solution_ViewModel currentSolution_VM = new ViewModel.Solution_ViewModel(currentComposition);
+            ViewModel.CurrentSolution_ViewModel targetSolution_VM = new ViewModel.CurrentSolution_ViewModel(targetComposition);
+            ViewModel.CurrentSolution_ViewModel currentSolution_VM = new ViewModel.CurrentSolution_ViewModel(currentComposition);
 
             //Creating Windows
             View.MainWindow mainWindow = new View.MainWindow();

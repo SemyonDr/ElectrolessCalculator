@@ -73,6 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\SolutionBase_ViewModel.cs" />
     <Compile Include="View\TargetEditPanel.xaml.cs">
       <DependentUpon>TargetEditPanel.xaml</DependentUpon>
     </Compile>
@@ -101,7 +102,7 @@
     <Compile Include="Model\UnitsConverter.cs" />
     <Compile Include="ViewModel\Component_ViewModel.cs" />
     <Compile Include="ViewModel\NickelMetal_ViewModel.cs" />
-    <Compile Include="ViewModel\Solution_ViewModel.cs" />
+    <Compile Include="ViewModel\CurrentSolution_ViewModel.cs" />
     <Compile Include="Model\ComponentUnitsEnum.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\SolutionVolumePresenter.xaml.cs">

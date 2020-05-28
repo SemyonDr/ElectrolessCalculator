@@ -15,7 +15,7 @@ namespace ElectrolessCalculator.ViewModel
         /// </summary>
         /// <param name="NickelSalt"></param>
         /// <param name="Units"></param>
-        public NickelMetal_ViewModel(Component_ViewModel NickelSalt, Model.ComponentUnits Units, Solution_ViewModel solution) : base(new Model.Component("Nickel Metal","Metallic Nickel","Ni", 1.0f, 8.908f), Units, solution)
+        public NickelMetal_ViewModel(Component_ViewModel NickelSalt, Model.ComponentUnits Units, SolutionBase_ViewModel solution) : base(new Model.Component("Nickel Metal","Metallic Nickel","Ni", 1.0f, 8.908f), Units, solution)
         {
             this.nickelSalt = NickelSalt;
             NickelSalt.PropertyChanged += NickelSalt_PropertyChanged;

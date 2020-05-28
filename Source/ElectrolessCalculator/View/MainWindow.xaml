@@ -58,7 +58,9 @@
         <!--============-->
         <local:TargetEditPanel x:Name="TargetEditPanel"
                                Grid.Row="2" Grid.Column="1"
-                               StartEditCommand="{Binding StartEditCommand}"/>
+                               StartEditCommand="{Binding StartEditCommand}"
+                               CancelEditCommand="{Binding CancelEditCommand}"
+                               SaveEditCommand="{Binding SaveEditCommand}"/>
 
         <!--Bath volume row-->
         <Border Grid.Row="3" Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="Black" Margin="10, 0, 10, 0" >

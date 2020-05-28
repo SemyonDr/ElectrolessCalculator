@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.ViewModel
 {
-    public class Solution_ViewModel : ViewModelBase
-    {
+    public class SolutionBase_ViewModel : ViewModelBase {
         #region PRIVATE FIELDS
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
 
         //Fields backing public properties
-        private bool editMode;
         private Model.Solution solution;
         #endregion
 
@@ -31,7 +29,8 @@ namespace ElectrolessCalculator.ViewModel
             set {
                 solution = value;
                 NotifyPropertyChanged("Components");
-                NotifyPropertyChanged("TotalVolume"); }}
+                NotifyPropertyChanged("TotalVolume");
+            }}
 
         /// <summary>
         /// View model components list.
@@ -56,12 +55,11 @@ namespace ElectrolessCalculator.ViewModel
         /// Constructor.
         /// </summary>
         /// <param name="solution"></param>
-        public Solution_ViewModel(Model.Solution solution)
+        public SolutionBase_ViewModel(Model.Solution solution)
         {
-            EditMode = false;
-            StartEditCommand = new RelayCommand(StartEditing, CanStartEditing);
-
             this.solution = solution;
+
+            //Creating view models for the components
             Components = new List<Component_ViewModel>();
 
             foreach (Model.Component c in solution.Components)
@@ -74,40 +72,7 @@ namespace ElectrolessCalculator.ViewModel
                 }
                 Components.Add(c_vm);
             }
-        }
-        #endregion
-
-        #region EDITING
-        //---------------------------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------------------------
-
-        public RelayCommand StartEditCommand { get; internal set; }
-
-        /// <summary>
-        /// This property sets edit mode on or off. (true/false)
-        /// Can be changed only by executing ~Edit commands.
-        /// </summary>
-        public bool EditMode {
-            get { return editMode; }
-            private set {
-                editMode = value;
-                NotifyPropertyChanged("EditMode"); }}
-
-        private void StartEditing(object parameter) {
-            if (!EditMode) { 
-                EditMode = true;
-                foreach (Component_ViewModel c in Components) {
-                    c.EditMode = true;  //Setting edit mode for component
-                    c.EditValue = c.Value;
-                }
-            }
-        }
-
-        private bool CanStartEditing(object parameter) {
-            return !EditMode;
-        }
-
+        }//CONSTRUCTOR
         #endregion
     }
 }

@@ -28,6 +28,30 @@ namespace ElectrolessCalculator.View
             DependencyProperty.Register("StartEditCommand", typeof(ICommand), typeof(TargetEditPanel), new PropertyMetadata(null));
 
 
+
+
+        public ICommand CancelEditCommand {
+            get { return (ICommand)GetValue(CancelEditCommandProperty); }
+            set { SetValue(CancelEditCommandProperty, value); }}
+
+        public static readonly DependencyProperty CancelEditCommandProperty =
+            DependencyProperty.Register("CancelEditCommand", typeof(ICommand), typeof(TargetEditPanel), new PropertyMetadata(null));
+
+
+
+
+        public ICommand SaveEditCommand
+        {
+            get { return (ICommand)GetValue(SaveEditCommandProperty); }
+            set { SetValue(SaveEditCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SaveEditCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SaveEditCommandProperty =
+            DependencyProperty.Register("SaveEditCommand", typeof(ICommand), typeof(TargetEditPanel), new PropertyMetadata(null));
+
+
+
         public TargetEditPanel()
         {
             InitializeComponent();

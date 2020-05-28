@@ -13,11 +13,45 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        
         <Button Height="40" Width="40"
                 Margin="5,5,5,5"
-                HorizontalAlignment="Left" VerticalAlignment="Top"
-                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TargetEditPanel}, Path=StartEditCommand}"
-                >Edit</Button>
+                HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding EditState}" Value="True">
+                            <Setter Property="Content" Value="Save"/>
+                            <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TargetEditPanel}, Path=SaveEditCommand}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding EditState}" Value="False">
+                            <Setter Property="Content" Value="Edit"/>
+                            <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TargetEditPanel}, Path=StartEditCommand}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <Button Grid.Column="2"
+                Height="40" Width="40"
+                Margin="5,5,5,5"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                Content="Cancel"
+                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TargetEditPanel}, Path=CancelEditCommand}">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding EditState}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding EditState}" Value="False">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
     </Grid>
 </UserControl>
