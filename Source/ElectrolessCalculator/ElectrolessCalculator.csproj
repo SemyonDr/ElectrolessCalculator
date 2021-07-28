@@ -72,8 +72,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\SolutionComponents\CmpType_enum.cs" />
+    <Compile Include="Model\Solutions\CurrentSolution.cs" />
+    <Compile Include="Model\SolutionComponents\ComponentFactory.cs" />
+    <Compile Include="Model\SolutionComponents\LacticAcidCmp.cs" />
+    <Compile Include="Model\SolutionComponents\NickelSulfateCmp.cs" />
+    <Compile Include="Model\SolutionComponents\SodiumAcetateCmp.cs" />
+    <Compile Include="Model\SolutionComponents\SodiumHypophosphiteCmp.cs" />
+    <Compile Include="Model\SolutionComponents\SuccinicAcidCmp.cs" />
+    <Compile Include="Model\Solutions\RequiredMaterials.cs" />
+    <Compile Include="Model\Solutions\TargetSolution.cs" />
+    <Compile Include="ViewModel\Component\ComponentBase_ViewModel.cs" />
+    <Compile Include="ViewModel\Component\CurrentComponent_ViewModel.cs" />
+    <Compile Include="ViewModel\Component\CurrentNickelMetal_ViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
-    <Compile Include="ViewModel\SolutionBase_ViewModel.cs" />
+    <Compile Include="ViewModel\Solution\CurrentSolution_ViewModel.cs" />
+    <Compile Include="ViewModel\Solution\SolutionBase_ViewModel.cs" />
     <Compile Include="View\TargetEditPanel.xaml.cs">
       <DependentUpon>TargetEditPanel.xaml</DependentUpon>
     </Compile>
@@ -82,10 +96,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\SolutionVolumePresenter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\CompositionPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -98,19 +108,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\Calculator.cs" />
-    <Compile Include="Model\Component.cs" />
+    <Compile Include="Model\SolutionComponents\Component.cs" />
     <Compile Include="Model\UnitsConverter.cs" />
-    <Compile Include="ViewModel\Component_ViewModel.cs" />
-    <Compile Include="ViewModel\NickelMetal_ViewModel.cs" />
-    <Compile Include="ViewModel\CurrentSolution_ViewModel.cs" />
+    <Compile Include="ViewModel\Component\TargetComponent_ViewModel.cs" />
+    <Compile Include="ViewModel\Component\TargetNickelMetal_ViewModel.cs" />
+    <Compile Include="ViewModel\Solution\TargetSolution_ViewModel.cs" />
     <Compile Include="Model\ComponentUnitsEnum.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\SolutionVolumePresenter.xaml.cs">
       <DependentUpon>SolutionVolumePresenter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ComponentPresenter.cs" />
-    <Compile Include="View\CompositionPresenter.xaml.cs">
-      <DependentUpon>CompositionPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converterts\ValueUnitsToTextConveter.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
@@ -123,7 +129,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Solution.cs" />
+    <Compile Include="Model\Solutions\Solution.cs" />
     <Compile Include="Model\NickelConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.Model
 {
-    public class Component {
-        public float Weigth { get; set; }
+    public abstract class Component {
+        public float WeigthKg { get; set; }
         public string FullName { get; }
         public string ShortName { get; }
         public string ChemicalFormula { get; }
-        public float Density { get; set; }
+        public float Density { get; }
 
-        public Component(string FullName, string ShortName, string ChemicalFormula, float Weigth, float Density) {
-            this.Weigth = Weigth;
+        public Component(float WeigthKg, string FullName, string ShortName, string ChemicalFormula, float Density) {
+            this.WeigthKg = WeigthKg;
             this.FullName = FullName;
             this.ShortName = ShortName;
             this.ChemicalFormula = ChemicalFormula;
