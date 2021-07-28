@@ -69,7 +69,7 @@ namespace ElectrolessCalculator.ViewModel
         public void StartEdit(object parameter) {
             if (!editState) { 
                 EditState = true;
-                foreach (Component_ViewModel c in Components) {
+                foreach (ComponentBase_ViewModel c in Components) {
                     c.StartEdit();
                 }
             }
@@ -94,7 +94,7 @@ namespace ElectrolessCalculator.ViewModel
         public void CancelEdit(object parameter) {
             if (editState) {
                 EditState = false;
-                foreach (Component_ViewModel c in Components) {
+                foreach (ComponentBase_ViewModel c in Components) {
                     c.CancelEdit();
                 }
             }
@@ -115,11 +115,11 @@ namespace ElectrolessCalculator.ViewModel
 
         private void SaveEdit(object parameter) {
             bool input_valid = true;
-            foreach (Component_ViewModel c in Components) {
+            foreach (ComponentBase_ViewModel c in Components) {
                 input_valid = c.CanSaveEdit();
             }
             if (input_valid) {
-                foreach (Component_ViewModel c in Components) {
+                foreach (ComponentBase_ViewModel c in Components) {
                     c.SaveEdit();
                 }
                 EditState = false;
@@ -127,7 +127,7 @@ namespace ElectrolessCalculator.ViewModel
         }
 
         private bool CanSaveEdit(object parameter) {
-            foreach (Component_ViewModel c in Components) {
+            foreach (ComponentBase_ViewModel c in Components) {
                 if (!c.CanSaveEdit())
                     return false;
             }

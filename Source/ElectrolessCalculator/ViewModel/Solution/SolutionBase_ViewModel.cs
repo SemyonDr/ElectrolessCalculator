@@ -35,7 +35,7 @@ namespace ElectrolessCalculator.ViewModel
         /// <summary>
         /// View model components list.
         /// </summary>
-        public List<Component_ViewModel> Components { get; set; }
+        public List<ComponentBase_ViewModel> Components { get; set; }
 
         /// <summary>
         /// Bath volume.
@@ -60,11 +60,11 @@ namespace ElectrolessCalculator.ViewModel
             this.solution = solution;
 
             //Creating view models for the components
-            Components = new List<Component_ViewModel>();
+            Components = new List<ComponentBase_ViewModel>();
 
             foreach (Model.Component c in solution.Components)
             {
-                Component_ViewModel c_vm = new Component_ViewModel(c, Model.ComponentUnits.g_l, this);
+                ComponentBase_ViewModel c_vm = new ComponentBase_ViewModel(c, Model.ComponentUnits.g_l, this);
                 if (c.ShortName == "Nickel Sulfate")
                 {
                     NickelMetal_ViewModel ni_vm = new NickelMetal_ViewModel(c_vm, Model.ComponentUnits.g_l, this);

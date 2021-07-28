@@ -83,11 +83,12 @@
     <Compile Include="Model\Solutions\RequiredMaterials.cs" />
     <Compile Include="Model\Solutions\TargetSolution.cs" />
     <Compile Include="ViewModel\Component\ComponentBase_ViewModel.cs" />
-    <Compile Include="ViewModel\Component\CurrentComponent_ViewModel.cs" />
-    <Compile Include="ViewModel\Component\CurrentNickelMetal_ViewModel.cs" />
+    <Compile Include="ViewModel\Component\TargetComponent_ViewModel.cs" />
+    <Compile Include="ViewModel\Component\TargetNickelMetal_ViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\Solution\CurrentSolution_ViewModel.cs" />
     <Compile Include="ViewModel\Solution\SolutionBase_ViewModel.cs" />
+    <Compile Include="ViewModel\Solution\TargetSolution_ViewModel.cs" />
     <Compile Include="View\TargetEditPanel.xaml.cs">
       <DependentUpon>TargetEditPanel.xaml</DependentUpon>
     </Compile>
@@ -110,9 +111,6 @@
     <Compile Include="Model\Calculator.cs" />
     <Compile Include="Model\SolutionComponents\Component.cs" />
     <Compile Include="Model\UnitsConverter.cs" />
-    <Compile Include="ViewModel\Component\TargetComponent_ViewModel.cs" />
-    <Compile Include="ViewModel\Component\TargetNickelMetal_ViewModel.cs" />
-    <Compile Include="ViewModel\Solution\TargetSolution_ViewModel.cs" />
     <Compile Include="Model\ComponentUnitsEnum.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\SolutionVolumePresenter.xaml.cs">

@@ -17,12 +17,12 @@ namespace ElectrolessCalculator
         void App_Startup(Object sender, StartupEventArgs args)
         {
             //Loading Model data
-            Model.Solution targetComposition = LoadTargetComposition();
-            Model.Solution currentComposition = Model.Calculator.GetCurrentSolution(1.1f, targetComposition.TotalVolume / 3, targetComposition);
+            Model.TargetSolution targetSolution = LoadTargetSolution();
+            Model.CurrentSolution currentSolution = new Model.CurrentSolution(300, targetSolution);
 
             //Creating ViewModels
-            ViewModel.CurrentSolution_ViewModel targetSolution_VM = new ViewModel.CurrentSolution_ViewModel(targetComposition);
-            ViewModel.CurrentSolution_ViewModel currentSolution_VM = new ViewModel.CurrentSolution_ViewModel(currentComposition);
+            ViewModel.CurrentSolution_ViewModel targetSolution_VM = new ViewModel.CurrentSolution_ViewModel(targetSolution);
+            ViewModel.CurrentSolution_ViewModel currentSolution_VM = new ViewModel.CurrentSolution_ViewModel(currentSolution);
 
             //Creating Windows
             View.MainWindow mainWindow = new View.MainWindow();
@@ -38,44 +38,14 @@ namespace ElectrolessCalculator
         }
 
 
-        private Model.Solution LoadTargetComposition() {
-            Model.Solution target = new Model.Solution(300);
-            target.Components.Add(
-                new Model.Component(
-                    "Nickel(II) Sulfate Hexahydrate",
-                    "Nickel Sulfate",
-                    "NiSO4*(H2O)6",
-                    7.5f,
-                    2.07f));
-            target.Components.Add(
-                new Model.Component(
-                    "Sodium Hypophosphite Anhydrous",
-                    "Sodium Hypophosphite",
-                    "NaPO2H2",
-                    7.8f,
-                    0.8f));
-            target.Components.Add(
-                new Model.Component(
-                    "Sodium Acetate Trihydrate",
-                    "Sodium Acetate",
-                    "C2H3NaO2(H20)3",
-                    10f,
-                    1.45f));
-            target.Components.Add(
-                new Model.Component(
-                    "Succinic Acid",
-                    "Succinic Acid",
-                    "C4H6O4",
-                    12f,
-                    1.56f));
-            target.Components.Add(
-                new Model.Component(
-                    "Lactic Acid",
-                    "Lactic Acid",
-                    "C3H6O3",
-                    10f,
-                    1.206f));
-
+        private Model.TargetSolution LoadTargetSolution() {
+            Model.TargetSolution target = new Model.TargetSolution(300);
+            Model.ComponentFactory cf = new Model.ComponentFactory();
+            target.Components.Add(CmpType.NickelSulfate, cf.CreateComponent(CmpType.NickelSulfate, 20));
+            target.Components.Add(CmpType.SodiumHypophosphite, cf.CreateComponent(CmpType.SodiumHypophosphite, 20));
+            target.Components.Add(CmpType.SodiumAcetate, cf.CreateComponent(CmpType.SodiumAcetate, 20));
+            target.Components.Add(CmpType.SuccinicAcid, cf.CreateComponent(CmpType.SuccinicAcid, 20));
+            target.Components.Add(CmpType.LacticAcid, cf.CreateComponent(CmpType.LacticAcid, 20));
             return target;
         }
     }
