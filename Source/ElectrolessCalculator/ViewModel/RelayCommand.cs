@@ -27,6 +27,14 @@ namespace ElectrolessCalculator.ViewModel
             this.canExecute = canExecute;
         }
 
+        /// <summary>
+        /// Creates command that can always be executed (doesn't have check).
+        /// </summary>
+        /// <param name="execute"></param>
+        public RelayCommand(Action<object> execute) {
+            this.execute = execute;
+        }
+
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }

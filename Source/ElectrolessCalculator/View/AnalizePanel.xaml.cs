@@ -15,10 +15,12 @@ using System.Windows.Shapes;
 
 namespace ElectrolessCalculator.View
 {
-
-    public partial class TargetEditPanel : UserControl
+    /// <summary>
+    /// Interaction logic for AnalizePanel.xaml
+    /// </summary>
+    public partial class AnalizePanel : UserControl
     {
-        public TargetEditPanel()
+        public AnalizePanel()
         {
             InitializeComponent();
         }

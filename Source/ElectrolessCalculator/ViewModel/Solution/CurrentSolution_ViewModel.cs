@@ -11,15 +11,6 @@ namespace ElectrolessCalculator.ViewModel
     /// </summary>
     public class CurrentSolution_ViewModel : SolutionBase_ViewModel
     {
-        #region PRIVATE FIELDS
-        //---------------------------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------------------------
-
-        //Fields backing public properties
-        private bool editState;
-        #endregion
-
         #region INITIALIZATION
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
@@ -31,108 +22,68 @@ namespace ElectrolessCalculator.ViewModel
         /// <param name="solution"></param>
         public CurrentSolution_ViewModel(Model.Solution solution) : base(solution)
         {
-            editState = false;
+            //Initialize components list
+            Components = new List<CurrentComponent_ViewModel>();
 
-            StartEditCommand = new RelayCommand(StartEdit, CanStartEdit);
-            CancelEditCommand = new RelayCommand(CancelEdit, CanCancelEdit);
-            SaveEditCommand = new RelayCommand(SaveEdit, CanSaveEdit);
-        }//CONSTRUCTOR
+            //Creating components view models
+            foreach (Model.Component c in solution.Components.Values) {
+                //Components are displayed as gram per liter concentration,
+                //except for Lactic Acid which comes in liquid form and displayed in ml pre liter.
+                Model.ComponentUnits units = Model.ComponentUnits.g_l;
+                if (c.ShortName == "Lactic Acid")
+                    units = Model.ComponentUnits.ml_l;
+
+                CurrentComponent_ViewModel c_vm = new CurrentComponent_ViewModel(c, units, this);
+                Components.Add(c_vm);
+            }
+        }
         #endregion
 
-        #region EDITING
+        #region PUBLIC PROPERTIES
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
 
-        //-----------------------STATE-----------------------------------------------------------------------------------
+        //Model solution alias
+        new public Model.CurrentSolution Solution {
+            get {
+                return (Model.CurrentSolution)(base.Solution);
 
-        /// <summary>
-        /// Can be changed only by executing ~Editing commands.
-        /// </summary>
-        public bool EditState {
-            get { return editState; }
-            private set {
-                editState = value;
-                NotifyPropertyChanged("EditState");
-                StartEditCommand.RaiseCanExecuteChanged();
-                CancelEditCommand.RaiseCanExecuteChanged();
             }}
 
-        //--------------------START EDITING--------------------------------------------------------------------------------
-
-        public RelayCommand StartEditCommand { get; internal set; }
-
-        /// <summary>
-        /// Swithes on Edit mode.
-        /// </summary>
-        /// <param name="parameter"></param>
-        public void StartEdit(object parameter) {
-            if (!editState) { 
-                EditState = true;
-                foreach (ComponentBase_ViewModel c in Components) {
-                    c.StartEdit();
-                }
+        public bool UseHPAnalize {
+            get {
+                return Solution.UseHPAnalize;
             }
-        }
+            set {
+                Solution.UseHPAnalize = value;
+                NotifyPropertyChanged("UseHPAnalize");
+                NotifyPropertyChanged("Components");
+            }}
 
-        /// <summary>
-        /// Editing can be started if edit state is now normal.
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        public bool CanStartEdit(object parameter) {
-            return !editState;
-        }
-
-        //--------------------CANCEL EDITING-------------------------------------------------------------------------------
-        public RelayCommand CancelEditCommand { get; internal set; }
-
-        /// <summary>
-        /// Cancels editing.
-        /// </summary>
-        /// <param name="parameter"></param>
-        public void CancelEdit(object parameter) {
-            if (editState) {
-                EditState = false;
-                foreach (ComponentBase_ViewModel c in Components) {
-                    c.CancelEdit();
-                }
+        public float NickelAnalize {
+            get {
+                return Solution.NickelAnalize;
             }
-        }
+            set {
+                Solution.NickelAnalize = value;
+                NotifyPropertyChanged("NickelAnalize");
+                NotifyPropertyChanged("Components");
+            }}
 
-        /// <summary>
-        /// Shows if edit can be canceled.
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        private bool CanCancelEdit(object parameter) {
-            return editState;
-        }
-
-        //--------------------SAVE EDITING---------------------------------------------------------------------------------
-
-        public RelayCommand SaveEditCommand { get; internal set; }
-
-        private void SaveEdit(object parameter) {
-            bool input_valid = true;
-            foreach (ComponentBase_ViewModel c in Components) {
-                input_valid = c.CanSaveEdit();
+        public float HypophosphiteAnalize {
+            get {
+                return Solution.HypophosphiteAnalize;
             }
-            if (input_valid) {
-                foreach (ComponentBase_ViewModel c in Components) {
-                    c.SaveEdit();
-                }
-                EditState = false;
-            }
-        }
+            set {
+                Solution.HypophosphiteAnalize = value;
+                NotifyPropertyChanged("HypophosphiteAnalize");
+                NotifyPropertyChanged("Components");
+            }}
 
-        private bool CanSaveEdit(object parameter) {
-            foreach (ComponentBase_ViewModel c in Components) {
-                if (!c.CanSaveEdit())
-                    return false;
-            }
-            return true;
-        }
+        public List<CurrentComponent_ViewModel> Components { get; private set; }
+
         #endregion
+
     }
 }

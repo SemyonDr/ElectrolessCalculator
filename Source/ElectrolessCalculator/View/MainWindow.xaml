@@ -57,34 +57,35 @@
         <!--Controls-->
         <!--============-->
         <local:TargetEditPanel x:Name="TargetEditPanel"
-                               Grid.Row="2" Grid.Column="1"
-                               StartEditCommand="{Binding StartEditCommand}"
-                               CancelEditCommand="{Binding CancelEditCommand}"
-                               SaveEditCommand="{Binding SaveEditCommand}"/>
+                               Grid.Row="2" Grid.Column="1"/>
 
         <!--Bath volume row-->
         <Border Grid.Row="3" Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="Black" Margin="10, 0, 10, 0" >
             <local:SolutionVolumePresenter x:Name="TargetVolumePresenter" Text="Target Bath Volume" Volume="{Binding TotalVolume}"></local:SolutionVolumePresenter>
         </Border>
 
+        <!--Analizes panel-->
+        <local:AnalizePanel x:Name="AnalizePanel"
+                            Grid.Row="2" Grid.Column="3"
+                            Margin="5,2,5,2"></local:AnalizePanel>
 
-        <!--Composition presenters-->
+
+        <!--Solution composition presenters-->
         <!--============-->
-        <!--Target composition-->
-        <ItemsControl x:Name="TargetComposition"
-                      Grid.Row="4" Grid.Column="1"
-                      Margin="10, 0, 10, 0"
-                      ItemsSource="{Binding Components}"
-                      ItemTemplate="{StaticResource ResourceKey=SolutionComponentDataTemplate}"/>
-
+        
+        <!--Target solution-->
+        <!--Data context is set in App_Startup-->
+        <local:TargetSolutionPresenter x:Name="TargetSolution"
+                    Grid.Row="4" Grid.Column="1" 
+                    Margin="10, 0, 10, 0"/>
 
 
         <!--Current composition-->
-        <ItemsControl x:Name="CurrentComposition"
+        <!--<ItemsControl x:Name="CurrentComposition"
                       Grid.Row="4" Grid.Column="3" 
                       Margin="10, 0, 10, 0" 
                       ItemsSource="{Binding Components}" 
-                      ItemTemplate="{StaticResource ResourceKey=SolutionComponentDataTemplate}"/>
+                      ItemTemplate="{StaticResource ResourceKey=TargetComponentDataTemplate}"/>-->
 
 
         <!--Bottom colors-->

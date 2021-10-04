@@ -21,18 +21,19 @@ namespace ElectrolessCalculator
             Model.CurrentSolution currentSolution = new Model.CurrentSolution(300, targetSolution);
 
             //Creating ViewModels
-            ViewModel.CurrentSolution_ViewModel targetSolution_VM = new ViewModel.CurrentSolution_ViewModel(targetSolution);
+            ViewModel.TargetSolution_ViewModel targetSolution_VM = new ViewModel.TargetSolution_ViewModel(targetSolution);
             ViewModel.CurrentSolution_ViewModel currentSolution_VM = new ViewModel.CurrentSolution_ViewModel(currentSolution);
-
+            
             //Creating Windows
             View.MainWindow mainWindow = new View.MainWindow();
 
             //Setting data context
-            mainWindow.TargetComposition.DataContext = targetSolution_VM;
+            mainWindow.TargetSolution.DataContext = targetSolution_VM;
             mainWindow.TargetVolumePresenter.DataContext = targetSolution_VM;
             mainWindow.TargetEditPanel.DataContext = targetSolution_VM;
+            mainWindow.AnalizePanel.DataContext = currentSolution_VM;
 
-            mainWindow.CurrentComposition.DataContext = currentSolution_VM;
+            //mainWindow.CurrentComposition.DataContext = currentSolution_VM;
             
             mainWindow.Show();
         }

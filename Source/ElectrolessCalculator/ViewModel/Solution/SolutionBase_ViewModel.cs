@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.ViewModel
 {
+    /// <summary>
+    /// Base class for solution view models.
+    /// </summary>
     public class SolutionBase_ViewModel : ViewModelBase {
         #region PRIVATE FIELDS
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
 
-        //Fields backing public properties
+        //Field backs public property
         private Model.Solution solution;
         #endregion
 
@@ -28,21 +31,15 @@ namespace ElectrolessCalculator.ViewModel
             get { return solution; }
             set {
                 solution = value;
-                NotifyPropertyChanged("Components");
                 NotifyPropertyChanged("TotalVolume");
             }}
-
-        /// <summary>
-        /// View model components list.
-        /// </summary>
-        public List<ComponentBase_ViewModel> Components { get; set; }
 
         /// <summary>
         /// Bath volume.
         /// </summary>
         public float TotalVolume {
-            get { return solution.TotalVolume; }
-            set { solution.TotalVolume = value; }}
+            get { return solution.TotalVolumeL; }
+            set { solution.TotalVolumeL = value; }}
 
         #endregion
 
@@ -58,21 +55,7 @@ namespace ElectrolessCalculator.ViewModel
         public SolutionBase_ViewModel(Model.Solution solution)
         {
             this.solution = solution;
-
-            //Creating view models for the components
-            Components = new List<ComponentBase_ViewModel>();
-
-            foreach (Model.Component c in solution.Components)
-            {
-                ComponentBase_ViewModel c_vm = new ComponentBase_ViewModel(c, Model.ComponentUnits.g_l, this);
-                if (c.ShortName == "Nickel Sulfate")
-                {
-                    NickelMetal_ViewModel ni_vm = new NickelMetal_ViewModel(c_vm, Model.ComponentUnits.g_l, this);
-                    Components.Add(ni_vm);
-                }
-                Components.Add(c_vm);
-            }
-        }//CONSTRUCTOR
+        }
         #endregion
     }
 }

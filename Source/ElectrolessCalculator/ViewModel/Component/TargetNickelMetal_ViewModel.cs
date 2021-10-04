@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace ElectrolessCalculator.ViewModel
 {
     /// <summary>
-    /// This class represents "virtual" component of metallic nickel, which is derived from nickel sulfate (value depends on nickel sulfate).
-    /// Displaying metallic nickel is another way for user to evaluate the nickel content.
+    /// This class represents "virtual" component of metallic nickel, which is derived from nickel sulfate (i.e. value depends on nickel sulfate).
+    /// Displaying metallic nickel is another way for the user to evaluate the nickel content.
     /// Metallic nickel component does not exist in the calculation model, so it requires dedicated view model which uses nickel sulfate component as data source.
     /// </summary>
-    public class TargetNickelMetal_ViewModel : TargetComponent_ViewModel
+    public class TargetNickelMetal_ViewModel : ViewModelBase
     {
         #region INITIALIZATION
         //---------------------------------------------------------------------------------------------------------------
@@ -22,10 +22,11 @@ namespace ElectrolessCalculator.ViewModel
         /// Constructor.
         /// </summary>
         /// <param name="NickelSulfate_VM"></param>
-        public TargetNickelMetal_ViewModel(TargetComponent_ViewModel NickelSulfate_VM) : base(NickelSulfate_VM.Component, NickelSulfate_VM.Units, NickelSulfate_VM.Solution) {
-            //Subscribing to changes in Nickel Sulfate view model edit value,
-            //so they are reflected in nickel metal edit value.
-            base.PropertyChanged += NickelSalt_EditValue_PropertyChanged;
+        public TargetNickelMetal_ViewModel(TargetComponent_ViewModel NickelSulfate_VM) { 
+            this.NickelSulfate_VM = NickelSulfate_VM;
+            //Subscribing to changes in Nickel Sulfate view model value,
+            //so they are reflected in nickel metal value.
+            NickelSulfate_VM.PropertyChanged += NickelSalt_PropertyChanged;
         }
 
         /// <summary>
@@ -34,11 +35,24 @@ namespace ElectrolessCalculator.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NickelSalt_EditValue_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void NickelSalt_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "EditValue")
                 NotifyPropertyChanged("EditValue");
+            if (e.PropertyName == "Value")
+                NotifyPropertyChanged("Value");
+            if (e.PropertyName == "EditState")
+                NotifyPropertyChanged("EditState");
+            if (e.PropertyName == "Units")
+                NotifyPropertyChanged("Units");
         }
+        #endregion
+
+        #region PRIVATE FIELDS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        private TargetComponent_ViewModel NickelSulfate_VM;
         #endregion
 
         #region PUBLIC PROPERTIES
@@ -49,51 +63,58 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //Displayed properties
 
-        new public string ShortName {
-            get { return "Nickel Metall"; }
+        public string ShortName {
+            get { return "  Nickel Metal"; }
         }
 
-        new public string FullName {
-            get { return "Nickel Metall"; }
+        public string FullName {
+            get { return "Nickel Metal"; }
         }
 
-        new public string ChemicalFormula {
+        public string ChemicalFormula {
             get { return "Ni"; }
         }
 
-        new public float Density {
+        public float Density {
             get { return 8.908f; }
         }
 
-        //Displayed value converted from absolute weigth in kg according with selected units.
+        public Model.ComponentUnits Units {
+            get { return NickelSulfate_VM.Units; }
+        }
+
+        public bool EditState {
+            get { return NickelSulfate_VM.EditState; }
+        }
+
         //Nickel metal value is calculated from nickel sulfate value;
-        new public virtual float Value {
+        //Displayed value converted from absolute weigth in kg according with selected units.
+        public float Value {
             get {
                 return Model.UnitsConverter.ConvertFromKg(
-                    Model.NickelConverter.ConvertSaltToMetal(Component.WeigthKg),
-                    Solution.TotalVolume,
-                    Units,
-                    Component.Density);
+                    Model.NickelConverter.ConvertSaltToMetal(NickelSulfate_VM.Component.WeigthKg),
+                    NickelSulfate_VM.Solution.TotalVolume,
+                    NickelSulfate_VM.Units,
+                    NickelSulfate_VM.Component.Density);
             }
             set {
-                Component.WeigthKg = Model.UnitsConverter.ConvertToKg(
+                NickelSulfate_VM.Component.WeigthKg = Model.UnitsConverter.ConvertToKg(
                     Model.NickelConverter.ConvertMetalToSalt(value),
-                    Solution.TotalVolume,
-                    Units,
-                    Component.Density);
+                    NickelSulfate_VM.Solution.TotalVolume,
+                    NickelSulfate_VM.Units,
+                    NickelSulfate_VM.Component.Density);
                 NotifyPropertyChanged("Value");
             }
         }
 
         //Displayed value for editing is converted from weigth in kg (saved in the private propery), according with component displayed units.
-        new public float EditValue {
+        public float EditValue {
             get {
-                return Model.NickelConverter.ConvertSaltToMetal(base.EditValue);
+                return Model.NickelConverter.ConvertSaltToMetal(NickelSulfate_VM.EditValue);
             }
             set {
-                base.EditValue = Model.NickelConverter.ConvertMetalToSalt(value);
+                NickelSulfate_VM.EditValue = Model.NickelConverter.ConvertMetalToSalt(value);
                 NotifyPropertyChanged("EditValue");
-                base.NotifyPropertyChanged("EditValue");
             }
         }
         #endregion

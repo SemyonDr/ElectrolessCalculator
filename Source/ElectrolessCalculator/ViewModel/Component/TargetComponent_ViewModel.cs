@@ -8,7 +8,7 @@ namespace ElectrolessCalculator.ViewModel
 {
     /// <summary>
     /// View model for a component in the target solution.
-    /// Have edit state logic added.
+    /// Includes edit state logic.
     /// </summary>
     public class TargetComponent_ViewModel : ComponentBase_ViewModel
     {
@@ -86,37 +86,26 @@ namespace ElectrolessCalculator.ViewModel
         /// Logic for starting editing.
         /// </summary>
         public void StartEdit() {
-            EditState = true;
             EditValue = Value;
-        }
-
-        /// <summary>
-        /// Logic for canceling editing.
-        /// </summary>
-        public void CancelEdit()
-        {
-            EditState = false;
+            EditState = true;
         }
 
         /// <summary>
         /// This method checks if entered values are correct and can be saved.
         /// </summary>
         /// <returns></returns>
-        public bool CanSaveEdit()
-        {
+        public bool CanSaveEdit() {
             //Checking if value isn't negative
             if (EditValue < 0)
                 return false;
 
             //Checking if total components volume is less than bath volume
             float components_total_volume = 0;
-            foreach (TargetComponent_ViewModel c in Solution.Components)
-            {
+            foreach (TargetComponent_ViewModel c in Solution.Components) {
                 components_total_volume += Model.UnitsConverter.ConvertFromKg(c.editValue_kg, 1, Model.ComponentUnits.l, c.Density);
             }
 
-            if (components_total_volume > Solution.TotalVolume)
-            {
+            if (components_total_volume > Solution.TotalVolume) {
                 return false;
             }
 
@@ -124,19 +113,18 @@ namespace ElectrolessCalculator.ViewModel
         }
 
         /// <summary>
+        /// Logic for canceling editing.
+        /// </summary>
+        public void CancelEdit() {
+            EditState = false;
+        }
+
+        /// <summary>
         /// Logic for saving entered values.
         /// </summary>
-        public void SaveEdit()
-        {
-            if (CanSaveEdit())
-            {
+        public void SaveEdit() {
                 Value = EditValue;
                 EditState = false;
-            }
-            else
-            {
-                //error logic goes here
-            }
         }
         #endregion
     }
