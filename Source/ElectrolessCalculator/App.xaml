@@ -58,6 +58,43 @@
                 </Grid>
             </Border>
         </ControlTemplate>
+
+        <DataTemplate x:Key="CurrentComponentDataTemplate">
+            <DataTemplate.Resources>
+                <view:ValueUnitsToTextConveter x:Key="UnitsToTextConverter"/>
+            </DataTemplate.Resources>
+
+            <Border Height="25">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="55"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Component name-->
+                    <TextBlock 
+                                x:Name="ComponentNameTextBlock"
+                                Grid.Column="0" 
+                                TextAlignment="Left"
+                                Text="{Binding ShortName, FallbackValue=NaN}"/>
+
+                    <!--Value-->
+                    <TextBox    Grid.Column="1" 
+                                TextAlignment="Right"
+                                Text="{Binding Value, StringFormat=F1, FallbackValue=NaN}"
+                                BorderThickness="0"/>
+
+
+                    <!--Units-->
+                    <TextBlock  Grid.Column="2"
+                                HorizontalAlignment="Right"
+                                FontWeight="DemiBold"
+                                Text="{Binding Units, Converter={StaticResource ResourceKey=UnitsToTextConverter}}"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        
         
     </Application.Resources>
 </Application>

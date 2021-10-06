@@ -81,11 +81,11 @@
 
 
         <!--Current composition-->
-        <!--<ItemsControl x:Name="CurrentComposition"
+        <ItemsControl x:Name="CurrentComposition"
                       Grid.Row="4" Grid.Column="3" 
                       Margin="10, 0, 10, 0" 
                       ItemsSource="{Binding Components}" 
-                      ItemTemplate="{StaticResource ResourceKey=TargetComponentDataTemplate}"/>-->
+                      ItemTemplate="{StaticResource ResourceKey=CurrentComponentDataTemplate}"/>
 
 
         <!--Bottom colors-->

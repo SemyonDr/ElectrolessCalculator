@@ -22,11 +22,17 @@ namespace ElectrolessCalculator.ViewModel
         /// <param name="solution"></param>
         public CurrentSolution_ViewModel(Model.Solution solution) : base(solution)
         {
+            RefreshComponentsVM();
+        }
+        #endregion
+
+        public void RefreshComponentsVM() {
             //Initialize components list
             Components = new List<CurrentComponent_ViewModel>();
 
             //Creating components view models
-            foreach (Model.Component c in solution.Components.Values) {
+            foreach (Model.Component c in Solution.Components.Values)
+            {
                 //Components are displayed as gram per liter concentration,
                 //except for Lactic Acid which comes in liquid form and displayed in ml pre liter.
                 Model.ComponentUnits units = Model.ComponentUnits.g_l;
@@ -37,7 +43,6 @@ namespace ElectrolessCalculator.ViewModel
                 Components.Add(c_vm);
             }
         }
-        #endregion
 
         #region PUBLIC PROPERTIES
         //---------------------------------------------------------------------------------------------------------------
@@ -58,6 +63,7 @@ namespace ElectrolessCalculator.ViewModel
             set {
                 Solution.UseHPAnalize = value;
                 NotifyPropertyChanged("UseHPAnalize");
+                RefreshComponentsVM();
                 NotifyPropertyChanged("Components");
             }}
 
@@ -68,6 +74,7 @@ namespace ElectrolessCalculator.ViewModel
             set {
                 Solution.NickelAnalize = value;
                 NotifyPropertyChanged("NickelAnalize");
+                RefreshComponentsVM();
                 NotifyPropertyChanged("Components");
             }}
 
@@ -78,6 +85,7 @@ namespace ElectrolessCalculator.ViewModel
             set {
                 Solution.HypophosphiteAnalize = value;
                 NotifyPropertyChanged("HypophosphiteAnalize");
+                RefreshComponentsVM();
                 NotifyPropertyChanged("Components");
             }}
 

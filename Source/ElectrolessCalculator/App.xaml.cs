@@ -18,7 +18,7 @@ namespace ElectrolessCalculator
         {
             //Loading Model data
             Model.TargetSolution targetSolution = LoadTargetSolution();
-            Model.CurrentSolution currentSolution = new Model.CurrentSolution(300, targetSolution);
+            Model.CurrentSolution currentSolution = LoadCurrentSolution(300, targetSolution);
 
             //Creating ViewModels
             ViewModel.TargetSolution_ViewModel targetSolution_VM = new ViewModel.TargetSolution_ViewModel(targetSolution);
@@ -32,8 +32,7 @@ namespace ElectrolessCalculator
             mainWindow.TargetVolumePresenter.DataContext = targetSolution_VM;
             mainWindow.TargetEditPanel.DataContext = targetSolution_VM;
             mainWindow.AnalizePanel.DataContext = currentSolution_VM;
-
-            //mainWindow.CurrentComposition.DataContext = currentSolution_VM;
+            mainWindow.CurrentComposition.DataContext = currentSolution_VM;
             
             mainWindow.Show();
         }
@@ -48,6 +47,16 @@ namespace ElectrolessCalculator
             target.Components.Add(CmpType.SuccinicAcid, cf.CreateComponent(CmpType.SuccinicAcid, 20));
             target.Components.Add(CmpType.LacticAcid, cf.CreateComponent(CmpType.LacticAcid, 20));
             return target;
+        }
+
+        private Model.CurrentSolution LoadCurrentSolution(float volume, Model.TargetSolution target) {
+            Model.CurrentSolution current = new Model.CurrentSolution(volume, target);
+            float targetNiSalt = target.GetConcentration(CmpType.NickelSulfate);
+            float targetNiMetal = Model.NickelConverter.ConvertSaltToMetal(targetNiSalt);
+            current.NickelAnalize = targetNiMetal;
+            current.HypophosphiteAnalize = target.GetConcentration(CmpType.SodiumHypophosphite);
+
+            return current;
         }
     }
 }
