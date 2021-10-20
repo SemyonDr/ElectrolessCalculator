@@ -27,9 +27,6 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //Data binding
 
-        //Binding to solution view model
-        public SolutionBase_ViewModel Solution { get; private set; }
-
         //Binding to represented model object
         public Model.Component Component { get; private set; }
 
@@ -49,20 +46,7 @@ namespace ElectrolessCalculator.ViewModel
             get { return Component.Density; }}
 
         //Displayed value converted from absolute weigth in kg according with selected units.
-        public virtual float Value {
-            get {
-                return Model.UnitsConverter.ConvertFromKg(
-                    Component.WeigthKg,
-                    Solution.TotalVolume,
-                    units,
-                    Component.Density); }
-            set {
-                Component.WeigthKg = Model.UnitsConverter.ConvertToKg(
-                    value,
-                    Solution.TotalVolume,
-                    units,
-                    Component.Density);
-                NotifyPropertyChanged("Value"); }}
+        public abstract float Value { get; set; }
 
         //Units will be converted to text by view converter
         public Model.ComponentUnits Units {
@@ -84,11 +68,10 @@ namespace ElectrolessCalculator.ViewModel
         /// <param name="Component">Solution component.</param>
         /// <param name="Units">Component units.</param>
         /// <param name="Solution_VM">Solution view model.</param>
-        public ComponentBase_ViewModel(Model.Component Component, Model.ComponentUnits Units, SolutionBase_ViewModel Solution_VM)
+        public ComponentBase_ViewModel(Model.Component Component, Model.ComponentUnits Units)
         {
             this.Component = Component;
             this.Units = Units;
-            this.Solution = Solution_VM;
         }
         #endregion
     }

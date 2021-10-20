@@ -21,34 +21,49 @@
                     </Grid.ColumnDefinitions>
 
                     <!--Component name-->
-                    <TextBlock 
-                                x:Name="ComponentNameTextBlock"
+                    <TextBlock  x:Name="ComponentNameTextBlock"
                                 Grid.Column="0" 
                                 TextAlignment="Left"
                                 Text="{Binding ShortName, FallbackValue=NaN}"/>
 
-                    <!--Value-->
-                    <TextBox 
-                                Grid.Column="1" 
-                                TextAlignment="Right">
+                    <!--Value for editing-->
+                    <TextBox    Grid.Column="1" 
+                                TextAlignment="Right"
+                                BorderBrush="#FF888888"
+                                BorderThickness="1"
+                                Text="{Binding EditValue, FallbackValue=NaN, UpdateSourceTrigger=PropertyChanged}">
                         <TextBox.Style>
                             <Style TargetType="TextBox">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding EditState}" Value="True">
-                                        <Setter Property="Text" Value="{Binding EditValue, StringFormat=F2, FallbackValue=NaN, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <Setter Property="BorderBrush" Value="#FF888888"/>
-                                        <Setter Property="IsReadOnly" Value="False"/>
-                                        <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                        <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding EditState}" Value="False">
-                                        <Setter Property="Text" Value="{Binding Value, StringFormat=F1, FallbackValue=NaN}"/>
-                                        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Background}"/>
-                                        <Setter Property="IsReadOnly" Value="True"/>
+                                        <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBox.Style>
                     </TextBox>
+
+                    <!--Value text for viewing-->
+                    <TextBlock Grid.Column="1" 
+                               TextAlignment="Right"
+                               Text="{Binding Value, StringFormat=F1, FallbackValue=NaN}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EditState}" Value="True">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding EditState}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
 
                     <!--Units-->
                     <TextBlock  Grid.Column="2"
@@ -80,10 +95,9 @@
                                 Text="{Binding ShortName, FallbackValue=NaN}"/>
 
                     <!--Value-->
-                    <TextBox    Grid.Column="1" 
+                    <TextBlock    Grid.Column="1" 
                                 TextAlignment="Right"
-                                Text="{Binding Value, StringFormat=F1, FallbackValue=NaN}"
-                                BorderThickness="0"/>
+                                Text="{Binding Value, StringFormat=F1, FallbackValue=NaN}"/>
 
 
                     <!--Units-->
@@ -94,7 +108,54 @@
                 </Grid>
             </Border>
         </DataTemplate>
-        
-        
+
+        <DataTemplate x:Key="RequiredComponentDataTemplate">
+            <DataTemplate.Resources>
+                <view:ValueUnitsToTextConveter x:Key="UnitsToTextConverter"/>
+            </DataTemplate.Resources>
+
+            <Border Height="25">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="35"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Component name-->
+                    <TextBlock 
+                                x:Name="ComponentNameTextBlock"
+                                Grid.Column="0" 
+                                TextAlignment="Left"
+                                Text="{Binding ShortName, FallbackValue=NaN}"/>
+
+                    <!--Value-->
+                    <TextBlock    Grid.Column="1" 
+                                TextAlignment="Right"
+                                Text="{Binding Value, StringFormat=F1, FallbackValue=NaN}"/>
+
+                    <!--Units-->
+                    <TextBlock  Grid.Column="2"
+                                HorizontalAlignment="Right"
+                                FontWeight="DemiBold"
+                                Text="{Binding Units, Converter={StaticResource ResourceKey=UnitsToTextConverter}}"/>
+
+                    <!--Value-->
+                    <TextBlock    Grid.Column="3" 
+                                TextAlignment="Right"
+                                Text="{Binding ComponentVolume, Mode=OneWay, StringFormat=F1, FallbackValue=NaN}"/>
+
+                    <!--Units-->
+                    <TextBlock  Grid.Column="4"
+                                HorizontalAlignment="Right"
+                                FontWeight="DemiBold"
+                                Text="{Binding VolumeUnits, Converter={StaticResource ResourceKey=UnitsToTextConverter}}"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+
     </Application.Resources>
 </Application>

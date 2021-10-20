@@ -17,6 +17,8 @@ namespace ElectrolessCalculator.ViewModel
 
         //Field backs public property
         private Model.Solution solution;
+
+        private float editTotalVolume;
         #endregion
 
         #region SOLUTION PROPERTIES
@@ -39,7 +41,16 @@ namespace ElectrolessCalculator.ViewModel
         /// </summary>
         public float TotalVolume {
             get { return solution.TotalVolumeL; }
-            set { solution.TotalVolumeL = value; }}
+            set {
+                solution.TotalVolumeL = value;
+                NotifyPropertyChanged("TotalVolume");
+            }}
+
+        public float EditTotalVolume {
+            get { return editTotalVolume; }
+            set { editTotalVolume = value;
+                NotifyPropertyChanged("EditTotalVolume");
+            }}
 
         #endregion
 

@@ -93,14 +93,14 @@ namespace ElectrolessCalculator.ViewModel
             get {
                 return Model.UnitsConverter.ConvertFromKg(
                     Model.NickelConverter.ConvertSaltToMetal(NickelSulfate_VM.Component.WeigthKg),
-                    NickelSulfate_VM.Solution.TotalVolume,
+                    NickelSulfate_VM.TargetSolution_VM.Volume,
                     NickelSulfate_VM.Units,
                     NickelSulfate_VM.Component.Density);
             }
             set {
                 NickelSulfate_VM.Component.WeigthKg = Model.UnitsConverter.ConvertToKg(
                     Model.NickelConverter.ConvertMetalToSalt(value),
-                    NickelSulfate_VM.Solution.TotalVolume,
+                    NickelSulfate_VM.TargetSolution_VM.Volume,
                     NickelSulfate_VM.Units,
                     NickelSulfate_VM.Component.Density);
                 NotifyPropertyChanged("Value");

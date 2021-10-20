@@ -19,10 +19,12 @@ namespace ElectrolessCalculator
             //Loading Model data
             Model.TargetSolution targetSolution = LoadTargetSolution();
             Model.CurrentSolution currentSolution = LoadCurrentSolution(300, targetSolution);
+            Model.RequiredMaterials requiredMaterials = new Model.RequiredMaterials(targetSolution, currentSolution);
 
             //Creating ViewModels
             ViewModel.TargetSolution_ViewModel targetSolution_VM = new ViewModel.TargetSolution_ViewModel(targetSolution);
-            ViewModel.CurrentSolution_ViewModel currentSolution_VM = new ViewModel.CurrentSolution_ViewModel(currentSolution);
+            ViewModel.CurrentSolution_ViewModel currentSolution_VM = new ViewModel.CurrentSolution_ViewModel(currentSolution, targetSolution_VM);
+            ViewModel.RequiredMaterials_VM requiredMaterials_VM = new ViewModel.RequiredMaterials_VM(requiredMaterials, targetSolution_VM, currentSolution_VM);
             
             //Creating Windows
             View.MainWindow mainWindow = new View.MainWindow();
@@ -31,8 +33,12 @@ namespace ElectrolessCalculator
             mainWindow.TargetSolution.DataContext = targetSolution_VM;
             mainWindow.TargetVolumePresenter.DataContext = targetSolution_VM;
             mainWindow.TargetEditPanel.DataContext = targetSolution_VM;
+
             mainWindow.AnalizePanel.DataContext = currentSolution_VM;
+            mainWindow.CurrentVolumePresenter.DataContext = currentSolution_VM;
             mainWindow.CurrentComposition.DataContext = currentSolution_VM;
+
+            mainWindow.RequiredComponents.DataContext = requiredMaterials_VM;
             
             mainWindow.Show();
         }
@@ -53,7 +59,7 @@ namespace ElectrolessCalculator
             Model.CurrentSolution current = new Model.CurrentSolution(volume, target);
             float targetNiSalt = target.GetConcentration(CmpType.NickelSulfate);
             float targetNiMetal = Model.NickelConverter.ConvertSaltToMetal(targetNiSalt);
-            current.NickelAnalize = targetNiMetal;
+            current.NickelAnalize = 10;//targetNiMetal;
             current.HypophosphiteAnalize = target.GetConcentration(CmpType.SodiumHypophosphite);
 
             return current;

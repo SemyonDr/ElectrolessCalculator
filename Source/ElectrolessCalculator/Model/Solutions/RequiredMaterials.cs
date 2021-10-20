@@ -14,7 +14,7 @@ namespace ElectrolessCalculator.Model
         private TargetSolution target;
         private CurrentSolution current;
 
-        public Dictionary<CmpType, Component> Components {
+        new public Dictionary<CmpType, Component> Components {
             get {
                 return calc.GetRequiredMaterials(target, current);
             }}
