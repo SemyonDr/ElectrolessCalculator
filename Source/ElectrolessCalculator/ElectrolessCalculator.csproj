@@ -94,12 +94,11 @@
     <Compile Include="View\AnalizePanel.xaml.cs">
       <DependentUpon>AnalizePanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ComponentPresenter.cs" />
-    <Compile Include="View\CompositionPresenter.xaml.cs">
-      <DependentUpon>CompositionPresenter.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\CurrentVolumePresenter.xaml.cs">
       <DependentUpon>CurrentVolumePresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TargetComponentPresenter.xaml.cs">
+      <DependentUpon>TargetComponentPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TargetEditPanel.xaml.cs">
       <DependentUpon>TargetEditPanel.xaml</DependentUpon>
@@ -117,10 +116,6 @@
     <Page Include="View\AnalizePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\CompositionPresenter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\CurrentVolumePresenter.xaml">
       <SubType>Designer</SubType>
@@ -144,6 +139,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\TargetComponentPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TargetEditPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

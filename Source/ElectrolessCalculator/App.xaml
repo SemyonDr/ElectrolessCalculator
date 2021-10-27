@@ -27,7 +27,8 @@
                                 Text="{Binding ShortName, FallbackValue=NaN}"/>
 
                     <!--Value for editing-->
-                    <TextBox    Grid.Column="1" 
+                    <TextBox    x:Name="EditTextBox"
+                                Grid.Column="1" 
                                 TextAlignment="Right"
                                 BorderBrush="#FF888888"
                                 BorderThickness="1"
@@ -41,6 +42,12 @@
                                     <DataTrigger Binding="{Binding EditState}" Value="False">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
+                                    <Trigger Property="Validation.HasError" Value="True">
+                                        <Setter Property="Background" Value="Red"/>
+                                    </Trigger>
+                                    <Trigger Property="Validation.HasError" Value="False">
+                                        <Setter Property="Background" Value="Green"/>
+                                    </Trigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBox.Style>

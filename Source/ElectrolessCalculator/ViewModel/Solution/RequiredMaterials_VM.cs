@@ -9,7 +9,7 @@ namespace ElectrolessCalculator.ViewModel
     public class RequiredMaterials_VM : ViewModelBase
     {
         public RequiredMaterials_VM(Model.RequiredMaterials requiredMaterialsModel, TargetSolution_ViewModel TargetSolution_VM, CurrentSolution_ViewModel CurrentSolution_VM) {
-            TargetSolution_VM.EditSaved += OnSolutionsChanged;
+            TargetSolution_VM.TargetSolutionChanged += OnSolutionsChanged;
             CurrentSolution_VM.CurrentSolutionChanged += OnSolutionsChanged;
 
             RequiredMaterialsModel = requiredMaterialsModel;

@@ -47,8 +47,8 @@ namespace ElectrolessCalculator
         private Model.TargetSolution LoadTargetSolution() {
             Model.TargetSolution target = new Model.TargetSolution(300);
             Model.ComponentFactory cf = new Model.ComponentFactory();
-            target.Components.Add(CmpType.NickelSulfate, cf.CreateComponent(CmpType.NickelSulfate, 20));
-            target.Components.Add(CmpType.SodiumHypophosphite, cf.CreateComponent(CmpType.SodiumHypophosphite, 20));
+            target.Components.Add(CmpType.NickelSulfate, cf.CreateComponent(CmpType.NickelSulfate, 9.3993f));
+            target.Components.Add(CmpType.SodiumHypophosphite, cf.CreateComponent(CmpType.SodiumHypophosphite, 6.9f));
             target.Components.Add(CmpType.SodiumAcetate, cf.CreateComponent(CmpType.SodiumAcetate, 20));
             target.Components.Add(CmpType.SuccinicAcid, cf.CreateComponent(CmpType.SuccinicAcid, 20));
             target.Components.Add(CmpType.LacticAcid, cf.CreateComponent(CmpType.LacticAcid, 20));
@@ -59,7 +59,7 @@ namespace ElectrolessCalculator
             Model.CurrentSolution current = new Model.CurrentSolution(volume, target);
             float targetNiSalt = target.GetConcentration(CmpType.NickelSulfate);
             float targetNiMetal = Model.NickelConverter.ConvertSaltToMetal(targetNiSalt);
-            current.NickelAnalize = 10;//targetNiMetal;
+            current.NickelAnalize = Model.NickelConverter.ConvertSaltToMetal(target.GetConcentration(CmpType.NickelSulfate));
             current.HypophosphiteAnalize = target.GetConcentration(CmpType.SodiumHypophosphite);
 
             return current;

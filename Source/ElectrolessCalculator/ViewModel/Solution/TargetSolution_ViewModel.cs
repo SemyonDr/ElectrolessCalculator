@@ -21,7 +21,11 @@ namespace ElectrolessCalculator.ViewModel
         /// <summary>
         /// Invoked when editing is finished and entered values are saved.
         /// </summary>
-        public event EventHandler EditSaved;
+        public event EventHandler TargetSolutionChanged;
+        /// <summary>
+        /// Invoked while editing when values for edit change.
+        /// </summary>
+        public event EventHandler TargetEditValuesChanged;
 
 
         #endregion
@@ -230,10 +234,46 @@ namespace ElectrolessCalculator.ViewModel
             CancelEdit(null);
 
             //Raise event on editing completion to inform subscribers of new values
-            if (EditSaved != null)
-                EditSaved.Invoke(this, new EventArgs());
+            OnTargetSolutionChanged();
         }
 
         #endregion
+
+        #region EVENT HANDLERS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        public void OnTargetSolutionChanged() {
+            if (TargetSolutionChanged != null)
+                TargetSolutionChanged.Invoke(this, new EventArgs());
+        }
+
+        #endregion
+    }
+
+
+
+
+    /// <summary>
+    /// This enum describes errors that may be found while editing target solution values.
+    /// </summary>
+    public enum TrgEditErrorType {
+        //Volume errors
+        VolumeIsIncorrect,
+        VolumeIsNegative,
+        VolumeIsZero,
+        VolumeIsTooBig, //Capped at 10,000 L
+
+        //Individual component errors
+        ComponentValueIsIncorrect,
+        ComponentValueIsNegative,
+        ComponentValueIsTooBig, //Exceeds volume of the solution
+
+        //Sum error
+        SumIsTooBig,     //Sum of components exceeds volume of the solution
+
+        //No errors
+        NoError
     }
 }

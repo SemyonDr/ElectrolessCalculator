@@ -6,8 +6,30 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.ViewModel
 {
+
     /// <summary>
-    /// View model for a component in the target solution.
+    /// Handler for event when edit value of target component is changed.
+    /// </summary>
+    /// <param name="sender">Component that raised event.</param>
+    /// <param name="editArgs">Data about the change.</param>
+    public delegate void TrgCmpEditChangedHandler(object sender, TrgCmpEditChangedArgs editArgs);
+
+
+    /// <summary>
+    /// Arguments for event of changed edit value of the target component.
+    /// </summary>
+    public class TrgCmpEditChangedArgs {
+        public bool isEditValid { get; private set; }
+        public TrgEditErrorType ErrorType { get; private set; }
+
+        public TrgCmpEditChangedArgs(bool isValid, TrgEditErrorType Error) {
+            isEditValid = isEditValid;
+            ErrorType = Error;
+        }
+    }
+
+    /// <summary>
+    /// View model for a component of the target solution.
     /// Includes edit state logic.
     /// </summary>
     public class TargetComponent_ViewModel : ComponentBase_ViewModel
@@ -15,6 +37,17 @@ namespace ElectrolessCalculator.ViewModel
         //Editing is realised by adding edit state. 
         //In edit state separate value property is used for storing entered value.
         //When saving entered value is written over displayed value if entered value is valid.
+
+        #region EVENTS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// This event is fired when value for editing is changed.
+        /// </summary>
+        public TrgCmpEditChangedHandler EditChanged;
+
+        #endregion
 
         #region INITIALIZATION
         //---------------------------------------------------------------------------------------------------------------
@@ -86,13 +119,27 @@ namespace ElectrolessCalculator.ViewModel
             set {
                 editValue_conc = value;
                 NotifyPropertyChanged("EditValue");
+                OnEditValueChanged();
             }}
+
+        /// <summary>
+        /// This property binds with text box used for editing to check if input is a float number (don't contain letters, symbols, etc. i.e. correct)
+        /// </summary>
+        public bool isEditValid { get; set; }
         #endregion
 
         #region METHODS
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// This method checks validity of user input value while in edit state and returns error type if found, or null if input is valid.
+        /// </summary>
+        /// <returns></returns>
+        private TrgEditErrorType ValidateEditValue() {
+            return TrgEditErrorType.NoError;
+        }
 
         /// <summary>
         /// Logic for starting editing.
@@ -138,6 +185,19 @@ namespace ElectrolessCalculator.ViewModel
                 Value = EditValue;
                 EditState = false;
         }
+        #endregion
+
+
+        #region EVENT HANDLERS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        private void OnEditValueChanged() {
+
+
+        }
+
         #endregion
     }
 }

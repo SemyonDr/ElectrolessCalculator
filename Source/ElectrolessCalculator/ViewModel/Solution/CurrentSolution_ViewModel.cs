@@ -43,7 +43,7 @@ namespace ElectrolessCalculator.ViewModel
             SetVolumeFractionCommand = new RelayCommand(new Action<object>(SetVolumeFraction));
 
             //Subscribing to event of target solution components (and volume) changing
-            Target_VM.EditSaved += OnTargetEditSaved;
+            Target_VM.TargetSolutionChanged += OnTargetSolutionChanged;
 
             //Calculate components values
             RefreshComponentsVM();
@@ -78,6 +78,9 @@ namespace ElectrolessCalculator.ViewModel
             set {
                 solutionModel.TotalVolumeL = value;
                 NotifyPropertyChanged("Volume");
+                //When volume changes absolute weigths of components should be recalculated
+                RefreshComponentsVM();
+                NotifyPropertyChanged("Components");
                 OnCurrentSolutionChanged();
             }}
 
@@ -200,7 +203,7 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
 
-        private void OnTargetEditSaved(object sender, EventArgs e) {
+        private void OnTargetSolutionChanged(object sender, EventArgs e) {
             //Current concentrations calculated as fractions of target concentrations, so when
             //target concentrations are saved current components should be recalculated
             RefreshComponentsVM();

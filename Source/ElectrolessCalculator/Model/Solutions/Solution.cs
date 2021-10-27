@@ -22,6 +22,11 @@ namespace ElectrolessCalculator.Model
             set { totalVolumeL = value; }
             }
 
+        /// <summary>
+        /// Returns concentration of the component in grams per liter.
+        /// </summary>
+        /// <param name="CType">Component type.</param>
+        /// <returns></returns>
         public float GetConcentration(CmpType CType) {
             return (Components[CType].WeigthKg * 1000) / totalVolumeL;
         }
