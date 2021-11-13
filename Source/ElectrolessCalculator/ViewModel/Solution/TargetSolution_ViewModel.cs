@@ -23,9 +23,10 @@ namespace ElectrolessCalculator.ViewModel
         /// </summary>
         public event EventHandler TargetSolutionChanged;
         /// <summary>
-        /// Invoked while editing when values for edit change.
+        /// Invoked while editing when editvalue of components change, or edit volume changes.
         /// </summary>
         public event EventHandler TargetEditValuesChanged;
+        public event EventHandler TargetEditVolumeChanged;
 
 
         #endregion
@@ -36,9 +37,9 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //Those commands are binded to buttons in view.
 
-        public ICommand StartEditCommand { get; private set; }
-        public ICommand CancelEditCommand { get; private set; }
-        public ICommand SaveEditCommand { get; private set; }
+        public RelayCommand StartEditCommand { get; private set; }
+        public RelayCommand CancelEditCommand { get; private set; }
+        public RelayCommand SaveEditCommand { get; private set; }
         #endregion
 
 
@@ -63,6 +64,12 @@ namespace ElectrolessCalculator.ViewModel
             CancelEditCommand = new RelayCommand(new Action<object>(CancelEdit));
             SaveEditCommand = new RelayCommand(new Action<object>(SaveEdit), new Func<object, bool>(CanSaveEdit));
 
+            //Initializing edit errors list
+            editErrors = new List<TargetEditError>();
+
+            //Initializing validation indicator for volume
+            IsEditVolumeValid = true;
+
             //Initializing components list
             Components = new List<TargetComponent_ViewModel>();
 
@@ -77,6 +84,9 @@ namespace ElectrolessCalculator.ViewModel
                 TargetComponent_ViewModel c_vm = new TargetComponent_ViewModel(c, units, this);
                 Components.Add(c_vm);
 
+                //Subscribing to component edit value changed event
+                c_vm.TarCmpEditValueChanged += TarCmpEditValueChanged;
+
                 //Creating nickel metal "virtual" component view model
                 //and adding it after nickel sulfate.
                 if (c.ShortName == "Nickel Sulfate")
@@ -86,14 +96,17 @@ namespace ElectrolessCalculator.ViewModel
         #endregion
 
 
-
         #region PRIVATE FIELDS
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
-        
+
         private Model.TargetSolution targetSolutionModel;
-        private float editVolume;
+        private string editVolume;
+        private float lastParsedEditVolume;
+        private bool isEditVolumeValid;
+        private List<TargetEditError> editErrors;
+        
 
         #endregion
 
@@ -134,16 +147,77 @@ namespace ElectrolessCalculator.ViewModel
         /// <summary>
         /// Property used for displaying target solution volume while editing.
         /// </summary>
-        public float EditVolume {
+        public string EditVolume {
             get {
                 return editVolume; }
             set {
                 editVolume = value;
+                //Trying to parse value
+                float result;
+                bool parsed = float.TryParse(value, out result);
+                if (parsed)
+                    lastParsedEditVolume = result;
+                //Forcing components validation with new volume
+                OnTargetEditVolumeChanged();
+                //Validating edit
+                ValidateEdit();
                 NotifyPropertyChanged("EditVolume");
+            }
+        }
+
+        /// <summary>
+        /// Used to inform view validation indicator.
+        /// </summary>
+        public bool IsEditVolumeValid {
+            get {
+                return isEditVolumeValid;
+            }
+            private set {
+                isEditVolumeValid = value;
+                NotifyPropertyChanged("IsEditVolumeValid");
+            }
+        }
+
+        /// <summary>
+        /// Last value of Edit Volume that was succesfully parsed from string.
+        /// </summary>
+        public float LastParsedEditVolume {
+            get {
+                return lastParsedEditVolume;
             }}
 
+        /// <summary>
+        /// Collection of edit validation errors.
+        /// </summary>
+        public List<TargetEditError> EditErrors {
+            get {
+                return editErrors;
+            }
+            private set {
+                editErrors = value;
+                NotifyPropertyChanged("EditErrors");
+                NotifyPropertyChanged("IsEditValid");
+            }}
+
+        /// <summary>
+        /// This flag shows if current edit values pass validation
+        /// </summary>
+        public bool IsEditValid {
+            get {
+                if (EditErrors.Count == 0)
+                    return true;
+                else
+                    return false;
+            }}
+
+        
+        #endregion
+
+
+        #region PRIVATE PROPERTIES
         //---------------------------------------------------------------------------------------------------------------
-        //Internal properties
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
         private Model.TargetSolution TargetSolutionModel {
             get { return targetSolutionModel; }
             set {
@@ -153,8 +227,6 @@ namespace ElectrolessCalculator.ViewModel
             }}
 
         #endregion
-
-
 
 
         #region EDITING
@@ -191,7 +263,11 @@ namespace ElectrolessCalculator.ViewModel
         /// </summary>
         /// <param name="parameter">For compatability with ICommand interface.</param>
         public void StartEdit(object parameter) {
-            EditVolume = Volume;
+            lastParsedEditVolume = Volume;
+            //Initializing edit volume without triggering validation
+            editVolume = Volume.ToString("F2");
+            NotifyPropertyChanged("EditVolume");
+            IsEditVolumeValid = true;
             foreach (TargetComponent_ViewModel cmp in Components) {
                     cmp.StartEdit();
             }
@@ -217,8 +293,7 @@ namespace ElectrolessCalculator.ViewModel
         /// <param name="parameter"></param>
         /// <returns></returns>
         public bool CanSaveEdit(object parameter) {
-            //Here comes value check logic
-            return true;
+            return IsEditValid;
         }
 
 
@@ -227,7 +302,7 @@ namespace ElectrolessCalculator.ViewModel
         /// </summary>
         /// <param name="parameter"></param>
         public void SaveEdit(object parameter) {
-            Volume = EditVolume;
+            Volume = lastParsedEditVolume;
             foreach (TargetComponent_ViewModel cmp in Components) {
                     cmp.SaveEdit();
             }
@@ -243,35 +318,120 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
-
         public void OnTargetSolutionChanged() {
             if (TargetSolutionChanged != null)
                 TargetSolutionChanged.Invoke(this, new EventArgs());
         }
 
+        /// <summary>
+        /// Called when edit value of one of the components changed.
+        /// </summary>
+        /// <param name="TarCmpObj"></param>
+        /// <param name="args"></param>
+        private void TarCmpEditValueChanged(TargetComponent_ViewModel TarCmpObj, TarCmpEditValueChangedArgs args){
+            //Edit of solution have to be re-validated
+            ValidateEdit();
+        }
+
+        private void OnTargetEditVolumeChanged() {
+            if (TargetEditVolumeChanged != null) {
+                TargetEditVolumeChanged.Invoke(this, new EventArgs());
+            }
+        }
+        #endregion
+
+        #region METHODS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// This method validates user input while editing target solution. 
+        /// Validates volume input and individual components input.
+        /// </summary>
+        /// <returns></returns>
+        private List<TargetEditError> ValidateEdit() {
+            List<TargetEditError> errors = new List<TargetEditError>();
+
+            //Trying to parse edit volume
+            float parsedVolume = 0.0f;
+            bool isVolumeParsed = float.TryParse(EditVolume, out parsedVolume);
+            if (isVolumeParsed)
+            {
+                lastParsedEditVolume = parsedVolume;
+
+                //Checking if volume is negative
+                if (lastParsedEditVolume < 0)
+                    errors.Add(new TargetEditError("Volume", TargetErrorType.Negative));
+
+                //Checking if volume is zero
+                if (lastParsedEditVolume == 0)
+                    errors.Add(new TargetEditError("Volume", TargetErrorType.Zero));
+
+                //Checking if volume is too big
+                if (lastParsedEditVolume > 10000)
+                    errors.Add(new TargetEditError("Volume", TargetErrorType.TooBig));
+
+                //Setting the flag
+                if (errors.Count > 0)
+                    IsEditVolumeValid = false;
+            }
+            else {
+                errors.Add(new TargetEditError("Volume", TargetErrorType.Invalid));
+                IsEditVolumeValid = false;
+            }
+
+            //Updating value for volume validation indicator
+            if (errors.Count == 0) {
+                IsEditVolumeValid = true;
+            }
+                
+            float totalCmpVolume = 0.0f;
+
+            //Checking if components are valid
+            foreach (TargetComponent_ViewModel c_vm in Components) {
+                if (!c_vm.IsEditValid)
+                    errors.Add(c_vm.EditError);
+                else
+                    //Calculating total volume of the components
+                    totalCmpVolume += Model.UnitsConverter.Convert(float.Parse(c_vm.EditValue), lastParsedEditVolume, c_vm.Units, Model.ComponentUnits.l, c_vm.Component.Density);
+            }
+
+            //Checking if combined volume of components is bigger that bath volume
+            if (totalCmpVolume > lastParsedEditVolume)
+                errors.Add(new TargetEditError("Components", TargetErrorType.SumIsTooBig));
+
+            //Setting result property
+            EditErrors = errors;
+
+            //Notifiying command
+            //SaveEditCommand.RaiseCanExecuteChanged();
+
+            return errors;
+        }
         #endregion
     }
 
-
-
-
     /// <summary>
-    /// This enum describes errors that may be found while editing target solution values.
+    /// This class represents validation error encountered while editing target solution.
     /// </summary>
-    public enum TrgEditErrorType {
-        //Volume errors
-        VolumeIsIncorrect,
-        VolumeIsNegative,
-        VolumeIsZero,
-        VolumeIsTooBig, //Capped at 10,000 L
+    public class TargetEditError {
+        public TargetErrorType Type { get; }
+        public string Source { get; }
+        public TargetEditError(string Source, TargetErrorType Type) {
+            this.Type = Type;
+            this.Source = Source;
+        }
+    }
 
-        //Individual component errors
-        ComponentValueIsIncorrect,
-        ComponentValueIsNegative,
-        ComponentValueIsTooBig, //Exceeds volume of the solution
+    public enum TargetErrorType {
+        Zero,
+        Invalid,
+        Negative,
+        TooBig,
 
-        //Sum error
-        SumIsTooBig,     //Sum of components exceeds volume of the solution
+        //All
+        SumIsTooBig,
 
         //No errors
         NoError

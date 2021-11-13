@@ -20,19 +20,6 @@ namespace ElectrolessCalculator.View
     /// </summary>
     public partial class TargetComponentPresenter : UserControl
     {
-
-
-        public bool IsValid
-        {
-            get { return (bool)GetValue(IsValidProperty); }
-            set { SetValue(IsValidProperty, value); }
-        }
-
-        public static readonly DependencyProperty IsValidProperty =
-            DependencyProperty.Register("IsValid", typeof(bool), typeof(TargetComponentPresenter), new PropertyMetadata(true));
-
-
-
         public TargetComponentPresenter()
         {
             InitializeComponent();

@@ -29,14 +29,14 @@ namespace ElectrolessCalculator.View
         public static readonly DependencyProperty VolumeProperty =
             DependencyProperty.Register("Volume", typeof(float), typeof(TargetVolumePresenter), new PropertyMetadata(0.0f));
 
-        public float EditVolume
+        public string EditVolume
         {
-            get { return (float)GetValue(EditVolumeProperty); }
+            get { return (string)GetValue(EditVolumeProperty); }
             set { SetValue(EditVolumeProperty, value); }
         }
 
         public static readonly DependencyProperty EditVolumeProperty =
-            DependencyProperty.Register("EditVolume", typeof(float), typeof(TargetVolumePresenter), new PropertyMetadata(0.0f));
+            DependencyProperty.Register("EditVolume", typeof(string), typeof(TargetVolumePresenter), new PropertyMetadata(""));
 
 
         public TargetVolumePresenter()

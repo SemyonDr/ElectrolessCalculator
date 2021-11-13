@@ -8,36 +8,40 @@
              d:DesignHeight="25" d:DesignWidth="300">
     <UserControl.Resources>
         <local:ValueUnitsToTextConveter x:Key="UnitsToTextConverter"/>
+        <local:BoolFlipConverter x:Key="BoolFlipConverter"/>
     </UserControl.Resources>
 
     <Grid Height="25">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="45"/>
             <ColumnDefinition Width="55"/>
         </Grid.ColumnDefinitions>
 
-        <Rectangle Grid.Column="0" Fill="Blue" Margin="0,1,1,1">
+        <!--Validation indicator-->
+        <Rectangle x:Name="ValidationIndicator"
+                   Grid.Column="0"
+                   Margin="1,5,2,5">
             <Rectangle.Style>
                 <Style TargetType="Rectangle">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsValid}" Value="True">
-                            <Setter Property="Fill" Value="Green"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsValid}" Value="False">
+                        <DataTrigger Binding="{Binding IsEditValid, Mode=OneWay}" Value="False">
                             <Setter Property="Fill" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsEditValid, Mode=OneWay}" Value="True">
+                            <Setter Property="Fill" Value="White"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Rectangle.Style>
         </Rectangle>
 
-
         <!--Component name-->
         <TextBlock  x:Name="ComponentNameTextBlock"
                                 Grid.Column="1" 
                                 TextAlignment="Left"
+                                VerticalAlignment="Center"
                                 Text="{Binding ShortName, FallbackValue=NaN}"/>
 
         <!--Value for editing-->
@@ -46,14 +50,17 @@
                                 TextAlignment="Right"
                                 BorderBrush="#FF888888"
                                 BorderThickness="1"
-                                Text="{Binding EditValue, FallbackValue=NaN, UpdateSourceTrigger=PropertyChanged}">
+                                Text="{Binding EditValue, UpdateSourceTrigger=PropertyChanged, FallbackValue=NaN}">
+            <local:RoutedPropertyContainer.RoutedProperty>
+                <local:RoutedProperty TargetPropertyPath="IsKeyboardFocused" SourceBinding="{Binding IsKeyboardFocused}"/>
+            </local:RoutedPropertyContainer.RoutedProperty>
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding EditState}" Value="True">
+                        <DataTrigger Binding="{Binding EditState, FallbackValue=False}" Value="True">
                             <Setter Property="Visibility" Value="Visible"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding EditState}" Value="False">
+                        <DataTrigger Binding="{Binding EditState, FallbackValue=False}" Value="False">
                             <Setter Property="Visibility" Value="Hidden"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -66,14 +73,15 @@
         <TextBlock  x:Name="DisplayTextBox"
                     Grid.Column="2" 
                     TextAlignment="Right"
-                    Text="{Binding Value, StringFormat=F1, FallbackValue=NaN}">
+                    Text="{Binding Value, StringFormat=F1, FallbackValue=NaN}"
+                    >
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding EditState}" Value="True">
+                        <DataTrigger Binding="{Binding EditState, FallbackValue=False}" Value="True">
                             <Setter Property="Visibility" Value="Hidden"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding EditState}" Value="False">
+                        <DataTrigger Binding="{Binding EditState, FallbackValue=False}" Value="False">
                             <Setter Property="Visibility" Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>

@@ -28,7 +28,7 @@
             <!--Spacer-->
             <ColumnDefinition Width="5"></ColumnDefinition>
             <!--Target composition-->
-            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1.1*"></ColumnDefinition>
             <!--Spacer-->
             <ColumnDefinition Width="5"></ColumnDefinition>
             <!--Current composition-->
@@ -108,8 +108,14 @@
                       ItemTemplate="{StaticResource ResourceKey=RequiredComponentDataTemplate}"/>
 
         <!--Bottom colors-->
-        <Rectangle Grid.Row="5" Grid.Column="1" Fill="DodgerBlue"></Rectangle>
-        <Rectangle Grid.Row="5" Grid.Column="3" Fill="Khaki"></Rectangle>
-        <Rectangle Grid.Row="5" Grid.Column="5" Fill="LightGreen"></Rectangle>
+        <Rectangle Grid.Row="5" Grid.Column="1" Fill="DodgerBlue"/>
+        <Rectangle Grid.Row="5" Grid.Column="3" Fill="Khaki"/>
+        <Rectangle Grid.Row="5" Grid.Column="5" Fill="LightGreen"/>
+
+        <local:TopTargetErrorPresenter x:Name="TopTargetError"
+                                       Grid.Row="5" Grid.Column="1"
+                                       EditErrors="{Binding EditErrors, Mode=OneWay}"
+                                       IsEditValid="{Binding IsEditValid, Mode=OneWay}"
+                                       />
     </Grid>
 </Window>

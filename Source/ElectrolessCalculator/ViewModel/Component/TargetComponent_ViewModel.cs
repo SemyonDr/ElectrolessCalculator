@@ -6,27 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.ViewModel
 {
-
-    /// <summary>
-    /// Handler for event when edit value of target component is changed.
-    /// </summary>
-    /// <param name="sender">Component that raised event.</param>
-    /// <param name="editArgs">Data about the change.</param>
-    public delegate void TrgCmpEditChangedHandler(object sender, TrgCmpEditChangedArgs editArgs);
-
-
-    /// <summary>
-    /// Arguments for event of changed edit value of the target component.
-    /// </summary>
-    public class TrgCmpEditChangedArgs {
-        public bool isEditValid { get; private set; }
-        public TrgEditErrorType ErrorType { get; private set; }
-
-        public TrgCmpEditChangedArgs(bool isValid, TrgEditErrorType Error) {
-            isEditValid = isEditValid;
-            ErrorType = Error;
-        }
-    }
+    public delegate void TarCmpEditValueHandler(TargetComponent_ViewModel sender, TarCmpEditValueChangedArgs args);
 
     /// <summary>
     /// View model for a component of the target solution.
@@ -43,11 +23,11 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         /// <summary>
-        /// This event is fired when value for editing is changed.
+        /// Raised when edit value is changed.
         /// </summary>
-        public TrgCmpEditChangedHandler EditChanged;
-
+        public event TarCmpEditValueHandler TarCmpEditValueChanged;
         #endregion
+
 
         #region INITIALIZATION
         //---------------------------------------------------------------------------------------------------------------
@@ -63,7 +43,10 @@ namespace ElectrolessCalculator.ViewModel
         {
             this.TargetSolution_VM = TargetSolution_VM;
             editState = false;
+            EditError = new TargetEditError(this.ShortName, TargetErrorType.NoError);
+            TargetSolution_VM.TargetEditVolumeChanged += OnTargetEditVolumeChanged;
         }
+
         #endregion
 
         #region PRIVATE FIELDS
@@ -71,7 +54,8 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         private bool editState;
-        private float editValue_conc;
+        private string editValue;
+        private TargetEditError editError;
 
         #endregion
 
@@ -82,6 +66,10 @@ namespace ElectrolessCalculator.ViewModel
         //Solution this components is part of.
         public TargetSolution_ViewModel TargetSolution_VM { get; private set; }
 
+
+        /// <summary>
+        /// Indicates if component in the state of editing.
+        /// </summary>
         public bool EditState
         {
             get { return editState; }
@@ -90,8 +78,12 @@ namespace ElectrolessCalculator.ViewModel
                     editState = value;
                     NotifyPropertyChanged("EditState");
                 }
-            }}
+            } }
 
+
+        /// <summary>
+        /// Displayed value when not editing.
+        /// </summary>
         public override float Value {
             get {
                 return Model.UnitsConverter.ConvertFromKg(
@@ -106,27 +98,47 @@ namespace ElectrolessCalculator.ViewModel
                     Units,
                     Component.Density);
                 NotifyPropertyChanged("Value");
-            }}
+            } }
 
-
-        //Value entered by user while editing assumed to be concnetration in chosen Units
-        //When edit is saved first bath volume is saved (in target solution view model), then absolute weigths of components are calculated
-        //according to new volume, so concentration stay the same.
-        public float EditValue {
-            get {
-                return editValue_conc;
-            }
-            set {
-                editValue_conc = value;
-                NotifyPropertyChanged("EditValue");
-                OnEditValueChanged();
-            }}
 
         /// <summary>
-        /// This property binds with text box used for editing to check if input is a float number (don't contain letters, symbols, etc. i.e. correct)
+        /// Displayed value when editing.
         /// </summary>
-        public bool isEditValid { get; set; }
+        public string EditValue {
+            //Value entered by user while editing assumed to be concnetration in chosen Units
+            //When edit is saved first bath volume is saved (in target solution view model), then absolute weigths of components are calculated
+            //according to new volume, so concentration stay the same.
+            get {
+                return editValue;
+            }
+            set {
+                editValue = value;
+                OnEditValueChanged();
+                NotifyPropertyChanged("EditValue");
+            }
+        }
+
+        /// <summary>
+        /// Shows if edit value is validated successfully.
+        /// </summary>
+        public bool IsEditValid {
+            get {
+                return (EditError.Type == TargetErrorType.NoError);
+            }
+        }
+
+        /// <summary>
+        /// Validation error.
+        /// </summary>
+        public TargetEditError EditError {
+            get { return editError; }
+            private set {
+                //No need to notify about this property change, since it only used internally
+                editError = value;
+                NotifyPropertyChanged("IsEditValid");
+            }}
         #endregion
+
 
         #region METHODS
         //---------------------------------------------------------------------------------------------------------------
@@ -134,18 +146,45 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
 
         /// <summary>
-        /// This method checks validity of user input value while in edit state and returns error type if found, or null if input is valid.
+        /// Validates edit value of this components and returns first error encountered, or "no error" if value is valid.
         /// </summary>
         /// <returns></returns>
-        private TrgEditErrorType ValidateEditValue() {
-            return TrgEditErrorType.NoError;
+        public TargetEditError ValidateEdit() {
+            //Variable to hold edit value parsed from input text
+            float parsedValue = 0.0f;
+
+            //Check if input is float
+            bool isParsed = float.TryParse(editValue, out parsedValue);
+            if (!isParsed) {
+                EditError = new TargetEditError(this.ShortName, TargetErrorType.Invalid);
+                return EditError;
+            }
+
+            //Check for negative value
+            if (parsedValue < 0) {
+                EditError = new TargetEditError(this.ShortName, TargetErrorType.Negative);
+                return EditError;
+            }
+
+            //Check if component volume is bigger than bath volume
+            float cmpVolume = Model.UnitsConverter.Convert(parsedValue, TargetSolution_VM.LastParsedEditVolume, Units, Model.ComponentUnits.l, Component.Density);
+            if (cmpVolume > TargetSolution_VM.LastParsedEditVolume) {
+                EditError = new TargetEditError(this.ShortName, TargetErrorType.TooBig);
+                return EditError;
+            }
+
+            EditError = new TargetEditError(this.ShortName, TargetErrorType.NoError);
+            return EditError;
         }
+
 
         /// <summary>
         /// Logic for starting editing.
         /// </summary>
         public void StartEdit() {
-            EditValue = (float)Math.Truncate(Value*100)/100;
+            //Setting edit value without triggering validation
+            editValue = Value.ToString("F2");
+            NotifyPropertyChanged("EditValue");
             EditState = true;
         }
 
@@ -154,21 +193,7 @@ namespace ElectrolessCalculator.ViewModel
         /// </summary>
         /// <returns></returns>
         public bool CanSaveEdit() {
-            //Checking if value isn't negative
-            if (EditValue < 0)
-                return false;
-
-            //Checking if total components volume is less than bath volume
-            float components_total_volume = 0;
-            foreach (TargetComponent_ViewModel c in TargetSolution_VM.Components) {
-                components_total_volume += Model.UnitsConverter.ConvertFromKg(c.editValue_conc, 1, Model.ComponentUnits.l, c.Density);
-            }
-
-            if (components_total_volume > TargetSolution_VM.Volume) {
-                return false;
-            }
-
-            return true;
+            return IsEditValid;
         }
 
         /// <summary>
@@ -182,7 +207,7 @@ namespace ElectrolessCalculator.ViewModel
         /// Logic for saving entered values.
         /// </summary>
         public void SaveEdit() {
-                Value = EditValue;
+                Value = float.Parse(EditValue);
                 EditState = false;
         }
         #endregion
@@ -192,12 +217,43 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
-
+        /// <summary>
+        /// On changing edit value value is validated and event is fired.
+        /// </summary>
         private void OnEditValueChanged() {
-
-
+            ValidateEdit();
+            TarCmpEditValueChangedArgs args = new TarCmpEditValueChangedArgs(EditError);
+            if (TarCmpEditValueChanged != null)
+                TarCmpEditValueChanged.Invoke(this, args);
         }
 
+        /// <summary>
+        /// Called when solution edit volume is changed and triggers re-validation of component edit value.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTargetEditVolumeChanged(object sender, EventArgs e)
+        {
+            ValidateEdit();
+        }
         #endregion
+    }
+
+
+
+    /// <summary>
+    /// Arguments for the event of changing the edit value.
+    /// </summary>
+    public class TarCmpEditValueChangedArgs {
+        public bool IsValid {
+            get {
+                return (Error.Type == TargetErrorType.NoError);
+            }}
+
+        public TargetEditError Error { get; private set; }
+
+        public TarCmpEditValueChangedArgs(TargetEditError Error) {
+            this.Error = Error;
+        }
     }
 }

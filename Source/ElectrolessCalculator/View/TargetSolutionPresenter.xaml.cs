@@ -20,6 +20,7 @@ namespace ElectrolessCalculator.View
     /// </summary>
     public partial class TargetSolutionPresenter : UserControl
     {
+
         public TargetSolutionPresenter()
         {
             InitializeComponent();

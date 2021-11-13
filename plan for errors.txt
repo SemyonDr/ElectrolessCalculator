@@ -1,0 +1,136 @@
+[x]  declare delegate TarCmpEditValueHandler(sender, args);
+
+TargetComponent {
+[X]	Event EditValueChanged
+	
+[X]	isInputValid {set {OnEditValueChanged}}//Binds to text box !HasErrors state
+[X]	isEditValid get {return (editerror == noError)} //Indicates if edit value passes validation
+	EditError
+
+	
+[X]	ErrorType ValidateEdit() {
+		1) Incorrect Input (from textbox)
+		2) Negative value
+		3) More than volume
+		
+		if (no error)
+			isEditValueValid = true
+	}
+
+[X]	OnEditValueChanged() {
+		new args(ValidateValue)
+		EditValueChanged.Invoke(args)
+	}
+	
+[X]	EditValue {set {call OnEditValueChanged()}}
+}
+
+
+[X]    TargetComponentEditValueChangedARGS {
+	isValid 
+	ErrorType
+}
+
+
+[X] enum ErrorType
+{
+	//Volume
+	Volume is incorrect
+	Volume is negative
+	Volume is zero
+	Volume is too big
+	
+	//Individual CMP
+	Value is incorrect
+	Value is negative
+	Value is too big
+	
+	//All
+	Sum is too big
+}
+
+
+
+TargetSolution
+{
+	event edivalueschanged;
+	
+	isEditValuesValid
+
+	Consctuctor {
+		subscribe to elements editvaluechanged += OnEditValueChanged
+	}
+
+	
+	list<ErrorType> ValidateEdit() {
+		//Check volume
+		1) incorrect
+		2) negative
+		3) zero
+		4) too big (>10000)
+		if (not valid)
+			list.add(errortype)
+		
+		//Check components
+		foreach component
+		if (not valid)
+			list.add(errortype)
+			
+		//Check summ
+		if (not valid)
+			list.add(errortype)
+			
+		//set status
+		isEditValuesValid = result;
+	}
+	
+	CanSave() {
+		return isEditValuesValid;
+	}
+	
+	Volume () {
+		set { OnEditValueChanged() }
+	}
+	
+	OnEditValueChanged() {
+		ValidateEdit()
+		args = new trgEditChangedArgs(list)
+		editvaluechanged,invoke(args)
+	}
+}
+
+class trgEditChangedArgs {
+	isValid
+	List<ErrorType>
+}
+
+
+TagetEditError_VM {
+
+	Constructor (target) {
+		subscribe to target.editchanged
+	}
+	
+	isTargetvalid {return target.isvalid}
+	
+	List<message>
+	
+	OnEditChanged {
+		create List<Message>
+	}
+}
+
+VIEW
+
+bind show to editerror.isTargetvalid
+bind editerror.message[0] to message text
+
+
+
+
+1) when edit chaged or input changed
+	- cmp_vm validates itself and puts appropriate error state in property
+	- invokes event
+2) target_vm catches event and compiles error list for components and volume
+	- puts validation status in property
+3) 

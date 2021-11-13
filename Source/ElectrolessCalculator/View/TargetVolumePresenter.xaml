@@ -8,17 +8,40 @@
              d:DesignHeight="20" d:DesignWidth="300">
     <Grid Height="20">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="45"></ColumnDefinition>
             <ColumnDefinition Width="55"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" 
+
+        <!--Validation indicator-->
+        <Rectangle x:Name="ValidationIndicator"
+                   Grid.Column="0"
+                   Margin="1,5,2,5">
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsEditVolumeValid, Mode=OneWay}" Value="False">
+                            <Setter Property="Fill" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsEditVolumeValid, Mode=OneWay}" Value="True">
+                            <Setter Property="Fill" Value="White"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
+
+        <!--Text-->
+        <TextBlock Grid.Column="1" 
                    FontSize="12"
                    TextAlignment="Left"
                    Text="Target solution volume"/>
 
+
+
         <!--Value for editing-->
-        <TextBox    Grid.Column="1" 
+        <TextBox    Grid.Column="2" 
                                 TextAlignment="Right"
                                 BorderBrush="#FF888888"
                                 BorderThickness="1"
@@ -38,9 +61,9 @@
         </TextBox>
 
         <!--Value text for viewing-->
-        <TextBlock Grid.Column="1" 
-                               TextAlignment="Right"
-                               Text="{Binding RelativeSource={RelativeSource AncestorType=local:TargetVolumePresenter}, Path=Volume, FallbackValue=NaN, StringFormat=F0}">
+        <TextBlock Grid.Column="2" 
+                   TextAlignment="Right"
+                   Text="{Binding RelativeSource={RelativeSource AncestorType=local:TargetVolumePresenter}, Path=Volume, FallbackValue=NaN, StringFormat=F0}">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Style.Triggers>
@@ -55,7 +78,8 @@
             </TextBlock.Style>
         </TextBlock>
 
-        <TextBlock Grid.Column="2" 
+        <!--Units-->
+        <TextBlock Grid.Column="3" 
                    FontSize="12"
                    FontWeight="SemiBold"
                    TextAlignment="Right"

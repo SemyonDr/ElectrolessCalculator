@@ -33,6 +33,7 @@ namespace ElectrolessCalculator
             mainWindow.TargetSolution.DataContext = targetSolution_VM;
             mainWindow.TargetVolumePresenter.DataContext = targetSolution_VM;
             mainWindow.TargetEditPanel.DataContext = targetSolution_VM;
+            mainWindow.TopTargetError.DataContext = targetSolution_VM;
 
             mainWindow.AnalizePanel.DataContext = currentSolution_VM;
             mainWindow.CurrentVolumePresenter.DataContext = currentSolution_VM;

@@ -94,14 +94,23 @@
     <Compile Include="View\AnalizePanel.xaml.cs">
       <DependentUpon>AnalizePanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converterts\BoolFlipConverter.cs" />
+    <Compile Include="View\Converterts\TargetErrorToMessageConverter.cs" />
     <Compile Include="View\CurrentVolumePresenter.xaml.cs">
       <DependentUpon>CurrentVolumePresenter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\HasErrorProxy\OneWayToSource.cs" />
+    <Compile Include="View\HasErrorProxy\OneWayToSourceBinding.cs" />
+    <Compile Include="View\RoutedProperty\RoutedProperty.cs" />
+    <Compile Include="View\RoutedProperty\RoutedPropertyContainer.cs" />
     <Compile Include="View\TargetComponentPresenter.xaml.cs">
       <DependentUpon>TargetComponentPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TargetEditPanel.xaml.cs">
       <DependentUpon>TargetEditPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopTargetErrorPresenter.xaml.cs">
+      <DependentUpon>TopTargetErrorPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TargetSolutionPresenter.xaml.cs">
       <DependentUpon>TargetSolutionPresenter.xaml</DependentUpon>
@@ -144,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TargetEditPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopTargetErrorPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

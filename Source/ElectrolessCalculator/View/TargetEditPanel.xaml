@@ -17,7 +17,8 @@
         </Grid.ColumnDefinitions>
 
         <!-- Edit/Save button. Switches functionality depending on a state. -->
-        <Button Height="30" Width="50"
+        <Button x:Name="SaveButton"
+                Height="30" Width="50"
                 Margin="5,5,5,5"
                 HorizontalAlignment="Left" VerticalAlignment="Top">
             <Button.Style>

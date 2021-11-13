@@ -14,7 +14,10 @@ namespace ElectrolessCalculator.ViewModel
 
         public bool CanExecute(object parameter)
         {
-            return this.canExecute == null || this.canExecute(parameter);
+            if (canExecute == null)
+                return true;
+
+            return this.canExecute(parameter);
         }
 
         public void Execute(object parameter)
@@ -28,7 +31,7 @@ namespace ElectrolessCalculator.ViewModel
         }
 
         /// <summary>
-        /// Creates command that can always be executed (doesn't have check).
+        /// Creates command that always can be executed.
         /// </summary>
         /// <param name="execute"></param>
         public RelayCommand(Action<object> execute) {

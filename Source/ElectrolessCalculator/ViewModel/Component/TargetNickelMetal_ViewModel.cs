@@ -53,6 +53,8 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         private TargetComponent_ViewModel NickelSulfate_VM;
+        private bool isKeyboardFocused;
+        private string editValue;
         #endregion
 
         #region PUBLIC PROPERTIES
@@ -108,15 +110,51 @@ namespace ElectrolessCalculator.ViewModel
         }
 
         //Displayed value for editing is converted from weigth in kg (saved in the private propery), according with component displayed units.
-        public float EditValue {
+        public string EditValue {
             get {
-                return Model.NickelConverter.ConvertSaltToMetal(NickelSulfate_VM.EditValue);
+                if (IsKeyboardFocused)
+                {   //If value is currently entered there is no need to calculate it from nickel sulfate value
+                    return editValue;
+                }
+                else {
+                    float ni_salt;
+                    //Checking if nickel sulfate edit value parsed succesfully (checking flag set by validation method in nickel sulfate view model)
+                    if (NickelSulfate_VM.EditError.Type != TargetErrorType.Invalid) {
+                        ni_salt = float.Parse(NickelSulfate_VM.EditValue);
+                        //Converting parsed value to nickel metal and displaying it as string
+                        return Model.NickelConverter.ConvertSaltToMetal(ni_salt).ToString("F2");
+                    }
+                    else {
+                        //If nickel sulfate edit value failed to be parsed displaying text from it
+                        return NickelSulfate_VM.EditValue;
+                    }
+                }
             }
             set {
-                NickelSulfate_VM.EditValue = Model.NickelConverter.ConvertMetalToSalt(value);
-                NotifyPropertyChanged("EditValue");
+                editValue = value;
+                //Trying to parse input value
+                float ni_me;
+                bool isParsed = float.TryParse(value, out ni_me);
+                //If value is parsed converting it to nickel salt and displaying it in nickel sulfate view model
+                if (isParsed) {
+                    NickelSulfate_VM.EditValue = Model.NickelConverter.ConvertMetalToSalt(ni_me).ToString("F2");
+                }
+                else {
+                    //If failed to parse copy input text to nickel sulfate
+                    NickelSulfate_VM.EditValue = value;
+                }
             }
         }
+
+        /// <summary>
+        /// Flag showing that associated text box is currently focused for entering value.
+        /// </summary>
+        public bool IsKeyboardFocused {
+            get { return isKeyboardFocused; }
+            set {
+                isKeyboardFocused = value;
+                NotifyPropertyChanged("IsKeyboardFocused");
+            }}
         #endregion
     }
 }
