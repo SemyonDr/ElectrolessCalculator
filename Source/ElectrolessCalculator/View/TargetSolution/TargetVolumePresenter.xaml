@@ -21,10 +21,10 @@
             <Rectangle.Style>
                 <Style TargetType="Rectangle">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsEditVolumeValid, Mode=OneWay}" Value="False">
+                        <DataTrigger Binding="{Binding EditVolume.IsValid, Mode=OneWay}" Value="False">
                             <Setter Property="Fill" Value="Red"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding IsEditVolumeValid, Mode=OneWay}" Value="True">
+                        <DataTrigger Binding="{Binding EditVolume.IsValid, Mode=OneWay}" Value="True">
                             <Setter Property="Fill" Value="White"/>
                         </DataTrigger>
                     </Style.Triggers>

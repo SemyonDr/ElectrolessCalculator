@@ -87,6 +87,7 @@
     <Compile Include="ViewModel\Component\RequiredComponent_VM.cs" />
     <Compile Include="ViewModel\Component\TargetComponent_ViewModel.cs" />
     <Compile Include="ViewModel\Component\TargetNickelMetal_ViewModel.cs" />
+    <Compile Include="ViewModel\InputFieldFloat.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\Solution\CurrentSolution_ViewModel.cs" />
     <Compile Include="ViewModel\Solution\RequiredMaterials_VM.cs" />
@@ -95,7 +96,6 @@
       <DependentUpon>AnalizePanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converterts\BoolFlipConverter.cs" />
-    <Compile Include="View\Converterts\TargetErrorToMessageConverter.cs" />
     <Compile Include="View\CurrentVolumePresenter.xaml.cs">
       <DependentUpon>CurrentVolumePresenter.xaml</DependentUpon>
     </Compile>
@@ -103,19 +103,22 @@
     <Compile Include="View\HasErrorProxy\OneWayToSourceBinding.cs" />
     <Compile Include="View\RoutedProperty\RoutedProperty.cs" />
     <Compile Include="View\RoutedProperty\RoutedPropertyContainer.cs" />
-    <Compile Include="View\TargetComponentPresenter.xaml.cs">
+    <Compile Include="View\TargetSolution\TargetComponentPresenter.xaml.cs">
       <DependentUpon>TargetComponentPresenter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TargetEditPanel.xaml.cs">
+    <Compile Include="View\TargetSolution\TargetEditPanel.xaml.cs">
       <DependentUpon>TargetEditPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TopTargetErrorPresenter.xaml.cs">
-      <DependentUpon>TopTargetErrorPresenter.xaml</DependentUpon>
+    <Compile Include="View\TargetSolution\TargetNickelMetalPresenter.xaml.cs">
+      <DependentUpon>TargetNickelMetalPresenter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TargetSolutionPresenter.xaml.cs">
+    <Compile Include="View\TargetSolution\ToptErrorPresenter.xaml.cs">
+      <DependentUpon>ToptErrorPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TargetSolution\TargetSolutionPresenter.xaml.cs">
       <DependentUpon>TargetSolutionPresenter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TargetVolumePresenter.xaml.cs">
+    <Compile Include="View\TargetSolution\TargetVolumePresenter.xaml.cs">
       <DependentUpon>TargetVolumePresenter.xaml</DependentUpon>
     </Compile>
     <Page Include="Themes\Generic.xaml">
@@ -148,23 +151,27 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\TargetComponentPresenter.xaml">
+    <Page Include="View\TargetSolution\TargetComponentPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TargetEditPanel.xaml">
+    <Page Include="View\TargetSolution\TargetEditPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TopTargetErrorPresenter.xaml">
+    <Page Include="View\TargetSolution\TargetNickelMetalPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TargetSolutionPresenter.xaml">
+    <Page Include="View\TargetSolution\ToptErrorPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TargetVolumePresenter.xaml">
+    <Page Include="View\TargetSolution\TargetSolutionPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TargetSolution\TargetVolumePresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

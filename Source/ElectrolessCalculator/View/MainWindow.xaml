@@ -65,7 +65,7 @@
             <local:TargetVolumePresenter x:Name="TargetVolumePresenter"
                                          VerticalAlignment="Top"
                                          Volume="{Binding Volume}"
-                                         EditVolume="{Binding EditVolume, Mode=TwoWay}" />
+                                         EditVolume="{Binding EditVolume.Value, Mode=TwoWay}" />
         </Border>
 
         <local:AnalizePanel x:Name="AnalizePanel"
@@ -73,10 +73,8 @@
                             Margin="5,2,5,2" />
 
         <Border Grid.Row="3" Grid.Column="3" BorderThickness="0,0,0,1">
-        <local:CurrentVolumePresenter 
-            x:Name="CurrentVolumePresenter"
-            Volume="{Binding Volume, Mode=TwoWay}"
-            SetVolumeFractionCommand="{Binding SetVolumeFractionCommand}"/>
+        <local:CurrentVolumePresenter Margin="5,0,5,0"
+            x:Name="CurrentVolumePresenter"/>
         </Border>
         <!--Current composition settings-->
         
@@ -112,10 +110,16 @@
         <Rectangle Grid.Row="5" Grid.Column="3" Fill="Khaki"/>
         <Rectangle Grid.Row="5" Grid.Column="5" Fill="LightGreen"/>
 
-        <local:TopTargetErrorPresenter x:Name="TopTargetError"
-                                       Grid.Row="5" Grid.Column="1"
-                                       EditErrors="{Binding EditErrors, Mode=OneWay}"
-                                       IsEditValid="{Binding IsEditValid, Mode=OneWay}"
-                                       />
+        <local:TopErrorPresenter    x:Name="TopTargetError"
+                                    Grid.Row="5" Grid.Column="1"
+                                    EditErrors="{Binding InputErrors, Mode=OneWay}"
+                                    IsActive="{Binding IsEditValid, Mode=OneWay}"
+                                    />
+
+        <local:TopErrorPresenter x:Name="TopCurrentError"
+                                 Grid.Row="5" Grid.Column="3"
+                                 EditErrors="{Binding InputErrors, Mode=OneWay}"
+                                 IsActive="{Binding IsInputValid, Mode=OneWay}"
+                                 />
     </Grid>
 </Window>

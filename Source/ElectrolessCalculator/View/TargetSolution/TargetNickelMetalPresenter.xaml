@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="ElectrolessCalculator.View.TargetNickelMetalPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectrolessCalculator.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:ValueUnitsToTextConveter x:Key="UnitsToTextConverter"/>
+        <local:BoolFlipConverter x:Key="BoolFlipConverter"/>
+    </UserControl.Resources>
+    <Grid Height="25">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="45"/>
+            <ColumnDefinition Width="55"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Component name-->
+        <TextBlock  x:Name="ComponentNameTextBlock"
+                    Grid.Column="0" 
+                    TextAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="15,0,0,0"
+                    Text="{Binding ShortName, FallbackValue=NaN}"/>
+
+        <!--Value for editing-->
+        <TextBox    x:Name="EditTextBox"
+                    Grid.Column="1" 
+                    TextAlignment="Right"
+                    BorderBrush="#FF888888"
+                    BorderThickness="1"
+                    Text="{Binding EditValue, UpdateSourceTrigger=PropertyChanged, FallbackValue=NaN}">
+            <local:RoutedPropertyContainer.RoutedProperty>
+                <local:RoutedProperty TargetPropertyPath="IsKeyboardFocused" SourceBinding="{Binding IsKeyboardFocused}"/>
+            </local:RoutedPropertyContainer.RoutedProperty>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding EditState, FallbackValue=False}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding EditState, FallbackValue=False}" Value="False">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <!--Value text for displaing-->
+        <TextBlock  x:Name="DisplayTextBox"
+                    Grid.Column="1" 
+                    TextAlignment="Right"
+                    Text="{Binding Value, StringFormat=F1, FallbackValue=NaN}"
+                    >
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding EditState, FallbackValue=False}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding EditState, FallbackValue=False}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!--Units-->
+        <TextBlock  x:Name="UnitsBlock"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    FontWeight="SemiBold"
+                    Text="{Binding Units, Converter={StaticResource ResourceKey=UnitsToTextConverter}, FallbackValue=NaN}"/>
+
+    </Grid>
+</UserControl>

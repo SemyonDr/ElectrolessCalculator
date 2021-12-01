@@ -26,10 +26,10 @@
             <Rectangle.Style>
                 <Style TargetType="Rectangle">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsEditValid, Mode=OneWay}" Value="False">
+                        <DataTrigger Binding="{Binding Path=EditValue.IsValid, Mode=OneWay}" Value="False">
                             <Setter Property="Fill" Value="Red"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding IsEditValid, Mode=OneWay}" Value="True">
+                        <DataTrigger Binding="{Binding Path=EditValue.IsValid, Mode=OneWay}" Value="True">
                             <Setter Property="Fill" Value="White"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -50,10 +50,7 @@
                                 TextAlignment="Right"
                                 BorderBrush="#FF888888"
                                 BorderThickness="1"
-                                Text="{Binding EditValue, UpdateSourceTrigger=PropertyChanged, FallbackValue=NaN}">
-            <local:RoutedPropertyContainer.RoutedProperty>
-                <local:RoutedProperty TargetPropertyPath="IsKeyboardFocused" SourceBinding="{Binding IsKeyboardFocused}"/>
-            </local:RoutedPropertyContainer.RoutedProperty>
+                                Text="{Binding EditValue.Value, UpdateSourceTrigger=PropertyChanged, FallbackValue=NaN}">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Style.Triggers>
@@ -69,7 +66,7 @@
         </TextBox>
 
         
-        <!--Value text for viewing-->
+        <!--Value text for displaing-->
         <TextBlock  x:Name="DisplayTextBox"
                     Grid.Column="2" 
                     TextAlignment="Right"

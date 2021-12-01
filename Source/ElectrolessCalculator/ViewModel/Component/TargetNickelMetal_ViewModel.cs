@@ -27,6 +27,12 @@ namespace ElectrolessCalculator.ViewModel
             //Subscribing to changes in Nickel Sulfate view model value,
             //so they are reflected in nickel metal value.
             NickelSulfate_VM.PropertyChanged += NickelSalt_PropertyChanged;
+            NickelSulfate_VM.EditValue.ValueChanged += NickelSalt_EditValueChanged;
+        }
+
+        private void NickelSalt_EditValueChanged(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("EditValue");
         }
 
         /// <summary>
@@ -37,8 +43,6 @@ namespace ElectrolessCalculator.ViewModel
         /// <param name="e"></param>
         private void NickelSalt_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "EditValue")
-                NotifyPropertyChanged("EditValue");
             if (e.PropertyName == "Value")
                 NotifyPropertyChanged("Value");
             if (e.PropertyName == "EditState")
@@ -66,7 +70,7 @@ namespace ElectrolessCalculator.ViewModel
         //Displayed properties
 
         public string ShortName {
-            get { return "  Nickel Metal"; }
+            get { return "Nickel Metal"; }
         }
 
         public string FullName {
@@ -113,20 +117,22 @@ namespace ElectrolessCalculator.ViewModel
         public string EditValue {
             get {
                 if (IsKeyboardFocused)
-                {   //If value is currently entered there is no need to calculate it from nickel sulfate value
+                {   //If value is currently entered there is no need to copy it from nickel sulfate
                     return editValue;
                 }
                 else {
-                    float ni_salt;
-                    //Checking if nickel sulfate edit value parsed succesfully (checking flag set by validation method in nickel sulfate view model)
-                    if (NickelSulfate_VM.EditError.Type != TargetErrorType.Invalid) {
-                        ni_salt = float.Parse(NickelSulfate_VM.EditValue);
-                        //Converting parsed value to nickel metal and displaying it as string
-                        return Model.NickelConverter.ConvertSaltToMetal(ni_salt).ToString("F2");
+                    //If input textbox is not focused edit value should be calculated from
+                    //Nickel Sulfate edit value
+                    //Checking if Nickel Sulfate edit value parsed succesfully
+                    if (NickelSulfate_VM.EditValue.State != ValidationState.Invalid) {
+                        //If value is parsed nickel metal value calculated
+                        //and then converted to string using nickel sulfate string format
+                        float ni_me = Model.NickelConverter.ConvertSaltToMetal(NickelSulfate_VM.EditValue.LastParsedValue);
+                        return ni_me.ToString(NickelSulfate_VM.EditValue.Format);
                     }
                     else {
-                        //If nickel sulfate edit value failed to be parsed displaying text from it
-                        return NickelSulfate_VM.EditValue;
+                        //If parsing failed current content on nickel sulfate edit value returned
+                        return NickelSulfate_VM.EditValue.Value;
                     }
                 }
             }
@@ -135,13 +141,13 @@ namespace ElectrolessCalculator.ViewModel
                 //Trying to parse input value
                 float ni_me;
                 bool isParsed = float.TryParse(value, out ni_me);
-                //If value is parsed converting it to nickel salt and displaying it in nickel sulfate view model
                 if (isParsed) {
-                    NickelSulfate_VM.EditValue = Model.NickelConverter.ConvertMetalToSalt(ni_me).ToString("F2");
+                    //If value is parsed converting it to nickel salt and displaying it in nickel sulfate view model
+                    NickelSulfate_VM.EditValue.Value = Model.NickelConverter.ConvertMetalToSalt(ni_me).ToString(NickelSulfate_VM.EditValue.Format);
                 }
                 else {
                     //If failed to parse copy input text to nickel sulfate
-                    NickelSulfate_VM.EditValue = value;
+                    NickelSulfate_VM.EditValue.Value = value;
                 }
             }
         }

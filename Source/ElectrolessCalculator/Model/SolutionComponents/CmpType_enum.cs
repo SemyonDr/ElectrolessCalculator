@@ -1,4 +1,5 @@
-﻿public enum CmpType {
+﻿
+public enum CmpType {
     NickelSulfate,
     SodiumHypophosphite,
     SodiumAcetate,

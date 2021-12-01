@@ -8,22 +8,66 @@
              d:DesignHeight="80" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="55*"/>
-            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="45"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
+        <!--Nickel validation indicator-->
+        <Rectangle x:Name="NickelValidation"
+                   Grid.Row="0" Grid.Column="0"
+                   Margin="1,5,2,5">
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=NickelAnalize.IsValid, Mode=OneWay}" Value="False">
+                            <Setter Property="Fill" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=NickelAnalize.IsValid, Mode=OneWay}" Value="True">
+                            <Setter Property="Fill" Value="White"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
+
+        <!--Hypophosphite validation indicator-->
+        <Rectangle x:Name="HypoValidation"
+                   Grid.Row="1" Grid.Column="0"
+                   Margin="1,5,2,5">
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=HypophosphiteAnalize.IsValid, Mode=OneWay}" Value="False">
+                            <Setter Property="Fill" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=HypophosphiteAnalize.IsValid, Mode=OneWay}" Value="True">
+                            <Setter Property="Fill" Value="White"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
+
+
         <!--Nickel Analize-->
-        <TextBlock Grid.Column="1" Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Left">Nickel Analize</TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="0" Margin="5,5,5,5" Text="{Binding Path=NickelAnalize, StringFormat=F1, UpdateSourceTrigger=PropertyChanged, FallbackValue=NaN}"></TextBox>
-        
+        <!--Title-->
+        <TextBlock Grid.Column="2" Grid.Row="0"
+                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                   Text="Nickel Analize"/>
+        <!--Nickel analize value box-->
+        <TextBox Grid.Column="3" Grid.Row="0"
+                 Margin="0,5,0,5"
+                 Text="{Binding Path=NickelAnalize.Value, UpdateSourceTrigger=PropertyChanged, FallbackValue=NaN}"/>
+
         <!--Hypophosphite Analize-->
-        <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left">Sodium Hypophosphite</TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="1" Margin="5,5,5,5" Text="{Binding Path=HypophosphiteAnalize, StringFormat=F1, UpdateSourceTrigger=PropertyChanged, FallbackValue=NaN}"></TextBox>
-        <CheckBox Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Path=UseHPAnalize, FallbackValue=True}"></CheckBox>
+        <TextBlock Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left">Sodium Hypophosphite</TextBlock>
+        <TextBox Grid.Column="3" Grid.Row="1" Margin="0,5,0,5" Text="{Binding Path=HypophosphiteAnalize.Value, StringFormat=F1, UpdateSourceTrigger=PropertyChanged, FallbackValue=NaN}"></TextBox>
+        <CheckBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Path=UseHPAnalize, FallbackValue=True}"></CheckBox>
     </Grid>
 </UserControl>

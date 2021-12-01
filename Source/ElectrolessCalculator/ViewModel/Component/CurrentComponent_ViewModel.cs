@@ -28,14 +28,14 @@ namespace ElectrolessCalculator.ViewModel
             get {
                 return Model.UnitsConverter.ConvertFromKg(
                     Component.WeigthKg,
-                    CurrentSolution_VM.Volume,
+                    CurrentSolution_VM.Volume.LastParsedValue,
                     Units,
                     Component.Density);
             }
             set {
                 Component.WeigthKg = Model.UnitsConverter.ConvertToKg(
                     value,
-                    CurrentSolution_VM.Volume,
+                    CurrentSolution_VM.Volume.LastParsedValue,
                     Units,
                     Component.Density);
                 NotifyPropertyChanged("Value");
