@@ -10,14 +10,14 @@
 <!-- DATA CONTEXT is set in App_Startup and it is target solution view model.    -->
 <!-- Commands and their logic are defined in the view model.                     -->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        
         <!-- Edit/Save button. Switches functionality depending on a state. -->
         <Button x:Name="SaveButton"
+                Grid.Row="0"
                 Height="30" Width="50"
                 Margin="5,5,5,5"
                 HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -40,7 +40,7 @@
         </Button>
 
         <!-- Cancel button. Shows up when edit state is active. -->
-        <Button Grid.Column="2"
+        <Button Grid.Row="0"
                 Height="30" Width="50"
                 Margin="5,5,5,5"
                 HorizontalAlignment="Right" VerticalAlignment="Top"
@@ -61,6 +61,11 @@
                 </Style>
             </Button.Style>
         </Button>
+
+        <local:SettingsMessage x:Name="Message"
+                               Grid.Row="1" 
+                               Margin="5,0,0,0"
+                               />
 
     </Grid>
 </UserControl>

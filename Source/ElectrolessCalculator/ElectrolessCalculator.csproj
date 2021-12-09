@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Settings.cs" />
     <Compile Include="Model\SolutionComponents\CmpType_enum.cs" />
     <Compile Include="Model\Solutions\CurrentSolution.cs" />
     <Compile Include="Model\SolutionComponents\ComponentFactory.cs" />
@@ -87,8 +88,13 @@
     <Compile Include="ViewModel\Component\RequiredComponent_VM.cs" />
     <Compile Include="ViewModel\Component\TargetComponent_ViewModel.cs" />
     <Compile Include="ViewModel\Component\TargetNickelMetal_ViewModel.cs" />
-    <Compile Include="ViewModel\InputFieldFloat.cs" />
+    <Compile Include="ViewModel\Input\InputError.cs" />
+    <Compile Include="ViewModel\Input\InputFieldFloat.cs" />
+    <Compile Include="ViewModel\Input\ValidationErrorToMessageConverter.cs" />
+    <Compile Include="ViewModel\Input\ValidationSettingsFloat.cs" />
+    <Compile Include="ViewModel\Input\ValidationStateEnum.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\Settings_ViewModel.cs" />
     <Compile Include="ViewModel\Solution\CurrentSolution_ViewModel.cs" />
     <Compile Include="ViewModel\Solution\RequiredMaterials_VM.cs" />
     <Compile Include="ViewModel\Solution\TargetSolution_ViewModel.cs" />
@@ -103,6 +109,9 @@
     <Compile Include="View\HasErrorProxy\OneWayToSourceBinding.cs" />
     <Compile Include="View\RoutedProperty\RoutedProperty.cs" />
     <Compile Include="View\RoutedProperty\RoutedPropertyContainer.cs" />
+    <Compile Include="View\SettingsMessage.xaml.cs">
+      <DependentUpon>SettingsMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TargetSolution\TargetComponentPresenter.xaml.cs">
       <DependentUpon>TargetComponentPresenter.xaml</DependentUpon>
     </Compile>
@@ -151,6 +160,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\SettingsMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TargetSolution\TargetComponentPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

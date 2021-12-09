@@ -188,7 +188,7 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
-        private Model.TargetSolution TargetSolutionModel {
+        public Model.TargetSolution TargetSolutionModel {
             get { return targetSolutionModel; }
             set {
                 targetSolutionModel = value;
