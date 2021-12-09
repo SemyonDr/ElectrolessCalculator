@@ -120,7 +120,7 @@ namespace ElectrolessCalculator.Model
             ser.Serialize(writer, this);
             writer.Close();
 
-            return "Saved succesfully!";
+            return "Settings saved";
         }
 
 
@@ -162,11 +162,27 @@ namespace ElectrolessCalculator.Model
             ser.UnreferencedObject += DeserealUnreferencedObjectHandler;
 
             //Reading the file
-            Settings new_set = (Settings)ser.Deserialize(fs);
+            Settings new_set = new Settings();
+            bool xml_error = false;
+            try {
+                new_set = (Settings)ser.Deserialize(fs);
+            }
+            catch {
+                xml_error = true;
+            }
+
+            fs.Close();
 
             //Checking for errors
-            if (deserializationErrors.HasError)
-                return "File format is incorrect";
+            if (deserializationErrors.HasError || xml_error) {
+                //Trying to reset the file
+                string reset_message = SaveToFile();
+
+                if (reset_message == "Settings saved")
+                    return "File format is incorrect. File reset";
+                else
+                    return "File format is incorrect. Failed to reset the file";
+            }
             else {
                 Volume = new_set.Volume;
                 NickelSulfate = new_set.NickelSulfate;
@@ -175,7 +191,7 @@ namespace ElectrolessCalculator.Model
                 SuccinicAcid = new_set.SuccinicAcid;
                 LacticAcid = new_set.LacticAcid;
 
-                return "Settings loaded successfully!";
+                return "Settings loaded";
             }
         }
 
@@ -204,6 +220,7 @@ namespace ElectrolessCalculator.Model
             public bool UnknownElement = false;
             public bool UnknownNode = false;
             public bool UnreferencedObject = false;
+
 
             public bool HasError {
                 get {
