@@ -1,0 +1,86 @@
+﻿<!-- This panel is used for entering analize values for current solution. 
+     Assumes CurrentSolution_ViewModel as DataContext. -->
+<UserControl x:Class="ElectrolessCalculator.View.AnalizePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectrolessCalculator.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="55" d:DesignWidth="300">
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="45"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+
+        <!-- NICKEL ANALIZE                                   -->
+        <!--==================================================-->
+
+        <!-- Nickel validation indicator -->
+        <!--=============================-->
+        <local:ValidationIndicator x:Name="NickelValidation"
+                                   Grid.Row="0" Grid.Column="0"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   IsValid="{Binding NickelAnalize.IsValid, Mode=OneWay}"/>
+
+        <!-- Title -->
+        <!--=======-->
+        <TextBlock Grid.Column="2" Grid.Row="0"
+                   HorizontalAlignment="Left"
+                   Text="Metallic Nickel Analize"/>
+
+        <!-- Nickel analize value box -->
+        <!--==========================-->
+        <TextBox Grid.Column="3" Grid.Row="0"
+                 Height="20"
+                 TextAlignment="Right"
+                 Margin="0,-6,0,0"
+                 Text="{Binding Path=NickelAnalize.Value, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                FallbackValue=Ni_Val}"/>
+
+
+
+        <!-- HYPOPHOSPHITE ANALIZE                            -->
+        <!--==================================================-->
+
+        <!-- Hypophosphite validation indicator -->
+        <!--====================================-->
+        <local:ValidationIndicator x:Name="HypoValidation"
+                                   Grid.Row="1" Grid.Column="0"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"                
+                                   IsValid="{Binding HypophosphiteAnalize.IsValid, Mode=OneWay}"/>
+
+        <!-- Title -->
+        <!--=======-->
+        <TextBlock Grid.Column="2" Grid.Row="1"
+                   HorizontalAlignment="Left" 
+                   Text="Sodium Hypophosphite Analize"/>
+        
+        <!-- Hypophosphite analize value box -->
+        <!--=================================-->
+        <TextBox Grid.Column="3" Grid.Row="1"
+                 Height="20"
+                 Margin="0,-6,0,0" 
+                 TextAlignment="Right"
+                 Text="{Binding Path=HypophosphiteAnalize.Value, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                FallbackValue=HP_Val}"/>
+        
+        <!-- Use hypophosphite analize check box -->
+        <!--=====================================-->
+        <CheckBox Grid.Column="1" Grid.Row="1"
+                  HorizontalAlignment="Center" 
+                  IsChecked="{Binding Path=UseHPAnalize,
+                                      FallbackValue=True}"/>
+    </Grid>
+</UserControl>

@@ -42,6 +42,8 @@ namespace ElectrolessCalculator.ViewModel
         public RelayCommand StartEditCommand { get; private set; }
         public RelayCommand CancelEditCommand { get; private set; }
         public RelayCommand SaveEditCommand { get; private set; }
+
+        public RelayCommand DefaultEditCommand { get; private set; }
         #endregion
 
 
@@ -65,6 +67,7 @@ namespace ElectrolessCalculator.ViewModel
             StartEditCommand = new RelayCommand(new Action<object>(StartEdit), new Func<object, bool>(CanStartEdit));
             CancelEditCommand = new RelayCommand(new Action<object>(CancelEdit));
             SaveEditCommand = new RelayCommand(new Action<object>(SaveEdit), new Func<object, bool>(CanSaveEdit));
+            DefaultEditCommand = new RelayCommand(new Action<object>(DefaultEdit));
 
             //Creating input field for editVolume
             ValidationSettingsFloat set = new ValidationSettingsFloat();
@@ -277,6 +280,62 @@ namespace ElectrolessCalculator.ViewModel
 
             //Raise event on editing completion to inform subscribers of new values
             OnTargetSolutionChanged();
+        }
+
+        /// <summary>
+        /// Sets edit values to default values.
+        /// </summary>
+        /// <param name="parameter"></param>
+        public void DefaultEdit(object parameter) {
+            if (EditState) {
+                //Getting default values
+                Model.Settings set = new Model.Settings();
+
+                //Setting volume
+                EditVolume.Value = set.Volume.ToString(EditVolume.Format);
+
+                //Setting components values
+                //Nickel Sulfate
+                TargetComponent_ViewModel nickel = Components[0];
+                nickel.EditValue.Value = Model.UnitsConverter.ConvertFromKg(
+                    set.NickelSulfate, 
+                    EditVolume.LastParsedValue, 
+                    nickel.Units,
+                    nickel.Density)
+                    .ToString(nickel.EditValue.Format);
+                //Sodium Hypophosphite
+                TargetComponent_ViewModel hypo = Components[1];
+                hypo.EditValue.Value = Model.UnitsConverter.ConvertFromKg(
+                    set.SodiumHypophosphite,
+                    EditVolume.LastParsedValue,
+                    hypo.Units,
+                    hypo.Density)
+                    .ToString(hypo.EditValue.Format);
+                //Sodium Acetate
+                TargetComponent_ViewModel acetate = Components[2];
+                acetate.EditValue.Value = Model.UnitsConverter.ConvertFromKg(
+                    set.SodiumAcetate,
+                    EditVolume.LastParsedValue,
+                    acetate.Units,
+                    acetate.Density)
+                    .ToString(acetate.EditValue.Format);
+                //Succinic acid
+                TargetComponent_ViewModel succinic = Components[3];
+                succinic.EditValue.Value = Model.UnitsConverter.ConvertFromKg(
+                    set.SuccinicAcid,
+                    EditVolume.LastParsedValue,
+                    succinic.Units,
+                    succinic.Density)
+                    .ToString(succinic.EditValue.Format);
+                //Lactic Acid
+                TargetComponent_ViewModel lactic = Components[4];
+                lactic.EditValue.Value = Model.UnitsConverter.ConvertFromKg(
+                    set.LacticAcid,
+                    EditVolume.LastParsedValue,
+                    lactic.Units,
+                    lactic.Density)
+                    .ToString(lactic.EditValue.Format);
+            }
         }
 
         #endregion

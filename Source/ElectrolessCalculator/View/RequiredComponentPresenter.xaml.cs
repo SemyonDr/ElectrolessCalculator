@@ -15,12 +15,9 @@ using System.Windows.Shapes;
 
 namespace ElectrolessCalculator.View
 {
-    /// <summary>
-    /// Interaction logic for TargetVolumePresenter.xaml
-    /// </summary>
-    public partial class TargetVolumePresenter : UserControl
+    public partial class RequiredComponentPresenter : UserControl
     {
-        public TargetVolumePresenter()
+        public RequiredComponentPresenter()
         {
             InitializeComponent();
         }

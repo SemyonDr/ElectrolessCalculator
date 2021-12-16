@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ElectrolessCalculator.View
 {
     /// <summary>
-    /// Interaction logic for TargetVolumePresenter.xaml
+    /// Interaction logic for CurrentComponentPresenter.xaml
     /// </summary>
-    public partial class TargetVolumePresenter : UserControl
+    public partial class CurrentComponentPresenter : UserControl
     {
-        public TargetVolumePresenter()
+        public CurrentComponentPresenter()
         {
             InitializeComponent();
         }

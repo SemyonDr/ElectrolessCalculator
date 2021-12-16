@@ -16,12 +16,18 @@ namespace ElectrolessCalculator.ViewModel
 
         public float ComponentVolume {
             get {
-                return Component.WeigthKg / Component.Density;
+                if (Component.WeigthKg >= 0.0f)
+                    return Component.WeigthKg / Component.Density;
+                else
+                    return 0.0f;
             }}
 
         public override float Value {
             get {
-                return Component.WeigthKg;
+                if (Component.WeigthKg >= 0.0f)
+                    return Component.WeigthKg;
+                else
+                    return 0.0f;
             }
             set {
                 Component.WeigthKg = Value;

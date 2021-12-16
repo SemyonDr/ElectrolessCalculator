@@ -49,11 +49,11 @@ namespace ElectrolessCalculator
             //Current solution
             mainWindow.AnalizePanel.DataContext = currentSolution_VM;
             mainWindow.CurrentVolumePresenter.DataContext = currentSolution_VM;
-            mainWindow.CurrentComposition.DataContext = currentSolution_VM;
+            mainWindow.CurrentSoution.DataContext = currentSolution_VM;
             mainWindow.TopCurrentError.DataContext = currentSolution_VM;
 
             //Required materials
-            mainWindow.RequiredComponents.DataContext = requiredMaterials_VM;
+            mainWindow.RequiredMaterials.DataContext = requiredMaterials_VM;
             
             mainWindow.Show();
         }

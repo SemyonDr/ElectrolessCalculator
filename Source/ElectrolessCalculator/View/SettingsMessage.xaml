@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ElectrolessCalculator.View"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="300">
+
     <Grid>
         <TextBlock Text="{Binding SettingsMessage, Mode=OneWay, NotifyOnTargetUpdated=True, FallbackValue=NaN}">
             <TextBlock.Triggers>

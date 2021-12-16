@@ -14,30 +14,58 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        
-        <!-- Edit/Save button. Switches functionality depending on a state. -->
-        <Button x:Name="SaveButton"
-                Grid.Row="0"
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <!-- Edit/Save button. Switches functionality depending on a state. -->
+            <Button x:Name="SaveButton"
                 Height="30" Width="50"
                 Margin="5,5,5,5"
                 HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="Background" Value="SteelBlue"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding EditState}" Value="True">
-                            <Setter Property="Content" Value="Save"/>
-                            <Setter Property="Command" Value="{Binding SaveEditCommand}"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding EditState}" Value="False">
-                            <Setter Property="Content" Value="Edit"/>
-                            <Setter Property="Command" Value="{Binding StartEditCommand}"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="SteelBlue"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding EditState}" Value="True">
+                                <Setter Property="Content" Value="Save"/>
+                                <Setter Property="Command" Value="{Binding SaveEditCommand}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding EditState}" Value="False">
+                                <Setter Property="Content" Value="Edit"/>
+                                <Setter Property="Command" Value="{Binding StartEditCommand}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Default values button. -->
+            <Button x:Name="DefaultButton"
+                    Height="30" Width="50"
+                    Margin="5,5,5,5"
+                    HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Content="Default"
+                    Background="Wheat"
+                    Command="{Binding DefaultEditCommand, Mode=OneWay}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding EditState}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding EditState}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+        </StackPanel>
+        
+
 
         <!-- Cancel button. Shows up when edit state is active. -->
         <Button Grid.Row="0"
@@ -49,7 +77,7 @@
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="Background" Value="Wheat"/>
+                    <Setter Property="Background" Value="Tomato"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding EditState}" Value="True">
                             <Setter Property="Visibility" Value="Visible"/>

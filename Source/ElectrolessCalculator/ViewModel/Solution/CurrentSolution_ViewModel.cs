@@ -74,6 +74,8 @@ namespace ElectrolessCalculator.ViewModel
 
             //Subscribing to event of target solution components (and volume) changing
             Target_VM.TargetSolutionChanged += OnTargetSolutionChanged;
+            //Subscribing to target edit volume changes
+            target_VM.EditVolume.ValueChanged += TargetVolumeChangedHandler;
 
             //Creates initial component view models.
             RefreshComponentsVM();
@@ -328,6 +330,17 @@ namespace ElectrolessCalculator.ViewModel
             RefreshErrors();
             //Raising change event
             OnCurrentSolutionChanged();
+        }
+
+        /// <summary>
+        /// Handles changes in target solution volume.
+        /// Sets current volume equal to new target volume.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TargetVolumeChangedHandler(object sender, EventArgs e) {
+            if (target_VM.EditVolume.IsValid)
+                Volume.Value = target_VM.EditVolume.Value;
         }
         #endregion
     }

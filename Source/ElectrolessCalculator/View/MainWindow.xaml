@@ -11,114 +11,174 @@
         >
     <Grid>
         <Grid.RowDefinitions>
-            <!--Headers-->
+            <!--0 Headers-->
             <RowDefinition Height="20"/>
-            <!--Upper Color-->
+            <!--1 Upper Color-->
             <RowDefinition Height="5"/>
-            <!--Buttons-->
+            <!--2 Buttons-->
             <RowDefinition Height="60"/>
-            <!--Solution volumes-->
-            <RowDefinition Height="60"/>
-            <!--Main field-->
+            <!--3 Spacer-->
+            <RowDefinition Height="3"/>
+            <!--4 Solution volumes-->
+            <RowDefinition Height="35"/>
+            <!--5 Main field-->
             <RowDefinition Height="1*"/>
-            <!--Bottom color-->
+            <!--6 Bottom color-->
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <!--Spacer-->
+            <!--0 Spacer-->
             <ColumnDefinition Width="5"></ColumnDefinition>
-            <!--Target composition-->
+            <!--1 Target composition-->
             <ColumnDefinition Width="1.1*"></ColumnDefinition>
-            <!--Spacer-->
+            <!--2 Spacer-->
             <ColumnDefinition Width="5"></ColumnDefinition>
-            <!--Current composition-->
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-            <!--Spacer-->
+            <!--3 Current composition-->
+            <ColumnDefinition Width="1.1*"></ColumnDefinition>
+            <!--4 Spacer-->
             <ColumnDefinition Width="5"></ColumnDefinition>
-            <!--Materials to add-->
+            <!--5 Materials to add-->
             <ColumnDefinition Width="1.3*"></ColumnDefinition>
-            <!--Spacer-->
+            <!--6 Spacer-->
             <ColumnDefinition Width="5"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
+        
+        
+        <!-- HEADERS                                          -->
+        <!--==================================================-->
 
-        <!--Upper colors-->
-        <!--============-->
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="DodgerBlue"></Rectangle>
-        <Rectangle Grid.Row="1" Grid.Column="3" Fill="Khaki"></Rectangle>
-        <Rectangle Grid.Row="1" Grid.Column="5" Fill="LightGreen"></Rectangle>
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0" FontSize="14" FontWeight="DemiBold" Text="Target Composition"/>
+        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5,0" FontSize="14" FontWeight="DemiBold" Text="Current Composition"/>
+        <TextBlock Grid.Row="0" Grid.Column="5" Margin="5,0" FontSize="14" FontWeight="DemiBold" Text="Materials to add"/>
 
-        <!--Headers-->
-        <!--============-->
-        <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0" FontSize="14" FontWeight="DemiBold">Target Composition</TextBlock>
-        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5,0" FontSize="14" FontWeight="DemiBold">Current Composition</TextBlock>
-        <TextBlock Grid.Row="0" Grid.Column="5" Margin="5,0" FontSize="14" FontWeight="DemiBold">Materials to add</TextBlock>
 
-        <!--Controls-->
-        <!--============-->
+        
+        <!-- UPPER COLORS                                     -->
+        <!--==================================================-->
+        
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="DodgerBlue"/>
+        <Rectangle Grid.Row="1" Grid.Column="3" Fill="Khaki"/>
+        <Rectangle Grid.Row="1" Grid.Column="5" Fill="LightGreen"/>
+        
+        
+        
+        <!-- CONTROLS                                         -->
+        <!--==================================================-->
+        
+        <!-- Panel for editing buttons of target solution-->
+        <!-- Data context is set in App_Startup to be TargetSolution_ViewModel-->
         <local:TargetEditPanel x:Name="TargetEditPanel"
                                Grid.Row="2" Grid.Column="1"
                                Margin="10,0,10,0"/>
 
-        <!--Bath volume row-->
-        <Border Grid.Row="3" Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="Black" Margin="10, 0, 10, 0">
-            <!--DATA CONTEXT for this presenter is set in App_Startup to be TargetSolution view model-->
-            <local:TargetVolumePresenter x:Name="TargetVolumePresenter"
-                                         VerticalAlignment="Top"
-                                         Volume="{Binding Volume}"
-                                         EditVolume="{Binding EditVolume.Value, Mode=TwoWay}" />
-        </Border>
-
+        <!-- Panel for entering analize values. -->
+        <!-- Data context is set in App_Startup to be CurrentSolution_ViewModel-->
         <local:AnalizePanel x:Name="AnalizePanel"
                             Grid.Column="3" Grid.Row="2"
-                            Margin="5,2,5,2" />
+                            VerticalAlignment="Center"
+                            Margin="5,0,5,0"/>
 
-        <Border Grid.Row="3" Grid.Column="3" BorderThickness="0,0,0,1">
-        <local:CurrentVolumePresenter Margin="5,0,5,0"
-            x:Name="CurrentVolumePresenter"/>
+        
+        
+        <!-- SPACER COLORS                                     -->
+        <!--==================================================-->
+
+        <Rectangle Grid.Row="3" Grid.Column="1" Fill="DodgerBlue"/>
+        <Rectangle Grid.Row="3" Grid.Column="3" Fill="Khaki"/>
+        <Rectangle Grid.Row="3" Grid.Column="5" Fill="LightGreen"/>
+        
+        
+
+        <!-- BATH VOLUMES ROW                                 -->
+        <!--==================================================-->
+        
+        <!-- Target solution volume -->
+        <!--=======================-->
+        <Border Grid.Row="4" Grid.Column="1"
+                BorderThickness="0,0,0,2"
+                BorderBrush="DodgerBlue">
+            <!-- Data context is set in App_Startup to be TargetSolution_ViewModel-->
+            <local:TargetVolumePresenter x:Name="TargetVolumePresenter"
+                                         VerticalAlignment="Center"
+                                         Margin="10, 0, 10, 0" />
         </Border>
-        <!--Current composition settings-->
+
+        <!-- Current solution volume -->
+        <!--=========================-->
+        <Border Grid.Row="4" Grid.Column="3"
+                BorderThickness="0,0,0,2"
+                BorderBrush="Khaki">
+            <!-- Data context is set in App_Startup to be CurrentSolution_ViewModel-->
+            <local:CurrentVolumePresenter x:Name="CurrentVolumePresenter"
+                                          VerticalAlignment="Center"
+                                          Margin="5,0,10,0" />
+        </Border>
+
+        <!-- "Materials to add" volume section border -->
+        <!--======================================-->
+        <Border Grid.Row="4" Grid.Column="5"
+                BorderThickness="0,0,0,2"
+                BorderBrush="LightGreen"/>
+
         
 
-
-        <!--Solution composition presenters-->
-        <!--============-->
+        <!-- COMPOSITION PRESENTERS               -->
+        <!--======================================-->
         
-        <!--Target composition list-->
-        <!--Data context is set in App_Startup-->
+        <!-- Target composition list -->
+        <!--=========================-->
+        <!-- Data context is set in App_Startup to be TargetSolution_ViewModel-->
         <local:TargetSolutionPresenter x:Name="TargetSolution"
-                    Grid.Row="4" Grid.Column="1" 
-                    Margin="10, 0, 10, 0"/>
+                                       Grid.Row="5" Grid.Column="1" 
+                                       Margin="10, 10, 10, 0"/>
 
+        <!-- Current composition list -->
+        <!--==========================-->
+        <!-- Data context is set in App_Startup to be CurrentSolution_ViewModel-->
+        <local:CurrentSolutionPresenter x:Name="CurrentSoution"
+                                        Grid.Row="5" Grid.Column="3"
+                                        Margin="10,10,10,0" />
 
-        <!--Current composition list-->
-        <ItemsControl x:Name="CurrentComposition"
-                      Grid.Row="4" Grid.Column="3" 
-                      Margin="10, 0, 10, 0" 
-                      ItemsSource="{Binding Components}" 
-                      ItemTemplate="{StaticResource ResourceKey=CurrentComponentDataTemplate}"/>
-        
-        
-        <!--Required components list-->
+        <!-- Required components list -->
+        <!--==========================-->
+        <local:RequiredMaterialsPresenter x:Name="RequiredMaterials"
+                                          Grid.Row="5" Grid.Column="5"
+                                          Margin="10,10,10,10"/>
+
+        <!--
         <ItemsControl x:Name="RequiredComponents"
-                      Grid.Row="4" Grid.Column="5"
-                      Margin="10, 0, 10, 0" 
+                      Grid.Row="5" Grid.Column="5"
+                      Margin="10, 10, 10, 0" 
                       ItemsSource="{Binding Components}"
                       ItemTemplate="{StaticResource ResourceKey=RequiredComponentDataTemplate}"/>
+        -->
 
-        <!--Bottom colors-->
-        <Rectangle Grid.Row="5" Grid.Column="1" Fill="DodgerBlue"/>
-        <Rectangle Grid.Row="5" Grid.Column="3" Fill="Khaki"/>
-        <Rectangle Grid.Row="5" Grid.Column="5" Fill="LightGreen"/>
+        
+        
+        <!-- BOTTOM COLORS                        -->
+        <!--======================================-->
+        
+        <Rectangle Grid.Row="6" Grid.Column="1" Fill="DodgerBlue"/>
+        <Rectangle Grid.Row="6" Grid.Column="3" Fill="Khaki"/>
+        <Rectangle Grid.Row="6" Grid.Column="5" Fill="LightGreen"/>
 
+        
+        
+        <!-- ERROR PRESENTERS-->
+        <!--======================================-->
+        
+        <!-- Panel that shows top error encounterd while editing -->
+        <!--=====================================================-->
         <local:TopErrorPresenter    x:Name="TopTargetError"
-                                    Grid.Row="5" Grid.Column="1"
+                                    Grid.Row="6" Grid.Column="1"
                                     EditErrors="{Binding InputErrors, Mode=OneWay}"
-                                    IsActive="{Binding IsEditValid, Mode=OneWay}"
-                                    />
+                                    IsActive="{Binding IsEditValid, Mode=OneWay}"/>
 
+        <!-- Panel that shows top error encountered while entering analize values -->
+        <!--======================================================================-->
         <local:TopErrorPresenter x:Name="TopCurrentError"
-                                 Grid.Row="5" Grid.Column="3"
+                                 Grid.Row="6" Grid.Column="3"
                                  EditErrors="{Binding InputErrors, Mode=OneWay}"
                                  IsActive="{Binding IsInputValid, Mode=OneWay}"
                                  />

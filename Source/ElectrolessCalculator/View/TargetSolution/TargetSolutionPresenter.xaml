@@ -5,12 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectrolessCalculator.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             >
-    <Grid>
+             d:DesignHeight="150" d:DesignWidth="300">
+    <Grid Background="White">
         <StackPanel>
             <local:TargetComponentPresenter DataContext="{Binding Components[0]}"/>
-            <local:TargetNickelMetalPresenter DataContext="{Binding NickelMetal}"/>
+            <local:TargetNickelMetalPresenter DataContext="{Binding NickelMetal}" Margin="15,0,0,0"/>
             <local:TargetComponentPresenter DataContext="{Binding Components[1]}"/>
             <local:TargetComponentPresenter DataContext="{Binding Components[2]}"/>
             <local:TargetComponentPresenter DataContext="{Binding Components[3]}"/>

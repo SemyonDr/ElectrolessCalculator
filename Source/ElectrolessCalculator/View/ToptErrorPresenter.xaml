@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="15" d:DesignWidth="200">
     <StackPanel Orientation="Horizontal"
-                Background="OrangeRed"
+                Background="Tomato"
                 >
         <StackPanel.Style>
             <Style TargetType="StackPanel">
