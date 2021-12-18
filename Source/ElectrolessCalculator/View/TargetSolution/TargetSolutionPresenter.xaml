@@ -1,4 +1,6 @@
-﻿<UserControl x:Class="ElectrolessCalculator.View.TargetSolutionPresenter"
+﻿<!-- Presents target components list.
+     DataContext assumed to be TargetComponent_ViewModel-->
+<UserControl x:Class="ElectrolessCalculator.View.TargetSolutionPresenter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

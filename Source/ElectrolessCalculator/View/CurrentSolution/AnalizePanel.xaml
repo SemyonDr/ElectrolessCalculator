@@ -11,9 +11,9 @@
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="45"/>
+            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -33,16 +33,17 @@
 
         <!-- Title -->
         <!--=======-->
-        <TextBlock Grid.Column="2" Grid.Row="0"
+        <TextBlock Grid.Column="1" Grid.Row="0"
                    HorizontalAlignment="Left"
                    Text="Metallic Nickel Analize"/>
 
         <!-- Nickel analize value box -->
         <!--==========================-->
-        <TextBox Grid.Column="3" Grid.Row="0"
+        <TextBox Grid.Column="2" Grid.Row="0"
                  Height="20"
                  TextAlignment="Right"
                  Margin="0,-6,0,0"
+                 BorderBrush="#FF888888"
                  Text="{Binding Path=NickelAnalize.Value, 
                                 UpdateSourceTrigger=PropertyChanged, 
                                 FallbackValue=Ni_Val}"/>
@@ -62,23 +63,37 @@
 
         <!-- Title -->
         <!--=======-->
-        <TextBlock Grid.Column="2" Grid.Row="1"
+        <TextBlock Grid.Column="1" Grid.Row="1"
                    HorizontalAlignment="Left" 
                    Text="Sodium Hypophosphite Analize"/>
         
         <!-- Hypophosphite analize value box -->
         <!--=================================-->
-        <TextBox Grid.Column="3" Grid.Row="1"
+        <TextBox Grid.Column="2" Grid.Row="1"
                  Height="20"
                  Margin="0,-6,0,0" 
                  TextAlignment="Right"
+                 BorderBrush="#FF888888"
                  Text="{Binding Path=HypophosphiteAnalize.Value, 
                                 UpdateSourceTrigger=PropertyChanged, 
-                                FallbackValue=HP_Val}"/>
+                                FallbackValue=HP_Val}">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding UseHPAnalize}" Value="True">
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding UseHPAnalize}" Value="False">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
         
         <!-- Use hypophosphite analize check box -->
         <!--=====================================-->
-        <CheckBox Grid.Column="1" Grid.Row="1"
+        <CheckBox Grid.Column="3" Grid.Row="1"
                   HorizontalAlignment="Center" 
                   IsChecked="{Binding Path=UseHPAnalize,
                                       FallbackValue=True}"/>

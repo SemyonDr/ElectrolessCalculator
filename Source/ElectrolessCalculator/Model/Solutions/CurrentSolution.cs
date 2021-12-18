@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.Model
 {
-    //This class represents current bath composition estimated by analizes
+    /// <summary>
+    /// This class represents current bath composition estimated by analizes.
+    /// </summary>
     public class CurrentSolution : Solution
     {
         private TargetSolution targetSolution;

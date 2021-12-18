@@ -11,6 +11,12 @@ namespace ElectrolessCalculator.Model
     /// </summary>
     public class Calculator
     {
+        /// <summary>
+        /// Calculates new current components list.
+        /// </summary>
+        /// <param name="target">Associated target solution.</param>
+        /// <param name="current">Associated current solution.</param>
+        /// <returns></returns>
         public Dictionary<CmpType, Component> GetCurrentSolution(TargetSolution target, CurrentSolution current)
         {
             //Current bath composition is estimated by assuming that:
@@ -24,11 +30,11 @@ namespace ElectrolessCalculator.Model
             //Converting in to nickel salt concentration (Ni2So4 g/l)
             float NiSaltAn = NickelConverter.ConvertMetalToSalt(current.NickelAnalize);
             //Relation between measured concentration and targer concentration of Nickel Sulfate
-            float proportionNi = NiSaltAn / target.GetConcentration(CmpType.NickelSulfate);
+            float proportionNi = NiSaltAn / target.GetConcentrationGL(CmpType.NickelSulfate);
             //Relation between measured concentration and targer concentration of Sodium Hypophosphite
             float proportionHP = 1;
             if (current.UseHPAnalize)
-                proportionHP = current.HypophosphiteAnalize / target.GetConcentration(CmpType.SodiumHypophosphite);
+                proportionHP = current.HypophosphiteAnalize / target.GetConcentrationGL(CmpType.SodiumHypophosphite);
 
             //While current Nickel and Hypophosphite are defined directly by analize result
             //other components current concentrations are calculated using average between analize results
@@ -78,7 +84,7 @@ namespace ElectrolessCalculator.Model
 
         private Component CreateCurrentComponentByProportion(CmpType Type, float Proportion, float CurrentVolume, TargetSolution Target, ComponentFactory CFactory) {
             //Calculating current concentration of the component as fraction of target concentration
-            float cur_conc = Target.GetConcentration(Type) * Proportion;
+            float cur_conc = Target.GetConcentrationGL(Type) * Proportion;
             //Calculating weigth in kg of the component in the current solution
             float cur_weigth = cur_conc * CurrentVolume / 1000.0f;
             //Creating component
@@ -92,42 +98,58 @@ namespace ElectrolessCalculator.Model
             return CFactory.CreateComponent(Type, cur_weigth);
         }
 
+        /// <summary>
+        /// Calculates required components list.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="current"></param>
+        /// <returns></returns>
         public Dictionary<CmpType, Component> GetRequiredMaterials(TargetSolution target, CurrentSolution current) {
             //Amount of required materials consists of two parts:
-            //1) Materials to add to the current volume to make its concentrations equal to target concentrations, which is calculated by:
-            //(target concentration - current concentration)*current volume
-            //2) Materials to make up volume of solution which to be added to current volume to reach target total volume, wihch is calculated by:
-            //target concentration * (target volume - current volume)
-            //Final calculation is:
-            //target weigth - current weigth
+            // 1) Materials to add to the current volume to make its concentrations equal to target concentrations, which is calculated by:
+            //    (target concentration - current concentration)*current volume
+            //    or 
+            //    target concentration*current volume - current weight
 
-            //Required materials list
-            Dictionary<CmpType, Component> required = new Dictionary<CmpType, Component>();
+            // 2) Materials to make up volume of solution which to be added to current volume to reach target total volume, wihch is calculated by:
+            //    target concentration * (target volume - current volume).
+            //    If current volume is bigger than target volume this part is set to 0. (materials nor added nor substracted for volume difference)
+
             ComponentFactory cmpFactory = new ComponentFactory();
 
-            //Nickel Sulfate
-            Component ni_cmp = cmpFactory.CreateComponent(CmpType.NickelSulfate, 
-                target.Components[CmpType.NickelSulfate].WeigthKg - current.Components[CmpType.NickelSulfate].WeigthKg);
+            //Calculating part 1
+            Dictionary<CmpType, Component> cur_components = current.Components;
+
+            float ni_w = (target.GetConcentrationGL(CmpType.NickelSulfate) * current.TotalVolumeL) / 1000.0f - cur_components[CmpType.NickelSulfate].WeigthKg;
+            float hp_w = (target.GetConcentrationGL(CmpType.SodiumHypophosphite) * current.TotalVolumeL) / 1000.0f - cur_components[CmpType.SodiumHypophosphite].WeigthKg;
+            float sa_w = (target.GetConcentrationGL(CmpType.SodiumAcetate) * current.TotalVolumeL) / 1000.0f - cur_components[CmpType.SodiumAcetate].WeigthKg;
+            float sc_w = (target.GetConcentrationGL(CmpType.SuccinicAcid) * current.TotalVolumeL) / 1000.0f - cur_components[CmpType.SuccinicAcid].WeigthKg;
+            float la_w = (target.GetConcentrationGL(CmpType.LacticAcid) * current.TotalVolumeL) / 1000.0f - cur_components[CmpType.LacticAcid].WeigthKg;
+
+            //Calculating part 2
+            if (current.TotalVolumeL < target.TotalVolumeL) {
+                float vol_diff = target.TotalVolumeL - current.TotalVolumeL;
+                ni_w += (target.GetConcentrationGL(CmpType.NickelSulfate)        * vol_diff) / 1000.0f;
+                hp_w += (target.GetConcentrationGL(CmpType.SodiumHypophosphite)  * vol_diff) / 1000.0f;
+                sa_w += (target.GetConcentrationGL(CmpType.SodiumAcetate)        * vol_diff) / 1000.0f;
+                sc_w += (target.GetConcentrationGL(CmpType.SuccinicAcid)         * vol_diff) / 1000.0f;
+                la_w += (target.GetConcentrationGL(CmpType.LacticAcid)           * vol_diff) / 1000.0f;
+            }
+
+            //Creating components
+            Component ni_cmp = cmpFactory.CreateComponent(CmpType.NickelSulfate, ni_w);
+            Component hp_cmp = cmpFactory.CreateComponent(CmpType.SodiumHypophosphite, hp_w);
+            Component sa_cmp = cmpFactory.CreateComponent(CmpType.SodiumAcetate, sa_w);
+            Component sc_cmp = cmpFactory.CreateComponent(CmpType.SuccinicAcid, sc_w);
+            Component la_cmp = cmpFactory.CreateComponent(CmpType.LacticAcid, la_w);
+            
+
+            //Adding components to the list
+            Dictionary<CmpType, Component> required = new Dictionary<CmpType, Component>();
             required.Add(CmpType.NickelSulfate, ni_cmp);
-
-            //Sodium Hypophosphite
-            Component hp_cmp = cmpFactory.CreateComponent(CmpType.SodiumHypophosphite,
-                target.Components[CmpType.SodiumHypophosphite].WeigthKg - current.Components[CmpType.SodiumHypophosphite].WeigthKg);
             required.Add(CmpType.SodiumHypophosphite, hp_cmp);
-
-            //Sodium Acetate
-            Component sa_cmp = cmpFactory.CreateComponent(CmpType.SodiumAcetate,
-                target.Components[CmpType.SodiumAcetate].WeigthKg - current.Components[CmpType.SodiumAcetate].WeigthKg);
             required.Add(CmpType.SodiumAcetate, sa_cmp);
-
-            //Succinic Acid
-            Component sca_cmp = cmpFactory.CreateComponent(CmpType.SuccinicAcid,
-                target.Components[CmpType.SuccinicAcid].WeigthKg - current.Components[CmpType.SuccinicAcid].WeigthKg);
-            required.Add(CmpType.SuccinicAcid, sca_cmp);
-
-            //Lactic Acid
-            Component la_cmp = cmpFactory.CreateComponent(CmpType.LacticAcid,
-                target.Components[CmpType.LacticAcid].WeigthKg - current.Components[CmpType.LacticAcid].WeigthKg);
+            required.Add(CmpType.SuccinicAcid, sc_cmp);
             required.Add(CmpType.LacticAcid, la_cmp);
 
             return required;

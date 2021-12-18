@@ -16,9 +16,10 @@ namespace ElectrolessCalculator
     {
         void App_Startup(Object sender, StartupEventArgs args)
         {
-            //Creating settings
+            //Creating settings object
             Model.Settings settings = new Model.Settings();
             //Loading settings data
+            //If loading fails settings will have default values
             string loading_message = settings.UpdateFromFile();
 
             //Creating model data
@@ -32,13 +33,15 @@ namespace ElectrolessCalculator
             ViewModel.CurrentSolution_ViewModel currentSolution_VM = new ViewModel.CurrentSolution_ViewModel(currentSolution, targetSolution_VM);
             ViewModel.RequiredMaterials_VM requiredMaterials_VM = new ViewModel.RequiredMaterials_VM(requiredMaterials, targetSolution_VM, currentSolution_VM);
             ViewModel.Settings_ViewModel settings_VM = new ViewModel.Settings_ViewModel(settings);
+
+            //Subscribing setting to changes in target solution
             targetSolution_VM.TargetSolutionChanged += settings_VM.TargetSolutionChangedHandler;
             settings_VM.SettingsMessage = loading_message;
 
             //Creating Windows
             View.MainWindow mainWindow = new View.MainWindow();
 
-            //Setting data context
+            //Setting data contexts for view elements
             //Target solution
             mainWindow.TargetSolution.DataContext = targetSolution_VM;
             mainWindow.TargetVolumePresenter.DataContext = targetSolution_VM;
@@ -55,10 +58,14 @@ namespace ElectrolessCalculator
             //Required materials
             mainWindow.RequiredMaterials.DataContext = requiredMaterials_VM;
             
+            //Showing main window
             mainWindow.Show();
         }
 
-
+        /// <summary>
+        /// Creates target solution model object with default values.
+        /// </summary>
+        /// <returns></returns>
         private Model.TargetSolution CreateTargetSolution() {
             Model.Settings set = new Model.Settings();
 
@@ -72,12 +79,21 @@ namespace ElectrolessCalculator
             return target;
         }
 
+        /// <summary>
+        /// Creates current solution model object with default values.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         private Model.CurrentSolution CreateCurrentSolution(Model.TargetSolution target) {
+            //Initial current volume is the same as in target solution
             Model.CurrentSolution current = new Model.CurrentSolution(target.TotalVolumeL, target);
-            float targetNiSalt = target.GetConcentration(CmpType.NickelSulfate);
+            //Initial analize values are set to target values
+            float targetNiSalt = target.GetConcentrationGL(CmpType.NickelSulfate);
             float targetNiMetal = Model.NickelConverter.ConvertSaltToMetal(targetNiSalt);
-            current.NickelAnalize = Model.NickelConverter.ConvertSaltToMetal(target.GetConcentration(CmpType.NickelSulfate));
-            current.HypophosphiteAnalize = target.GetConcentration(CmpType.SodiumHypophosphite);
+            current.NickelAnalize = Model.NickelConverter.ConvertSaltToMetal(target.GetConcentrationGL(CmpType.NickelSulfate));
+            current.HypophosphiteAnalize = target.GetConcentrationGL(CmpType.SodiumHypophosphite);
+            //HP analize is used by default
+            current.UseHPAnalize = true;
 
             return current;
         }

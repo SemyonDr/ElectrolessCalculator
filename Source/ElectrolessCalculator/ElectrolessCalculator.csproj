@@ -85,7 +85,7 @@
     <Compile Include="Model\Solutions\TargetSolution.cs" />
     <Compile Include="ViewModel\Component\ComponentBase_ViewModel.cs" />
     <Compile Include="ViewModel\Component\CurrentComponent_ViewModel.cs" />
-    <Compile Include="ViewModel\Component\RequiredComponent_VM.cs" />
+    <Compile Include="ViewModel\Component\RequiredComponent_ViewModel.cs" />
     <Compile Include="ViewModel\Component\TargetComponent_ViewModel.cs" />
     <Compile Include="ViewModel\Component\TargetNickelMetal_ViewModel.cs" />
     <Compile Include="ViewModel\Input\InputError.cs" />
@@ -111,12 +111,10 @@
     <Compile Include="View\CurrentSolution\CurrentVolumePresenter.xaml.cs">
       <DependentUpon>CurrentVolumePresenter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HasErrorProxy\OneWayToSource.cs" />
-    <Compile Include="View\HasErrorProxy\OneWayToSourceBinding.cs" />
-    <Compile Include="View\RequiredComponentPresenter.xaml.cs">
+    <Compile Include="View\RequiredMaterials\RequiredComponentPresenter.xaml.cs">
       <DependentUpon>RequiredComponentPresenter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RequiredMaterialsPresenter.xaml.cs">
+    <Compile Include="View\RequiredMaterials\RequiredMaterialsPresenter.xaml.cs">
       <DependentUpon>RequiredMaterialsPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RoutedProperty\RoutedProperty.cs" />
@@ -183,11 +181,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\RequiredComponentPresenter.xaml">
+    <Page Include="View\RequiredMaterials\RequiredComponentPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\RequiredMaterialsPresenter.xaml">
+    <Page Include="View\RequiredMaterials\RequiredMaterialsPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

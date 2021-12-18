@@ -1,4 +1,7 @@
-﻿<UserControl x:Class="ElectrolessCalculator.View.TargetEditPanel"
+﻿<!-- This panel controls editing of target solution values.                      
+     DataContext assumed to be TargetSolution_ViewModel    
+     Commands and their logic are defined in the view model. -->
+<UserControl x:Class="ElectrolessCalculator.View.TargetEditPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,22 +9,20 @@
              xmlns:local="clr-namespace:ElectrolessCalculator.View"
              mc:Ignorable="d" 
              d:DesignHeight="80" d:DesignWidth="300" Background="White">
-<!-- This panel controls editing of target solution values.                      -->
-<!-- DATA CONTEXT is set in App_Startup and it is target solution view model.    -->
-<!-- Commands and their logic are defined in the view model.                     -->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="1*"/> <!-- Buttons row -->
+            <RowDefinition Height="20"/> <!-- Message row -->
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0"
                     Orientation="Horizontal">
             <!-- Edit/Save button. Switches functionality depending on a state. -->
+            <!--================================================================-->
             <Button x:Name="SaveButton"
                 Height="30" Width="50"
-                Margin="5,5,5,5"
-                HorizontalAlignment="Left" VerticalAlignment="Top">
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="5,5,5,5" >
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="BorderThickness" Value="0"/>
@@ -41,6 +42,7 @@
             </Button>
 
             <!-- Default values button. -->
+            <!--========================-->
             <Button x:Name="DefaultButton"
                     Height="30" Width="50"
                     Margin="5,5,5,5"
@@ -66,8 +68,8 @@
         </StackPanel>
         
 
-
         <!-- Cancel button. Shows up when edit state is active. -->
+        <!--====================================================-->
         <Button Grid.Row="0"
                 Height="30" Width="50"
                 Margin="5,5,5,5"
@@ -90,6 +92,8 @@
             </Button.Style>
         </Button>
 
+        <!-- Load/Save message -->
+        <!--===================-->
         <local:SettingsMessage x:Name="Message"
                                Grid.Row="1" 
                                Margin="5,0,0,0"

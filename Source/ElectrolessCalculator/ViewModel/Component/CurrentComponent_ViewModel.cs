@@ -11,18 +11,35 @@ namespace ElectrolessCalculator.ViewModel
     /// </summary>
     public class CurrentComponent_ViewModel : ComponentBase_ViewModel
     {
+        #region INITIALIZATION
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
         /// <summary>
-        /// Constructor
+        /// Constructor.
         /// </summary>
         /// <param name="CurrentComponent"></param>
         /// <param name="Units"></param>
         /// <param name="CurrentSolution_VM"></param>
         public CurrentComponent_ViewModel(Model.Component CurrentComponent, Model.ComponentUnits Units, CurrentSolution_ViewModel CurrentSolution_VM) : base(CurrentComponent, Units) {
             this.CurrentSolution_VM = CurrentSolution_VM;
-
         }
+        #endregion
+
+        #region PUBLIC PROPERTIES
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------------------------
+        //Data binding
 
         public CurrentSolution_ViewModel CurrentSolution_VM { get; private set; }
+
+
+        //---------------------------------------------------------------------------------------------------------------
+        //Displayed properties
 
         public override float Value {
             get {
@@ -30,17 +47,15 @@ namespace ElectrolessCalculator.ViewModel
                     Component.WeigthKg,
                     CurrentSolution_VM.Volume.LastParsedValue,
                     Units,
-                    Component.Density);
-            }
+                    Component.Density); }
             set {
                 Component.WeigthKg = Model.UnitsConverter.ConvertToKg(
                     value,
                     CurrentSolution_VM.Volume.LastParsedValue,
                     Units,
                     Component.Density);
-                NotifyPropertyChanged("Value");
-            }
-        }
+                NotifyPropertyChanged("Value"); }}
 
+        #endregion
     }
 }

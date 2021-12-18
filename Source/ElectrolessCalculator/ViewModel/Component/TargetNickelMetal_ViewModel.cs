@@ -21,35 +21,15 @@ namespace ElectrolessCalculator.ViewModel
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="NickelSulfate_VM"></param>
+        /// <param name="NickelSulfate_VM">View model of associated nickel sulfate component.</param>
         public TargetNickelMetal_ViewModel(TargetComponent_ViewModel NickelSulfate_VM) { 
             this.NickelSulfate_VM = NickelSulfate_VM;
             //Subscribing to changes in Nickel Sulfate view model value,
             //so they are reflected in nickel metal value.
-            NickelSulfate_VM.PropertyChanged += NickelSalt_PropertyChanged;
-            NickelSulfate_VM.EditValue.ValueChanged += NickelSalt_EditValueChanged;
+            NickelSulfate_VM.PropertyChanged += NickelSalt_PropertyChangedHandler;
+            NickelSulfate_VM.EditValue.ValueChanged += NickelSalt_EditValueChangedHandler;
         }
 
-        private void NickelSalt_EditValueChanged(object sender, EventArgs e)
-        {
-            NotifyPropertyChanged("EditValue");
-        }
-
-        /// <summary>
-        /// Event handler for base EditValue property changed.
-        /// Notifies of changing of this property in Nickel Metal view model.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NickelSalt_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Value")
-                NotifyPropertyChanged("Value");
-            if (e.PropertyName == "EditState")
-                NotifyPropertyChanged("EditState");
-            if (e.PropertyName == "Units")
-                NotifyPropertyChanged("Units");
-        }
         #endregion
 
         #region PRIVATE FIELDS
@@ -65,6 +45,19 @@ namespace ElectrolessCalculator.ViewModel
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------------------------
+        //State properties
+
+        /// <summary>
+        /// Flag that shows if associated text box is currently focused for entering value.
+        /// </summary>
+        public bool IsKeyboardFocused {
+            get { return isKeyboardFocused; }
+            set {
+                isKeyboardFocused = value;
+                NotifyPropertyChanged("IsKeyboardFocused");
+            }}
 
         //---------------------------------------------------------------------------------------------------------------
         //Displayed properties
@@ -93,8 +86,11 @@ namespace ElectrolessCalculator.ViewModel
             get { return NickelSulfate_VM.EditState; }
         }
 
-        //Nickel metal value is calculated from nickel sulfate value;
-        //Displayed value converted from absolute weigth in kg according with selected units.
+
+        /// <summary>
+        /// Displayed value when not editing.
+        /// Nickel metal value is calculated from nickel sulfate value.
+        /// </summary>
         public float Value {
             get {
                 return Model.UnitsConverter.ConvertFromKg(
@@ -113,13 +109,14 @@ namespace ElectrolessCalculator.ViewModel
             }
         }
 
-        //Displayed value for editing is converted from weigth in kg (saved in the private propery), according with component displayed units.
+        /// <summary>
+        /// Value for editing.
+        /// </summary>
         public string EditValue {
             get {
                 if (IsKeyboardFocused)
-                {   //If value is currently entered there is no need to copy it from nickel sulfate
+                    //If value is currently being entered there is no need to copy it from nickel sulfate
                     return editValue;
-                }
                 else {
                     //If input textbox is not focused edit value should be calculated from
                     //Nickel Sulfate edit value
@@ -151,16 +148,38 @@ namespace ElectrolessCalculator.ViewModel
                 }
             }
         }
+        #endregion
+
+        #region EVENT HANDLERS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
 
         /// <summary>
-        /// Flag showing that associated text box is currently focused for entering value.
+        /// Event handler for changes in Nickel Sulfate edit value.
         /// </summary>
-        public bool IsKeyboardFocused {
-            get { return isKeyboardFocused; }
-            set {
-                isKeyboardFocused = value;
-                NotifyPropertyChanged("IsKeyboardFocused");
-            }}
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NickelSalt_EditValueChangedHandler(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("EditValue");
+        }
+
+        /// <summary>
+        /// Event handler for base EditValue property changed.
+        /// Notifies of changing of this property in Nickel Metal view model.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NickelSalt_PropertyChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Value")
+                NotifyPropertyChanged("Value");
+            if (e.PropertyName == "EditState")
+                NotifyPropertyChanged("EditState");
+            if (e.PropertyName == "Units")
+                NotifyPropertyChanged("Units");
+        }
         #endregion
     }
 }

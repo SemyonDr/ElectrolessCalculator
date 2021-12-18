@@ -146,16 +146,8 @@
                                           Grid.Row="5" Grid.Column="5"
                                           Margin="10,10,10,10"/>
 
-        <!--
-        <ItemsControl x:Name="RequiredComponents"
-                      Grid.Row="5" Grid.Column="5"
-                      Margin="10, 10, 10, 0" 
-                      ItemsSource="{Binding Components}"
-                      ItemTemplate="{StaticResource ResourceKey=RequiredComponentDataTemplate}"/>
-        -->
+        
 
-        
-        
         <!-- BOTTOM COLORS                        -->
         <!--======================================-->
         
@@ -168,8 +160,8 @@
         <!-- ERROR PRESENTERS-->
         <!--======================================-->
         
-        <!-- Panel that shows top error encounterd while editing -->
-        <!--=====================================================-->
+        <!-- Panel that shows top error encounterd while editing target solution -->
+        <!--=====================================================================-->
         <local:TopErrorPresenter    x:Name="TopTargetError"
                                     Grid.Row="6" Grid.Column="1"
                                     EditErrors="{Binding InputErrors, Mode=OneWay}"

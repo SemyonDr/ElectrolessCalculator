@@ -1,4 +1,6 @@
-﻿<UserControl x:Class="ElectrolessCalculator.View.TargetNickelMetalPresenter"
+﻿<!-- Presenter for Nickel Metal "virtual" target component.
+     DataContext assumed to be TargetNickelMetal_ViewModel. -->
+<UserControl x:Class="ElectrolessCalculator.View.TargetNickelMetalPresenter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -36,7 +38,7 @@
                     Margin="0,-1,-3,0"
                     BorderBrush="#FF888888"
                     Text="{Binding EditValue, UpdateSourceTrigger=PropertyChanged, FallbackValue=EditVal}">
-            <!-- Routed binding -->
+            <!-- Routed binding of IsKeyboardFocused-->
             <local:RoutedPropertyContainer.RoutedProperty>
                 <local:RoutedProperty TargetPropertyPath="IsKeyboardFocused" SourceBinding="{Binding IsKeyboardFocused}"/>
             </local:RoutedPropertyContainer.RoutedProperty>

@@ -1,4 +1,6 @@
-﻿<UserControl x:Class="ElectrolessCalculator.View.TopErrorPresenter"
+﻿<!-- Block that displays first error from provided error list.
+     Invisible if list is empty. -->
+<UserControl x:Class="ElectrolessCalculator.View.TopErrorPresenter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,6 +13,7 @@
                 >
         <StackPanel.Style>
             <Style TargetType="StackPanel">
+                <!-- Visibility triggers -->
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TopErrorPresenter}, Path=IsActive}" Value="True">
                         <Setter Property="Visibility" Value="Hidden"/>
@@ -22,11 +25,14 @@
             </Style>
         </StackPanel.Style>
 
+        <!-- Displayed text -->
+        <!--================-->
         <TextBlock x:Name="EditErrorText"
                    Margin="5,0,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center" >
             <TextBlock.Text>
+                <!-- Binding combines error source and message to one string -->
                 <MultiBinding StringFormat="{}{0}: {1}">
                     <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:TopErrorPresenter}" Path="EditErrors[0].Source" Mode="OneWay"/>
                     <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:TopErrorPresenter}" Path="EditErrors[0].Message" Mode="OneWay"/>

@@ -42,7 +42,6 @@ namespace ElectrolessCalculator.ViewModel
         public RelayCommand StartEditCommand { get; private set; }
         public RelayCommand CancelEditCommand { get; private set; }
         public RelayCommand SaveEditCommand { get; private set; }
-
         public RelayCommand DefaultEditCommand { get; private set; }
         #endregion
 

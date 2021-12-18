@@ -1,4 +1,5 @@
-﻿<UserControl x:Class="ElectrolessCalculator.View.SettingsMessage"
+﻿<!-- Presents messages from settings object - states of loading and saving. -->
+<UserControl x:Class="ElectrolessCalculator.View.SettingsMessage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,10 +7,14 @@
              xmlns:local="clr-namespace:ElectrolessCalculator.View"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="300">
-
-    <Grid>
-        <TextBlock Text="{Binding SettingsMessage, Mode=OneWay, NotifyOnTargetUpdated=True, FallbackValue=NaN}">
+    <Grid Background="White">
+        <!-- Notification should be issued to trigger the animation. -->
+        <TextBlock Text="{Binding SettingsMessage, 
+                            Mode=OneWay,
+                            NotifyOnTargetUpdated=True, 
+                            FallbackValue=SettingsMessage}">
             <TextBlock.Triggers>
+                <!-- Animation that shows new message for 1 second with 0.5 second fadeout. -->
                 <EventTrigger RoutedEvent="Binding.TargetUpdated">
                     <BeginStoryboard>
                         <Storyboard>

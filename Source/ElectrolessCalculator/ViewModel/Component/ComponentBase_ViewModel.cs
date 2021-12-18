@@ -11,6 +11,25 @@ namespace ElectrolessCalculator.ViewModel
     /// Contains properties for dispayng the component data.
     /// </summary>
     public abstract class ComponentBase_ViewModel : ViewModelBase {
+
+        #region INITIALIZATION
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="Component">Solution component.</param>
+        /// <param name="Units">Component units.</param>
+        /// <param name="Solution_VM">Solution view model.</param>
+        public ComponentBase_ViewModel(Model.Component Component, Model.ComponentUnits Units) {
+            this.Component = Component;
+            this.Units = Units;
+        }
+        #endregion
+
+
         #region PRIVATE FIELDS
         //---------------------------------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------------------------------
@@ -18,6 +37,7 @@ namespace ElectrolessCalculator.ViewModel
         //Private fields backing public properties
         private Model.ComponentUnits units;
         #endregion
+
 
         #region PUBLIC PROPERTIES
         //---------------------------------------------------------------------------------------------------------------
@@ -55,24 +75,6 @@ namespace ElectrolessCalculator.ViewModel
                 units = value;
                 NotifyPropertyChanged("Value");
                 NotifyPropertyChanged("Units"); }}
-        #endregion
-
-        #region INITIALIZATION
-        //---------------------------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------------------------------
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="Component">Solution component.</param>
-        /// <param name="Units">Component units.</param>
-        /// <param name="Solution_VM">Solution view model.</param>
-        public ComponentBase_ViewModel(Model.Component Component, Model.ComponentUnits Units)
-        {
-            this.Component = Component;
-            this.Units = Units;
-        }
         #endregion
     }
 }

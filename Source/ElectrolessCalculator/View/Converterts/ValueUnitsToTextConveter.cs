@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace ElectrolessCalculator.View
 {
+    /// <summary>
+    /// Converts Units enum values to strings for display.
+    /// </summary>
     public class ValueUnitsToTextConveter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

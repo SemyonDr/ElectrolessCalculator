@@ -1,0 +1,18 @@
+﻿<!-- List of required materials. 
+    Assumes DataContext is RequiredMaterials_ViewModel -->
+<UserControl x:Class="ElectrolessCalculator.View.RequiredMaterialsPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectrolessCalculator.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="125" d:DesignWidth="300">
+    <StackPanel Orientation="Vertical">
+        <local:RequiredComponentPresenter DataContext="{Binding Components[0]}"/>
+        <local:RequiredComponentPresenter DataContext="{Binding Components[1]}"/>
+        <local:RequiredComponentPresenter DataContext="{Binding Components[2]}"/>
+        <local:RequiredComponentPresenter DataContext="{Binding Components[3]}"/>
+        <local:RequiredComponentPresenter DataContext="{Binding Components[4]}"/>
+    </StackPanel>
+</UserControl>

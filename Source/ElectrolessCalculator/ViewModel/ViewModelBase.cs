@@ -7,9 +7,13 @@ using System.ComponentModel;
 
 namespace ElectrolessCalculator.ViewModel
 {
+    /// <summary>
+    /// Base class for view model classes that implements INotifyPropertyChanged.
+    /// </summary>
     public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void NotifyPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

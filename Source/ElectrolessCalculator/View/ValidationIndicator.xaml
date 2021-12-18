@@ -1,4 +1,5 @@
-﻿<UserControl x:Class="ElectrolessCalculator.View.ValidationIndicator"
+﻿<!-- Simple on-off element used to inddicate input validation. -->    
+<UserControl x:Class="ElectrolessCalculator.View.ValidationIndicator"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

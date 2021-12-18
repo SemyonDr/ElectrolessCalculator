@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ElectrolessCalculator.ViewModel
 {
     /// <summary>
-    /// This class is a view model for input field of a text box.
+    /// This class is a view model for input field of a text box for float values.
     /// Contains validation logic and flags.
     /// </summary>
     public class InputFieldFloat : ViewModelBase

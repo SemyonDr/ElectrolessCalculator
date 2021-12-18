@@ -7,24 +7,47 @@ using System.Windows.Input;
 
 namespace ElectrolessCalculator.ViewModel
 {
+    /// <summary>
+    /// Simple WPF command interface realisation.
+    /// Wrapper for method for WPF binding.
+    /// </summary>
     public class RelayCommand : ICommand
     {
+        #region EVENTS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        public event EventHandler CanExecuteChanged {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public void OnCanExecuteChanged() {
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        #endregion
+
+        #region DELEGATES
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
         private Action<object> execute;
         private Func<object, bool> canExecute;
 
-        public bool CanExecute(object parameter)
-        {
-            if (canExecute == null)
-                return true;
+        #endregion
 
-            return this.canExecute(parameter);
-        }
+        #region CONSTRUCTORS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
 
-        public void Execute(object parameter)
-        {
-            this.execute(parameter);
-        }
-
+        /// <summary>
+        /// Creates command that have canExecute check.
+        /// </summary>
+        /// <param name="execute"></param>
+        /// <param name="canExecute"></param>
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute) {
             this.execute = execute;
             this.canExecute = canExecute;
@@ -37,16 +60,33 @@ namespace ElectrolessCalculator.ViewModel
         public RelayCommand(Action<object> execute) {
             this.execute = execute;
         }
+        #endregion
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+        #region METHODS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Executes the command.
+        /// </summary>
+        /// <param name="parameter"></param>
+        public void Execute(object parameter) {
+            this.execute(parameter);
         }
 
-        public void RaiseCanExecuteChanged()
-        {
-            CommandManager.InvalidateRequerySuggested();
+        /// <summary>
+        /// Returns if command can be executed.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public bool CanExecute(object parameter) {
+            if (canExecute == null)
+                return true;
+
+            return this.canExecute(parameter);
         }
+
+        #endregion
     }
 }

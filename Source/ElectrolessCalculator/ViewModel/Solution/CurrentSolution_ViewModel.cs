@@ -73,7 +73,7 @@ namespace ElectrolessCalculator.ViewModel
             SetVolumeFractionCommand = new RelayCommand(new Action<object>(SetVolumeFraction));
 
             //Subscribing to event of target solution components (and volume) changing
-            Target_VM.TargetSolutionChanged += OnTargetSolutionChanged;
+            Target_VM.TargetSolutionChanged += TargetSolutionChangedHandler;
             //Subscribing to target edit volume changes
             target_VM.EditVolume.ValueChanged += TargetVolumeChangedHandler;
 
@@ -112,9 +112,9 @@ namespace ElectrolessCalculator.ViewModel
             Volume = volume;
 
             //Subscribing to input fields changes
-            NickelAnalize.ValueChanged += InputChanged;
-            HypophosphiteAnalize.ValueChanged += InputChanged;
-            Volume.ValueChanged += InputChanged;
+            NickelAnalize.ValueChanged += InputChangedHandler;
+            HypophosphiteAnalize.ValueChanged += InputChangedHandler;
+            Volume.ValueChanged += InputChangedHandler;
         }
         #endregion
 
@@ -196,7 +196,7 @@ namespace ElectrolessCalculator.ViewModel
             }}
 
         /// <summary>
-        /// This flag shows if current input values pass validation
+        /// This flag shows if current input values passes validation
         /// </summary>
         public bool IsInputValid {
             get {
@@ -301,7 +301,7 @@ namespace ElectrolessCalculator.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnTargetSolutionChanged(object sender, EventArgs e) {
+        private void TargetSolutionChangedHandler(object sender, EventArgs e) {
             //Current concentrations calculated as fractions of target concentrations, so when
             //target concentrations are saved current components should be recalculated
             RefreshComponentsVM();            
@@ -313,7 +313,7 @@ namespace ElectrolessCalculator.ViewModel
         /// </summary>
         /// <param name="sender">Input Field object that was changed.</param>
         /// <param name="e">Arguments are empty.</param>
-        private void InputChanged(object sender, EventArgs e)
+        private void InputChangedHandler(object sender, EventArgs e)
         {
             InputFieldFloat Field = sender as InputFieldFloat;
             //Refreshing model values
