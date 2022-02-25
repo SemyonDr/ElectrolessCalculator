@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.Model
 {
-    //Creates components by Type
+    /// <summary>
+    /// Creates components by Type.
+    /// </summary>
     public class ComponentFactory
     {
         public Component CreateComponent(CmpType Type, float Weigth) {

@@ -21,6 +21,8 @@
             <ColumnDefinition Width="55"/>  <!-- Units       -->
         </Grid.ColumnDefinitions>
 
+
+        
         <!-- Validation indicator -->
         <!--======================-->
         <local:ValidationIndicator x:Name="Validation"
@@ -34,7 +36,18 @@
         <TextBlock  x:Name="ComponentNameTextBlock"
                     Grid.Column="1" 
                     TextAlignment="Left"
-                    Text="{Binding ShortName, FallbackValue=ComponentName}"/>
+                    Text="{Binding ShortName, FallbackValue=ComponentName}">
+            <!-- Component name shows tooltip with info about the component -->
+            <TextBlock.ToolTip>
+                <ToolTip Background="LightYellow">
+                    <StackPanel>
+                        <TextBlock Height="17" Text="{Binding FullName, Mode=OneWay, FallbackValue=FullName}"/>
+                        <TextBlock Height="17" Text="{Binding ChemicalFormula, Mode=OneWay, FallbackValue=Formula}"/>
+                        <TextBlock Height="17" Text="{Binding Density, Mode=OneWay, FallbackValue=Density, StringFormat={}Density: {0} kg/L}"/>
+                    </StackPanel>
+                </ToolTip>
+            </TextBlock.ToolTip>
+        </TextBlock>
 
         <!-- Value for editing -->
         <!--===================-->

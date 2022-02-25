@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.Model
 {
+    /// <summary>
+    /// Converts nickel sulfate weigth and concentration values to
+    /// nickel metal values and back.
+    /// </summary>
     public static class NickelConverter
     {
         public static float ConvertMetalToSalt(float NickelMetalMass)

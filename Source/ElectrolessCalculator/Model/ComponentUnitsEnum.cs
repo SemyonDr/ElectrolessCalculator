@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.Model
 {
+    /// <summary>
+    /// Enumeration of possible units for values.
+    /// </summary>
     public enum ComponentUnits
     {
         kg,

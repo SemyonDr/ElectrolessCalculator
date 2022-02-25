@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.Model
 {
-    //This class represents final product of calculation - 
-    //amount of materials to add to current solution to achieve target composition.
+    /// <summary>
+    /// This class represents final product of calculation - 
+    /// amount of materials to add to current solution to achieve target composition.
+    /// </summary>
     public class RequiredMaterials
     {
         private Calculator calc;

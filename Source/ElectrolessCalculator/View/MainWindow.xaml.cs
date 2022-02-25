@@ -20,9 +20,25 @@ namespace ElectrolessCalculator.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        private AboutWindow AboutWindow;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void AboutClick(object sender, RoutedEventArgs e) {
+            if (AboutWindow == null) {
+                AboutWindow = new AboutWindow();
+                AboutWindow.Owner = this;
+                AboutWindow.Closed += AboutWindow_Closed;
+                AboutWindow.ShowDialog();
+            }
+        }
+
+        private void AboutWindow_Closed(object sender, EventArgs e)
+        {
+            this.AboutWindow = null;
         }
     }
 }

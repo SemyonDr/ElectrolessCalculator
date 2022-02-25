@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace ElectrolessCalculator.Model
 {
     /// <summary>
-    /// This class is used to calculate current composition and components to add.
+    /// Central logical class of the application.
+    /// Used to calculate current composition and required components.
     /// </summary>
     public class Calculator
     {

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ElectrolessCalculator.Model
 {
+    /// <summary>
+    /// Model representation of the material.
+    /// </summary>
     public abstract class Component {
         public float WeigthKg { get; set; }
         public string FullName { get; }

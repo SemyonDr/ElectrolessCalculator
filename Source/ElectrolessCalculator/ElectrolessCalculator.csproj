@@ -98,6 +98,9 @@
     <Compile Include="ViewModel\Solution\CurrentSolution_ViewModel.cs" />
     <Compile Include="ViewModel\Solution\RequiredMaterials_VM.cs" />
     <Compile Include="ViewModel\Solution\TargetSolution_ViewModel.cs" />
+    <Compile Include="View\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CurrentSolution\AnalizePanel.xaml.cs">
       <DependentUpon>AnalizePanel.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,12 @@
     </Compile>
     <Compile Include="View\CurrentSolution\CurrentVolumePresenter.xaml.cs">
       <DependentUpon>CurrentVolumePresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CurrentSolution\FractionButton.xaml.cs">
+      <DependentUpon>FractionButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CurrentSolution\FractionsMenu.xaml.cs">
+      <DependentUpon>FractionsMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RequiredMaterials\RequiredComponentPresenter.xaml.cs">
       <DependentUpon>RequiredComponentPresenter.xaml</DependentUpon>
@@ -147,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CurrentSolution\AnalizePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -160,6 +173,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CurrentSolution\CurrentVolumePresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CurrentSolution\FractionButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CurrentSolution\FractionsMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

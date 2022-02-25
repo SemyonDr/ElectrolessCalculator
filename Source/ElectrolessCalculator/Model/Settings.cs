@@ -25,15 +25,28 @@ namespace ElectrolessCalculator.Model
         /// <summary>
         /// Holds errors during setting file reding.
         /// </summary>
+        // Errors class is defined as subclass of this class.
         private DeserializationErrors deserializationErrors;
 
-        //Settings list
+        #region SETTINGS LIST
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+
         public float Volume;
         public float NickelSulfate;
         public float SodiumHypophosphite;
         public float SodiumAcetate;
         public float SuccinicAcid;
         public float LacticAcid;
+
+        #endregion
+
+
+        #region INITIALIZATION
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
 
         /// <summary>
         /// Constructor creates settings object with default settings values.
@@ -50,6 +63,14 @@ namespace ElectrolessCalculator.Model
 
             deserializationErrors = new DeserializationErrors();
         }
+
+        #endregion
+
+
+        #region METHODS
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
 
         /// <summary>
         /// Reads values from target solution object and stores them in this Setting object.
@@ -79,6 +100,13 @@ namespace ElectrolessCalculator.Model
             target.Components[CmpType.LacticAcid].WeigthKg = LacticAcid;
         }
 
+        #endregion
+
+
+        #region FILE HANDLING LOGIC
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------------
 
         /// <summary>
         /// Writes setting to file using XML serializer.
@@ -235,5 +263,6 @@ namespace ElectrolessCalculator.Model
                 UnreferencedObject = false;
             }
         }
+        #endregion
     }
 }

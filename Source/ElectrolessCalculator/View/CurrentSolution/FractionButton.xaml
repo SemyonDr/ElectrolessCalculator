@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="ElectrolessCalculator.View.FractionButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectrolessCalculator.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="20">
+    <Grid>
+        <Button x:Name="P_Button" Height="20" Width="20" Click="Button_Click" Background="White">
+            <Button.ToolTip>
+                <StackPanel>
+                    <TextBlock Text="Set current solution volume"/>
+                    <TextBlock Text="as fraction of target volume."/>
+                </StackPanel>
+                
+            </Button.ToolTip>
+            <Grid>
+                <TextBlock Text="%" FontSize="12" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Focusable="False" Margin="-1,-2,0,0" Height="16"/>
+            </Grid>
+        </Button>
+        <Popup x:Name="Popup" 
+                   VerticalAlignment="Center"
+                   Placement="Right" 
+                   PopupAnimation="Scroll"
+                    
+                   Focusable="True" 
+                   StaysOpen="True">
+            <local:FractionsMenu x:Name="FractionsMenu"/>
+        </Popup>
+    </Grid>
+</UserControl>

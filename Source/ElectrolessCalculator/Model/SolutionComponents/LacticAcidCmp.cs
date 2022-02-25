@@ -8,7 +8,13 @@ namespace ElectrolessCalculator.Model
 {
     public class LacticAcidCmp : Component
     {
-        public float VolumeL { get { return base.WeigthKg/base.Density; } set { base.WeigthKg = value*base.Density; } }
+        public float VolumeL {
+            get {
+                return base.WeigthKg/base.Density;
+            }
+            set {
+                base.WeigthKg = value*base.Density;
+            }}
 
         public LacticAcidCmp(float WeigthKg) :
             base(WeigthKg,
