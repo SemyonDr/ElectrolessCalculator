@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElectrolessCalculator.View"
+        xmlns:gl="clr-namespace:ElectrolessCalculator"
         mc:Ignorable="d"
         Title="About" 
         Height="480" Width="400"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="CanMinimize">
+        ResizeMode="CanMinimize"
+        Icon="/Resources/AboutIcon.ico">
     <Grid Margin="5,0,5,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
