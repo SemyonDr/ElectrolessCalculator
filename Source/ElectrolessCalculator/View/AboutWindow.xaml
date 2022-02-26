@@ -22,6 +22,9 @@
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
 
+        <!-- COLOR BARS                                       -->
+        <!--==================================================-->
+        
         <Rectangle Grid.Row="0" Fill="#b9dcff"/>
         <Rectangle Grid.Row="2" Height="5" Width="240" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,8,0,0" Fill="DodgerBlue"/>
         <Rectangle Grid.Row="2" Height="5" Width="5" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,8,0,0" Fill="DodgerBlue"/>
@@ -35,11 +38,20 @@
         <Rectangle Grid.Row="5" Height="5" Width="240" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,8,0,0" Fill="#b9dcff"/>
         <Rectangle Grid.Row="5" Height="5" Width="5" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,8,0,0" Fill="#b9dcff"/>
 
+        <Rectangle Grid.Row="6" Fill="#b9dcff" />
+
+        
+        <!-- TEXT BLOCKS                                      -->
+        <!--==================================================-->
+
+        <!-- General description                              -->
         <TextBlock Grid.Row="1" 
                    Margin="10,5,10,5"
                    TextWrapping="Wrap"
                    >This program helps the operator of a electroless nickel plating bath to maintain correct solution composition.</TextBlock>
+
         
+        <!-- Target composition                               -->
         <StackPanel Grid.Row="2"
                     Margin="10,0,10,5">
             <TextBlock FontWeight="Bold" 
@@ -48,6 +60,8 @@
                     >In this section desired bath composition is described by entering bath volume and desired materials concentrations. Data is saved and loaded from file.</TextBlock>
         </StackPanel>
 
+
+        <!-- Current composition                              -->
         <StackPanel Grid.Row="3"
                     Margin="10,0,10,5">
             <TextBlock FontWeight="Bold"
@@ -56,6 +70,8 @@
                     >In this section user is entering concentration analises results for Metallic Nickel and (optionally) Sodium Hypophosphite along with current solution volume. Then estimated current concentrations are displayed based on analises.</TextBlock>
         </StackPanel>
 
+
+        <!-- Materials to add                                 -->
         <StackPanel Grid.Row="4"
                     Margin="10,0,10,5">
             <TextBlock FontWeight="Bold"
@@ -66,11 +82,13 @@
                     >Amount of required materials given both in kilograms and liters. For every material except for Lactic Acid liters are the volume of material in powder form.</TextBlock>
         </StackPanel>
 
+
+        <!-- Credits                                          -->
         <StackPanel Grid.Row="5"
                     Margin="10,0,10,5">
             <TextBlock FontWeight="Bold"
                     >Credits</TextBlock>
-            <TextBlock>Created by Semyon Drozdov © 2022</TextBlock>
+            <TextBlock>Created by Semyon Drozdov © 2022 Version 1.0</TextBlock>
             <StackPanel Orientation="Horizontal">
                 <TextBlock>Email me at <Hyperlink>semyon.drozdov@gmail.com</Hyperlink></TextBlock>
             </StackPanel>
@@ -84,6 +102,6 @@
             </TextBlock>
         </StackPanel>
 
-        <Rectangle Grid.Row="6" Fill="#b9dcff" />
+
     </Grid>
 </Window>

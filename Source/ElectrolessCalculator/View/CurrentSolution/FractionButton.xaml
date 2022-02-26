@@ -1,4 +1,6 @@
-﻿<UserControl x:Class="ElectrolessCalculator.View.FractionButton"
+﻿<!-- Button that opens fractions menu. -->
+<!-- Menu is implemented as a popup. -->
+<UserControl x:Class="ElectrolessCalculator.View.FractionButton"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,6 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="20">
     <Grid>
+        
         <Button x:Name="P_Button" Height="20" Width="20" Click="Button_Click" Background="White">
             <Button.ToolTip>
                 <StackPanel>
@@ -19,11 +22,11 @@
                 <TextBlock Text="%" FontSize="12" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Focusable="False" Margin="-1,-2,0,0" Height="16"/>
             </Grid>
         </Button>
+        
         <Popup x:Name="Popup" 
                    VerticalAlignment="Center"
                    Placement="Right" 
                    PopupAnimation="Scroll"
-                    
                    Focusable="True" 
                    StaysOpen="True">
             <local:FractionsMenu x:Name="FractionsMenu"/>
